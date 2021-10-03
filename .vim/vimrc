@@ -1,0 +1,62 @@
+" theme
+colorscheme apprentice
+
+
+# vim plug constants
+let VIM_PLUG = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+let PLUG_DIR = '~/.vim/autoload/plug.vim'
+
+
+# install vim plug
+if empty(glob(PLUG_DIR))
+  silent execute '!curl -fLo ' . PLUG_DIR . ' --create-dirs ' . VIM_PLUG
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+# plugins
+call plug#begin('~/.vim/plugged')
+
+# javascript
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+
+call plug#end()
+
+
+" syntax highlighting 
+syntax on
+filetype plugin indent on
+
+
+" search rules
+set hlsearch
+set incsearch
+set ignorecase
+set gdefault
+
+
+" highlight current line
+set cursorline
+" show filename in titlebar
+set title
+" show command as it's being typed
+set showcmd
+" scroll three lines before border
+set scrolloff=3
+" use spaces 
+set expandtab
+" ergonomic backspacing
+set backspace=indent,eol,start
+" line numbers
+set number
+" always enable mouse mode
+set mouse=a
+
+
+" yaml overrides
+autocmd FileType yaml
+  \ setlocal
+  \ ts=2
+  \ sts=2
+  \ sw=2
