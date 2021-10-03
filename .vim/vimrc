@@ -2,7 +2,7 @@
 func! Fetch(upstream, dest)
   if empty(glob(a:dest))
     silent execute '!curl -fLo ' . a:dest . ' --create-dirs ' . a:upstream
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    autocmd VimEnter * PlugInstall --sync +qa | source $MYVIMRC
   endif
 endfunc
 
