@@ -2,10 +2,7 @@
 
 
 init() {
-  rsync \
-    --exclude ".git/" \
-    --exclude "README.md" \
-    -avh --no-perms . ~;
+  rsync --exclude ".git/" --exclude "README.md" --exclude "init.sh" -avh --no-perms . ~
 }
 
 
