@@ -1,7 +1,7 @@
 " fetch hard dependencies
-func! Fetch(src, dest)
+func! Fetch(upstream, dest)
   if empty(glob(dest))
-    silent execute '!curl -fLo ' . dest . ' --create-dirs ' . src
+    silent execute '!curl -fLo ' . dest . ' --create-dirs ' . upstream
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
 endfunc
