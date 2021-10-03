@@ -1,0 +1,11 @@
+[user]
+  name = Dan Bergelt
+  email = dan@danbergelt.com
+
+
+[pull]
+  rebase = true
+
+
+[branch]
+  autosetuprebase = always
