@@ -3,6 +3,7 @@
 
 init() {
   rsync --exclude={"README.md","init.sh",".git/"} -avh --no-perms . ~
+  vim +'PlugInstall --sync' +qall &> /dev/null
 }
 
 
