@@ -1,5 +1,14 @@
+shell:
+  program: '/bin/bash'
+
+  args:
+    - '-l'
+    - '-c'
+    - 'tmux attach || tmux'
+
+
 font:
-  size: 14.0
+  size: 14
 
 
 colors:
@@ -8,11 +17,11 @@ colors:
     foreground: '#BCBCBC'
 
   cursor:
-    text: '#000000'
+    text:   '#000000'
     cursor: '#f8f8f2'
 
   selection:
-    text: '#272822'
+    text:       '#272822'
     background: '#f8f8f2'
   
   normal:
