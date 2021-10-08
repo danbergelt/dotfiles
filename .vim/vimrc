@@ -56,6 +56,9 @@ set ignorecase
 " 4. Enable backspacing in indent mode
 " 5. Line numbers
 " 6. Enable mouse mode
+" 7. Disable vi compatibility
+" 8. Disable modelines
+" 9. Auto read files when they change on disk
 "
 
 set cursorline
@@ -64,6 +67,23 @@ set expandtab
 set backspace=indent,eol,start
 set number
 set mouse=a
+set nocompatible
+set modelines=0
+set autoread
+
+"
+" Remove trailing whitespace on save
+"
+
+autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
+
+"
+" Spellcheck
+"
+
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
+autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+autocmd FileType gitcommit setlocal spell spelllang=en_us
 
 "
 " YAML file overrides
