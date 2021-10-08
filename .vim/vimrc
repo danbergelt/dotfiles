@@ -1,4 +1,7 @@
-" fetch hard dependencies
+"
+" Fetch hard dependencies
+"
+
 func! Fetch(upstream, dest)
   if empty(glob(a:dest))
     silent execute '!curl -fLo ' . a:dest . ' --create-dirs ' . a:upstream
@@ -6,36 +9,65 @@ func! Fetch(upstream, dest)
 endfunc
 
 
+"
+" Fetch color theme
+"
+
 call Fetch('https://raw.githubusercontent.com/romainl/Apprentice/master/colors/apprentice.vim', '~/.vim/colors/apprentice.vim')
 colorscheme apprentice
 
+"
+" Fetch plugin manager 
+"
 
 call Fetch('https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim', '~/.vim/autoload/plug.vim')
+
+"
+" 1. Javascript overrides
+" 2. JSX syntax highlighting
+"
+
 call plug#begin('~/.vim/plugged')
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
+"
+" Enable syntax highlighting + filetype detection
+"
 
 syntax on
 filetype plugin indent on
 
+"
+" 1. Highlight search results
+" 2. Incremental search
+" 3. Case insensitive search
+"
 
 set hlsearch
 set incsearch
 set ignorecase
-set gdefault
 
+"
+" 1. Highlight current line
+" 2. 3 line buffer at screen edge
+" 3. Spaces
+" 4. Enable backspacing in indent mode
+" 5. Line numbers
+" 6. Enable mouse mode
+"
 
 set cursorline
-set title
-set showcmd
 set scrolloff=3
 set expandtab
 set backspace=indent,eol,start
 set number
 set mouse=a
 
+"
+" YAML file overrides
+"
 
 autocmd FileType yaml
   \ setlocal
