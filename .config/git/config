@@ -1,11 +1,21 @@
+#
+# Me
+#
+
 [user]
   name = Dan Bergelt
   email = dan@danbergelt.com
 
+#
+# Rebase all pulls
+#
 
 [pull]
   rebase = true
 
+#
+# Set up new branches for rebases
+#
 
 [branch]
   autosetuprebase = always

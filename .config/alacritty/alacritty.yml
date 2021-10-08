@@ -1,45 +1,58 @@
 shell:
+
+  #
+  # Use bash as default shell
+  #
+  
   program: '/bin/bash'
 
+  #
+  # Open in tmux on launch
+  #
+  
   args:
     - '-l'
     - '-c'
     - 'tmux'
 
-
 font:
+  
+  #
+  # Default font size
+  #
+  
   size: 14
 
-
 colors:
-  primary:
-    background: '#262626'
-    foreground: '#BCBCBC'
-
+  
+  #
+  # Match vim + terminal 
+  #
+  
   cursor:
-    text:   '#000000'
-    cursor: '#f8f8f2'
-
+    text:       '#000000'
+    cursor:     '#f8f8f2'
+  normal:
+    black:      '#1C1C1C'
+    red:        '#AF5F5F'
+    green:      '#5F875F'
+    yellow:     '#87875F'
+    blue:       '#5F87AF'
+    magenta:    '#5F5F87'
+    cyan:       '#5F8787'
+    white:      '#6C6C6C'
+  bright:
+    black:      '#444444'
+    red:        '#FF8700'
+    green:      '#88AF87'
+    yellow:     '#FFFFAF'
+    blue:       '#8FAFD7'
+    magenta:    '#8787AF'
+    cyan:       '#5FAFAF'
+    white:      '#FFFFFF'
   selection:
     text:       '#272822'
     background: '#f8f8f2'
-  
-  normal:
-    black:   '#1C1C1C'
-    red:     '#AF5F5F'
-    green:   '#5F875F'
-    yellow:  '#87875F'
-    blue:    '#5F87AF'
-    magenta: '#5F5F87'
-    cyan:    '#5F8787'
-    white:   '#6C6C6C'
-
-  bright:
-    black:   '#444444'
-    red:     '#FF8700'
-    green:   '#88AF87'
-    yellow:  '#FFFFAF'
-    blue:    '#8FAFD7'
-    magenta: '#8787AF'
-    cyan:    '#5FAFAF'
-    white:   '#FFFFFF'
+  primary:
+    background: '#262626'
+    foreground: '#BCBCBC'
