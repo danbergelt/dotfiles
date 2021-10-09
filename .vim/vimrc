@@ -10,7 +10,7 @@ endfunc
 
 
 "
-" Fetch color theme
+" Fetch + set theme
 "
 
 call Fetch('https://raw.githubusercontent.com/romainl/Apprentice/master/colors/apprentice.vim', '~/.vim/colors/apprentice.vim')
@@ -23,10 +23,7 @@ colorscheme apprentice
 call Fetch('https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim', '~/.vim/autoload/plug.vim')
 
 "
-" 1. Javascript overrides
-" 2. JSX syntax highlighting
-" 3. Vim airline
-" 4. Vim airline themes
+" Plugins
 "
 
 call plug#begin('~/.vim/plugged')
@@ -54,9 +51,7 @@ let g:airline_section_x=''
 let g:airline_section_y='%Y'
 
 "
-" 1. Highlight search results
-" 2. Incremental search
-" 3. Case insensitive search
+" Search settings
 "
 
 set hlsearch
@@ -64,15 +59,7 @@ set incsearch
 set ignorecase
 
 "
-" 1. Highlight current line
-" 2. 3 line buffer at screen edge
-" 3. Use spaces
-" 4. Enable backspacing in indent mode
-" 5. Line numbers
-" 6. Enable mouse mode
-" 7. Disable vi compatibility
-" 8. Disable modelines
-" 9. Auto read files when they change on disk
+" Misc. settings
 "
 
 set cursorline
@@ -100,7 +87,7 @@ autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 
 "
-" YAML file overrides
+" YAML overrides
 "
 
 autocmd FileType yaml

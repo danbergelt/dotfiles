@@ -3,32 +3,32 @@ shell:
   #
   # Use bash as default shell
   #
-  
+
   program: '/bin/bash'
 
   #
   # Open in tmux on launch
   #
-  
+
   args:
     - '-l'
     - '-c'
     - 'tmux'
 
 font:
-  
+
   #
   # Default font size
   #
-  
+
   size: 14
 
 colors:
-  
+
   #
-  # Match vim + terminal 
+  # Apprentice theme
   #
-  
+
   cursor:
     text:       '#000000'
     cursor:     '#f8f8f2'
