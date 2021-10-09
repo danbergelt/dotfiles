@@ -17,7 +17,7 @@ call Fetch('https://raw.githubusercontent.com/romainl/Apprentice/master/colors/a
 colorscheme apprentice
 
 "
-" Fetch plugin manager 
+" Fetch plugin manager
 "
 
 call Fetch('https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim', '~/.vim/autoload/plug.vim')
@@ -73,7 +73,6 @@ set ignorecase
 " 7. Disable vi compatibility
 " 8. Disable modelines
 " 9. Auto read files when they change on disk
-" 10. Shortcut for toggling paste mode
 "
 
 set cursorline
@@ -85,7 +84,6 @@ set mouse=a
 set nocompatible
 set modelines=0
 set autoread
-set pastetoggle=<F3>
 
 "
 " Remove trailing whitespace on save
