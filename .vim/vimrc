@@ -8,7 +8,6 @@ func! Fetch(upstream, dest)
   endif
 endfunc
 
-
 "
 " Fetch + set theme
 "
