@@ -25,11 +25,15 @@ call Fetch('https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 "
 " 1. Javascript overrides
 " 2. JSX syntax highlighting
+" 3. Vim airline
+" 4. Vim airline themes
 "
 
 call plug#begin('~/.vim/plugged')
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 "
@@ -38,6 +42,16 @@ call plug#end()
 
 syntax on
 filetype plugin indent on
+
+"
+" Airline config
+"
+
+let g:airline_theme='apprentice'
+let g:airline_section_b='%F'
+let g:airline_section_c=''
+let g:airline_section_x=''
+let g:airline_section_y='%Y'
 
 "
 " 1. Highlight search results
@@ -52,13 +66,14 @@ set ignorecase
 "
 " 1. Highlight current line
 " 2. 3 line buffer at screen edge
-" 3. Spaces
+" 3. Use spaces
 " 4. Enable backspacing in indent mode
 " 5. Line numbers
 " 6. Enable mouse mode
 " 7. Disable vi compatibility
 " 8. Disable modelines
 " 9. Auto read files when they change on disk
+" 10. Shortcut for toggling paste mode
 "
 
 set cursorline
@@ -70,6 +85,7 @@ set mouse=a
 set nocompatible
 set modelines=0
 set autoread
+set pastetoggle=<F3>
 
 "
 " Remove trailing whitespace on save
