@@ -4,13 +4,15 @@
 # Fetch and sync deps
 #
 
-bootstrap() {
-        # 1. Sync files
+install() {
+        # Sync files
         rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
-        # 2. Download vim plugin manager
+        # Install node
+        curl -sL install-node.now.sh/lts | bash
+        # Install vim plugin manager
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        # 3. Download all vim plugins
+        # Install all vim plugins
         vim +'PlugInstall --sync' +qall
 }
 
@@ -21,6 +23,6 @@ bootstrap() {
 read -p "This may overwrite files in your home directory. Are you sure? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
         printf "\nBootstrapping..."
-        bootstrap &> /dev/null
+        install &> /dev/null
         printf "\nDone!\n"
 fi;

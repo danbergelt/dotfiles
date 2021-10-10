@@ -3,13 +3,14 @@
 "
 
 call plug#begin('~/.vim/plugged')
+Plug 'yuezk/vim-js'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 "
@@ -29,11 +30,11 @@ filetype plugin indent on
 " Airline config
 "
 
-let g:airline_theme='apprentice'
-let g:airline_section_b='%F'
 let g:airline_section_c=''
 let g:airline_section_x=''
+let g:airline_section_b='%F'
 let g:airline_section_y='%Y'
+let g:airline_theme='apprentice'
 
 "
 " Make leader = space
@@ -63,9 +64,9 @@ nnoremap <leader><Right> :diffget REMOTE<CR>
 " NERDTree config
 "
 
+let NERDTreeShowHidden=1
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
-let NERDTreeShowHidden=1
 
 "
 " Remap window switching
@@ -89,12 +90,12 @@ nnoremap <leader><space> :noh<cr>
 set cursorline
 set scrolloff=3
 set expandtab
-set backspace=indent,eol,start
 set number
 set mouse=a
 set nocompatible
 set modelines=0
 set autoread
+set backspace=indent,eol,start
 
 "
 " Remove trailing whitespace on save
@@ -106,9 +107,9 @@ autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
 " Spellcheck
 "
 
+autocmd FileType gitcommit setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
-autocmd FileType gitcommit setlocal spell spelllang=en_us
 
 "
 " YAML overrides
