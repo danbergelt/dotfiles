@@ -3,6 +3,7 @@
 "
 
 call plug#begin('~/.vim/plugged')
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -40,6 +41,16 @@ let g:airline_section_y='%Y'
 
 nnoremap <space> <nop>
 let mapleader=" "
+
+"
+" CtrlP config
+"
+
+nnoremap <leader>p :CtrlP<CR>
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+    \ 'AcceptSelection("t")': ['<cr>'],
+    \ }
 
 "
 " NERDTree config
