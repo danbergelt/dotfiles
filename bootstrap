@@ -6,7 +6,7 @@
 
 bootstrap() {
         # 1. Sync files
-        rsync --exclude={"README.md","init.sh",".git/"} -avh --no-perms . ~
+        rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
         # 2. Download vim plugin manager
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
