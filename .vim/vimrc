@@ -48,9 +48,9 @@ let mapleader=" "
 
 nnoremap <leader>p :CtrlP<CR>
 let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
-    \ 'AcceptSelection("t")': ['<cr>'],
-    \ }
+        \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+        \ 'AcceptSelection("t")': ['<cr>'],
+        \ }
 
 "
 " NERDTree config
@@ -108,7 +108,7 @@ autocmd FileType gitcommit setlocal spell spelllang=en_us
 "
 
 autocmd FileType yaml
-  \ setlocal
-  \ ts=2
-  \ sts=2
-  \ sw=2
+        \ setlocal
+        \ ts=2
+        \ sts=2
+        \ sw=2
