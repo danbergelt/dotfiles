@@ -8,6 +8,7 @@ func! Fetch(upstream, dest)
   endif
 endfunc
 
+
 "
 " Fetch + set theme
 "
@@ -30,6 +31,7 @@ Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 "
@@ -50,12 +52,34 @@ let g:airline_section_x=''
 let g:airline_section_y='%Y'
 
 "
+" Make leader = space
+"
+
+nnoremap <space> <nop>
+let mapleader=" "
+
+"
+" NERDTree config
+"
+
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFocus<CR>
+let NERDTreeShowHidden=1
+
+"
+" Remap window switching
+"
+
+nnoremap <leader>w <C-w>w
+
+"
 " Search settings
 "
 
 set hlsearch
 set incsearch
 set ignorecase
+nnoremap <leader><space> :noh<cr>
 
 "
 " Misc. settings
