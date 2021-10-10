@@ -53,6 +53,13 @@ let g:ctrlp_prompt_mappings = {
         \ }
 
 "
+" Vimdiff config
+"
+
+nnoremap <leader><Left> :diffget LOCAL<CR>
+nnoremap <leader><Right> :diffget REMOTE<CR>
+
+"
 " NERDTree config
 "
 

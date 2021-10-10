@@ -12,7 +12,6 @@ bootstrap() {
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         # 3. Download all vim plugins
         vim +'PlugInstall --sync' +qall
-
 }
 
 #
