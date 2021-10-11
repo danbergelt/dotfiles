@@ -62,6 +62,7 @@ let mapleader=" "
 "
 
 nnoremap <leader>p :CtrlP<CR>
+let g:ctrlp_show_hidden=1
 let g:ctrlp_prompt_mappings={
         \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
         \ 'AcceptSelection("t")': ['<cr>'],
