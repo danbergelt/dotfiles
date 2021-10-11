@@ -35,6 +35,8 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
 inoremap <silent><expr> <cr> pumvisible()
         \ ? coc#_select_confirm()
         \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -102,6 +104,7 @@ set cursorline
 set scrolloff=3
 set expandtab
 set number
+set relativenumber
 set mouse=a
 set nocompatible
 set modelines=0
