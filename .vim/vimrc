@@ -27,6 +27,16 @@ syntax on
 filetype plugin indent on
 
 "
+" Coc.nvim config
+"
+
+set encoding=utf-8
+set hidden
+set updatetime=300
+inoremap <silent><expr> <cr> pumvisible()
+        \ ? coc#_select_confirm()
+        \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"
 " Airline config
 "
 
@@ -48,7 +58,7 @@ let mapleader=" "
 "
 
 nnoremap <leader>p :CtrlP<CR>
-let g:ctrlp_prompt_mappings = {
+let g:ctrlp_prompt_mappings={
         \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
         \ 'AcceptSelection("t")': ['<cr>'],
         \ }
