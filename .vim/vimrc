@@ -35,8 +35,8 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gr <Plug>(coc-references)
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gr <Plug>(coc-references)
 inoremap <silent><expr> <cr> pumvisible()
         \ ? coc#_select_confirm()
         \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
