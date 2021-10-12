@@ -5,15 +5,11 @@
 #
 
 install() {
-        # Sync files
-        rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
-        # Install node
-        curl -sL install-node.now.sh/lts | bash
-        # Install vim plugin manager
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        # Install all vim plugins
-        vim +'PlugInstall --sync' +qall
+    rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
+    curl -sL install-node.now.sh/lts | bash
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +'PlugInstall --sync' +qall
 }
 
 #
@@ -22,7 +18,7 @@ install() {
 
 read -p "This may overwrite files in your home directory. Are you sure? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
-        printf "\nBootstrapping..."
-        install &> /dev/null
-        printf "\nDone!\n"
+    printf "\nBootstrapping..."
+    install &> /dev/null
+    printf "\nDone!\n"
 fi;

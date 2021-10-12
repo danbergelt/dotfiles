@@ -3,27 +3,27 @@
 #
 
 [user]
-        name = Dan Bergelt
-        email = dan@danbergelt.com
+    name = Dan Bergelt
+    email = dan@danbergelt.com
 
 #
 # Rebase all pulls
 #
 
 [pull]
-        rebase = true
+    rebase = true
 
 #
 # Set up new branches for rebases
 #
 
 [branch]
-        autosetuprebase = always
+    autosetuprebase = always
 
 #
 # Aliases
 #
 
 [alias]
-        conflicts = mergetool --tool vimdiff
+    conflicts = mergetool --tool vimdiff
 
