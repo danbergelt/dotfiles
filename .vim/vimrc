@@ -35,6 +35,7 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
+let g:coc_global_extensions=['coc-tsserver']
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gr <Plug>(coc-references)
 inoremap <silent><expr> <cr> pumvisible()
