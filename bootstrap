@@ -5,30 +5,22 @@
 #
 
 osx() {
-    echo Installing Homebrew...
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &> /dev/null
-    echo Installing NodeJS...
-    brew install node &> /dev/null
-    echo Installing Alacritty...
-    brew install --cask alacritty &> /dev/null
-    echo Installing Docker...
-    brew install --cask docker; open /Applications/Docker.app &> /dev/null
+    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    brew install node
+    brew install --cask alacritty
+    brew install --cask docker; open /Applications/Docker.app
 }
 
 #
-# Global tasks applicable to all unix OS's
+# Global tasks
 #
 
 main() {
-    echo Syncing files...
-    rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~ &> /dev/null
-    echo Installing Vim-Plug...
+    rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &> /dev/null
-    echo Installing Vim plugins...
-    vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall &> /dev/null
-    echo Bootstrapping Vim language servers...
-    vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall &> /dev/null
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall
+    vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall
 }
 
 #
@@ -37,13 +29,11 @@ main() {
 
 read -p "Install native dependencies on OSX? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
-    echo
-    echo Installing native dependencies for osx...
-    osx
-    echo Installed native dependencies!
+    printf "\nInstalling native dependencies for osx...\n"
+    osx &> /dev/null
+    printf "Installed native dependencies!\n"
 else
-    echo
-    echo No action taken
+    printf "\nNo action taken\n"
 fi;
 
 #
@@ -52,11 +42,9 @@ fi;
 
 read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
-    echo
-    echo Installing dotfiles...
-    main
-    echo Installed dotfiles!
+    printf "\nInstalling dotfiles...\n"
+    main &> /dev/null
+    printf "Installed dotfiles!\n"
 else
-    echo
-    echo No action taken
+    printf "\nNo action taken\n"
 fi;
