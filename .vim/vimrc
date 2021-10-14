@@ -55,7 +55,6 @@ let g:airline_theme='apprentice'
 " Make leader = space
 "
 
-nnoremap <space> <nop>
 let mapleader=" "
 
 "
@@ -93,10 +92,8 @@ nnoremap <leader>w <C-w>w
 " Search settings
 "
 
-set hlsearch
 set incsearch
-set smartcase
-nnoremap <leader><space> :noh<cr>
+set ignorecase
 
 "
 " Misc. settings
@@ -107,7 +104,7 @@ set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
-set scrolloff=3
+set scrolloff=8
 set number
 set relativenumber
 set mouse=a
@@ -116,13 +113,13 @@ set modelines=0
 set autoread
 set backspace=indent,eol,start
 set noerrorbells
-
+set nowrap
 
 "
-" Remove trailing whitespace on save
+" Auto strip trailing whitespace
 "
 
-autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 "
 " Spellcheck
