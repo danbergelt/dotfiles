@@ -53,7 +53,7 @@ fi;
 read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     echo
-    echo Bootstrapping...
+    echo Installing dotfiles...
     main
     echo Installed dotfiles!
 else
