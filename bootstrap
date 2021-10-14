@@ -1,27 +1,62 @@
 #!/bin/bash
 
 #
-# Fetch and sync deps
+# OSX specific tasks
 #
 
-install() {
-    rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
-    curl -sL install-node.now.sh/lts | bash
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall
-    vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall
+osx() {
+    echo Installing Homebrew...
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &> /dev/null
+    echo Installing NodeJS...
+    brew install node &> /dev/null
+    echo Installing Alacritty...
+    brew install --cask alacritty &> /dev/null
+    echo Installing Docker...
+    brew install --cask docker; open /Applications/Docker.app &> /dev/null
 }
 
 #
-# Entrypoint
+# Global tasks applicable to all unix OS's
 #
 
-read -p "This may overwrite files in your home directory. Are you sure? (y/n) " -n 1;
+main() {
+    echo Syncing files...
+    rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~ &> /dev/null
+    echo Installing Vim-Plug...
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &> /dev/null
+    echo Installing Vim plugins...
+    vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall &> /dev/null
+    echo Bootstrapping Vim language servers...
+    vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall &> /dev/null
+}
+
+#
+# Run OSX
+#
+
+read -p "Install native dependencies on OSX? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
-    printf "\nBootstrapping..."
-    install &> /dev/null
-    printf "\nDone!\n"
+    echo
+    echo Installing native dependencies for osx...
+    osx
+    echo Installed native dependencies!
 else
-    printf "\n"
+    echo
+    echo No action taken
+fi;
+
+#
+# Run main
+#
+
+read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
+if [[ $REPLY = "y" ]]; then
+    echo
+    echo Bootstrapping...
+    main
+    echo Installed dotfiles!
+else
+    echo
+    echo No action taken
 fi;
