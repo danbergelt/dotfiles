@@ -3,14 +3,11 @@
 "
 
 call plug#begin('~/.vim/plugged')
-Plug 'ap/vim-css-color'
 Plug 'vimwiki/vimwiki'
-Plug 'yuezk/vim-js'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
