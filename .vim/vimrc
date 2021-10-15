@@ -86,7 +86,7 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 " Remap window switching
 "
 
-nnoremap <leader>w <C-w>w
+nnoremap <leader>a <C-w>w
 
 "
 " Search settings
