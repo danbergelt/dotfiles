@@ -3,6 +3,7 @@
 "
 
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
@@ -65,12 +66,6 @@ let g:ctrlp_prompt_mappings={
     \ 'AcceptSelection("t")': ['<cr>'],
     \ }
 
-"
-" Vimdiff config
-"
-
-nnoremap <leader><Left> :diffget LOCAL<CR>
-nnoremap <leader><Right> :diffget REMOTE<CR>
 
 "
 " NERDTree config
