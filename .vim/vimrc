@@ -31,7 +31,6 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
-let b:coc_diagnostic_disable=1
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gr <Plug>(coc-references)
 
