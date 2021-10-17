@@ -9,8 +9,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
@@ -52,7 +50,14 @@ let g:airline_theme='apprentice'
 " Make leader = space
 "
 
+nnoremap <SPACE> <Nop>
 let mapleader=" "
+
+"
+" Fugitive config
+"
+
+nnoremap <leader>gg :Ggrep!
 
 "
 " CtrlP config
@@ -103,6 +108,12 @@ set autoread
 set backspace=indent,eol,start
 set noerrorbells
 set nowrap
+
+"
+" Show current file
+"
+
+nnoremap <leader>fi :echo expand('%:p')<CR>
 
 "
 " Auto strip trailing whitespace
