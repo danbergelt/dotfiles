@@ -3,12 +3,11 @@
 "
 
 call plug#begin('~/.vim/plugged')
-Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
-Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
