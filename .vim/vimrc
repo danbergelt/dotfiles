@@ -36,16 +36,6 @@ nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gr <Plug>(coc-references)
 
 "
-" Airline config
-"
-
-let g:airline_section_c=''
-let g:airline_section_x=''
-let g:airline_section_b='%F'
-let g:airline_section_y='%Y'
-let g:airline_theme='apprentice'
-
-"
 " Make leader = space
 "
 
@@ -69,17 +59,10 @@ let g:ctrlp_prompt_mappings={
     \ }
 
 "
-" NERDTree config
+" Toggle file tree
 "
 
-let NERDTreeShowHidden=1
-nnoremap <leader>n :NERDTreeToggle<CR>
-
-"
-" Remap window switching
-"
-
-nnoremap <leader>a <C-w>w
+nnoremap <leader>t :Lex<CR>
 
 "
 " Search settings
