@@ -58,10 +58,11 @@ let g:ctrlp_prompt_mappings={
     \ }
 
 "
-" Toggle file tree
+" File tree config
 "
 
 nnoremap <leader>t :Lex<CR>
+let g:netrw_liststyle=3
 
 "
 " Search settings
