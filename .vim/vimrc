@@ -3,11 +3,13 @@
 "
 
 call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
 Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -33,11 +35,9 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
+let b:coc_diagnostic_disable=1
 nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gr <Plug>(coc-references)
-inoremap <silent><expr> <cr> pumvisible()
-    \ ? coc#_select_confirm()
-    \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 "
 " Airline config
