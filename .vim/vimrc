@@ -91,12 +91,6 @@ set noerrorbells
 set nowrap
 
 "
-" Show current file
-"
-
-nnoremap <leader>fi :echo expand('%:p')<CR>
-
-"
 " Auto strip trailing whitespace
 "
 
