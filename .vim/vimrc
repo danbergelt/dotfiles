@@ -58,6 +58,12 @@ let g:ctrlp_prompt_mappings={
     \ }
 
 "
+" More ergonomic window switching
+"
+
+nnoremap <leader>a <C-W>w
+
+"
 " File tree config
 "
 
