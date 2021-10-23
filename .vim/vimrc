@@ -52,6 +52,7 @@ nnoremap <leader>gg :Ggrep!
 "
 
 nnoremap <leader>p :CtrlP<CR>
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 let g:ctrlp_prompt_mappings={
     \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
     \ 'AcceptSelection("t")': ['<cr>'],
