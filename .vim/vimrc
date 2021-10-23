@@ -52,7 +52,7 @@ nnoremap <leader>gg :Ggrep!
 "
 
 nnoremap <leader>p :CtrlP<CR>
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore='\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 let g:ctrlp_prompt_mappings={
     \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
     \ 'AcceptSelection("t")': ['<cr>'],
@@ -103,7 +103,7 @@ set nowrap
 " Auto strip trailing whitespace
 "
 
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | silent! %s/\n\{3,}/\r\r/e | endif
 
 "
 " Spellcheck
