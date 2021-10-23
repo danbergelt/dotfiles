@@ -15,7 +15,7 @@ call plug#end()
 " Make leader = space
 "
 
-nnoremap <SPACE> <Nop>
+nnoremap <space> <nop>
 let mapleader=" "
 
 "
@@ -44,9 +44,9 @@ nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
-nnoremap <silent>K :call <SID>show_documentation()<CR>
+nnoremap <silent>K :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-    \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+    \: "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
 "
 " Functions
@@ -72,7 +72,7 @@ nnoremap <leader>gg :Ggrep!<space>
 " CtrlP config
 "
 
-nnoremap <leader>p :CtrlP<CR>
+nnoremap <leader>p :CtrlP<cr>
 let g:ctrlp_custom_ignore='\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 let g:ctrlp_prompt_mappings={
     \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
@@ -89,7 +89,7 @@ nnoremap <leader>a <C-W>w
 " File tree config
 "
 
-nnoremap <leader>t :Lex<CR>
+nnoremap <leader>t :Lex<cr>
 let g:netrw_liststyle=3
 let g:netrw_list_hide='.*\.swp$'
 
