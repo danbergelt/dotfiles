@@ -124,7 +124,10 @@ set nowrap
 " Auto strip trailing whitespace
 "
 
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | silent! %s/\n\{3,}/\r\r/e | endif
+autocmd BufRead,BufWrite * if ! &bin |
+    \ silent! %s/\s\+$//ge |
+    \ silent! %s/\n\{3,}/\r\r/e |
+    \ endif
 
 "
 " Spellcheck
@@ -133,6 +136,14 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | silent! %s/\n\{3,}
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+
+"
+" Local settings
+"
+
+if filereadable(expand("~/.vim/vimlocal"))
+    source ~/.vim/vimlocal
+endif
 
 "
 " YAML overrides
