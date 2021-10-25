@@ -1,9 +1,6 @@
 #!/bin/bash
 
-#
 # OSX specific tasks
-#
-
 osx() {
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     brew install ripgrep
@@ -13,10 +10,7 @@ osx() {
     brew install --cask docker; open /Applications/Docker.app
 }
 
-#
 # Global tasks
-#
-
 main() {
     rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -25,10 +19,7 @@ main() {
     vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall
 }
 
-#
 # Run OSX
-#
-
 read -p "Install native dependencies on OSX? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     printf "\nInstalling native dependencies for osx...\n"
@@ -38,10 +29,7 @@ else
     printf "\nNo action taken\n"
 fi;
 
-#
 # Run main
-#
-
 read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     printf "\nInstalling dotfiles...\n"

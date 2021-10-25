@@ -1,7 +1,4 @@
-
 " Plugins
-"
-
 call plug#begin('~/.vim/plugged')
 Plug 'romainl/Apprentice'
 Plug 'junegunn/fzf'
@@ -12,30 +9,18 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
-"
 " Make leader = space
-"
-
 nnoremap <space> <nop>
 let mapleader=" "
 
-"
 " Set theme
-"
-
 colorscheme apprentice
 
-"
 " Enable syntax highlighting + filetype detection
-"
-
 syntax on
 filetype plugin indent on
 
-"
 " Coc.nvim config
-"
-
 set encoding=utf-8
 set hidden
 set updatetime=300
@@ -49,10 +34,7 @@ nnoremap <leader>ck :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
     \: "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
-"
 " Functions
-"
-
 function! s:show_documentation()
     if (index(['vim', 'help'], &filetype) >= 0)
         execute 'h ' . expand('<cword>')
@@ -63,48 +45,30 @@ function! s:show_documentation()
     endif
 endfunction
 
-"
 " fugitive config
-"
-
 nmap <leader>g<left> :diffget //2<cr>
 nmap <leader>g<right> :diffget //3<cr>
 nmap <leader>gs :G<cr>
 
-"
 " fzf config
-"
-
 nnoremap <leader>sf :GFiles<cr>
 nnoremap <leader>sg :Rg<cr>
 
-"
 " More ergonomic window switching
-"
-
 nnoremap <leader>a <C-W>w
 
-"
 " File tree config
-"
-
 nnoremap <leader>t :Lex<cr>
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_winsize=30
 let g:netrw_list_hide='.*\.swp$'
 
-"
 " Search settings
-"
-
 set incsearch
 set ignorecase
 
-"
 " Misc. settings
-"
-
 set cursorline
 set tabstop=4 softtabstop=4
 set shiftwidth=4
@@ -121,35 +85,23 @@ set backspace=indent,eol,start
 set noerrorbells
 set nowrap
 
-"
 " Auto strip trailing whitespace
-"
-
 autocmd BufRead,BufWrite * if ! &bin |
     \ silent! %s/\s\+$//ge |
     \ silent! %s/\n\{3,}/\r\r/e |
     \ endif
 
-"
 " Spellcheck
-"
-
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
 autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
 
-"
 " Local settings
-"
-
 if filereadable(expand("~/.vim/vimlocal"))
     source ~/.vim/vimlocal
 endif
 
-"
 " YAML overrides
-"
-
 autocmd FileType yaml
     \ setlocal
     \ ts=2
