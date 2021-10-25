@@ -1,12 +1,13 @@
-"
+
 " Plugins
 "
 
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/Apprentice'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
@@ -38,13 +39,13 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
-nmap <leader>rn <Plug>(coc-rename)
-nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gr <Plug>(coc-references)
-nmap <silent>gi <Plug>(coc-implementation)
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-nnoremap <silent>K :call <sid>show_documentation()<cr>
+nmap <leader>cn <Plug>(coc-rename)
+nmap <leader>cd <Plug>(coc-definition)
+nmap <leader>cr <Plug>(coc-references)
+nmap <leader>ci <Plug>(coc-implementation)
+nmap <leader>cs <Plug>(coc-range-select)
+xmap <leader>cs <Plug>(coc-range-select)
+nnoremap <leader>ck :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
     \: "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
@@ -63,21 +64,23 @@ function! s:show_documentation()
 endfunction
 
 "
-" Fugitive config
+" fugitive config
 "
 
-nnoremap <leader>gg :Ggrep!<space>
+nmap <leader>ga :diffget //2<cr>
+nmap <leader>gb :diffget //3<cr>
+nmap <leader>gs :G<cr>
 
 "
-" CtrlP config
+" fzf config
 "
 
-nnoremap <leader>p :CtrlP<cr>
-let g:ctrlp_custom_ignore='\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
-let g:ctrlp_prompt_mappings={
-    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
-    \ 'AcceptSelection("t")': ['<cr>'],
-    \ }
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({ 'dir': systemlist('git rev-parse --show-toplevel')[0] }), <bang>0)
+nnoremap <leader>sg :GGrep<cr>
+nnoremap <leader>sf :GFiles<cr>
 
 "
 " More ergonomic window switching
@@ -91,6 +94,8 @@ nnoremap <leader>a <C-W>w
 
 nnoremap <leader>t :Lex<cr>
 let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_winsize=30
 let g:netrw_list_hide='.*\.swp$'
 
 "
