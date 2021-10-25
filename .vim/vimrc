@@ -3,12 +3,12 @@
 "
 
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'romainl/Apprentice'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
-Plug 'romainl/Apprentice'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
@@ -75,12 +75,8 @@ nmap <leader>gs :G<cr>
 " fzf config
 "
 
-command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 0,
-  \   fzf#vim#with_preview({ 'dir': systemlist('git rev-parse --show-toplevel')[0] }), <bang>0)
-nnoremap <leader>sg :GGrep<cr>
 nnoremap <leader>sf :GFiles<cr>
+nnoremap <leader>sg :Rg<cr>
 
 "
 " More ergonomic window switching
