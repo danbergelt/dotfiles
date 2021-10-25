@@ -67,8 +67,8 @@ endfunction
 " fugitive config
 "
 
-nmap <leader>ga :diffget //2<cr>
-nmap <leader>gb :diffget //3<cr>
+nmap <leader>g<left> :diffget //2<cr>
+nmap <leader>g<right> :diffget //3<cr>
 nmap <leader>gs :G<cr>
 
 "
