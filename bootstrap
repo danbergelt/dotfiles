@@ -5,7 +5,6 @@ osx() {
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     brew install ripgrep
     brew install fzf
-    brew install bat
     brew install node
     brew install --cask alacritty
     brew install --cask docker; open /Applications/Docker.app
