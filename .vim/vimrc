@@ -85,6 +85,9 @@ set backspace=indent,eol,start
 set noerrorbells
 set nowrap
 
+" Toggle paste mode
+nnoremap <leader>p :set paste!<cr>
+
 " Auto strip trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin |
     \ silent! %s/\s\+$//ge |
