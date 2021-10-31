@@ -19,9 +19,10 @@ cat << EOF
     6. Reject complexity.
     7. Avoid coupling unrelated components.
     8. Flat over nested, embrace pattern matching.
-    9. Data structures, small & simple functions.
+    9. Use the right data structure.
     10. DSLs are fantastic. Accidental DSLs are disasters.
     11. There are no silver bullets - it's always a tradeoff.
+    12. Small, pure functions.
 
 EOF
 }

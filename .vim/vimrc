@@ -2,13 +2,13 @@
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
-" Make leader = space
+" Make leader=space
 nnoremap <space> <nop>
 let mapleader=" "
 
@@ -23,13 +23,11 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
-nmap <leader>cn <Plug>(coc-rename)
-nmap <leader>cd <Plug>(coc-definition)
-nmap <leader>cr <Plug>(coc-references)
-nmap <leader>ci <Plug>(coc-implementation)
-nmap <leader>cs <Plug>(coc-range-select)
-xmap <leader>cs <Plug>(coc-range-select)
-nnoremap <leader>ck :call <sid>show_documentation()<cr>
+nmap <leader><space>n <Plug>(coc-rename)
+nmap <leader><space>d <Plug>(coc-definition)
+nmap <leader><space>r <Plug>(coc-references)
+nmap <leader><space>i <Plug>(coc-implementation)
+nnoremap <leader><space>k :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
     \: "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
@@ -52,6 +50,9 @@ nmap <leader>gs :G<cr>
 " fzf config
 nnoremap <leader>sf :GFiles<cr>
 nnoremap <leader>sg :Rg<cr>
+
+" nerdcommenter config
+let g:NERDSpaceDelims=1
 
 " More ergonomic window switching
 nnoremap <leader>a <C-W>w
