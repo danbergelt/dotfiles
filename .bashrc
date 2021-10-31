@@ -52,5 +52,5 @@ d() {
 # Open tmux on launch
 #
 
-[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit; }
+[ -z "$TMUX" ] && { tmux attach || exec tmux new-session; }
 
