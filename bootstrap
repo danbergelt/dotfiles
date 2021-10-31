@@ -7,7 +7,6 @@ osx() {
     brew install fd
     brew install fzf
     brew install node
-    brew install --cask alacritty
     brew install --cask docker; open /Applications/Docker.app
 }
 

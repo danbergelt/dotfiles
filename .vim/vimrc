@@ -1,6 +1,5 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'romainl/Apprentice'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
@@ -14,7 +13,7 @@ nnoremap <space> <nop>
 let mapleader=" "
 
 " Set theme
-colorscheme apprentice
+colorscheme ron
 
 " Enable syntax highlighting + filetype detection
 syntax on
@@ -69,7 +68,6 @@ set incsearch
 set ignorecase
 
 " Misc. settings
-set cursorline
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
