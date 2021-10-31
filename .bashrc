@@ -5,7 +5,7 @@
 alias tkw='tmux kill-window'
 
 #
-# Words to live by
+# Guiding principles
 #
 
 zen() {
@@ -46,3 +46,10 @@ tiles() {
 d() {
     cd `find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -type d -print | fzf`
 }
+
+#
+# Open tmux on launch
+#
+
+[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit; }
+
