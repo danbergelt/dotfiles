@@ -3,7 +3,7 @@
 #
 
 zen() {
-    cat << EOF
+cat << EOF
 
     1. Be creative. Be curious. Question everything.
     2. Chunk problems into smaller problems. Small enough? Do it again.

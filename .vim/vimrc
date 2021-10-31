@@ -13,7 +13,7 @@ nnoremap <space> <nop>
 let mapleader=" "
 
 " Set theme
-colorscheme ron
+colorscheme torte
 
 " Enable syntax highlighting + filetype detection
 syntax on
