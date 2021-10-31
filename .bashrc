@@ -1,4 +1,10 @@
 #
+# Aliases
+#
+
+alias tkw='tmux kill-window'
+
+#
 # Words to live by
 #
 
