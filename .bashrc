@@ -1,10 +1,4 @@
 #
-# Aliases
-#
-
-alias tkw='tmux kill-window'
-
-#
 # Guiding principles
 #
 
@@ -46,6 +40,23 @@ tiles() {
 
 d() {
     cd `find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -type d -print | fzf`
+}
+
+#
+# Kill current tmux window
+#
+tkw() {
+    tmux kill-window
+}
+
+#
+# Kill all non-attached tmux sessions
+#
+
+tks() {
+    tmux ls \
+        | awk 'BEGIN {FS=":"} !/(attached)/ {print $1}' \
+        | xargs -n 1 tmux kill-session -t 2> /dev/null
 }
 
 #
