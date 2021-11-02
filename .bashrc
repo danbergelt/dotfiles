@@ -65,5 +65,6 @@ tks() {
 #
 
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
+    cd ~/me
+    exec tmux
 fi
