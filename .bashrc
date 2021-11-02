@@ -45,6 +45,7 @@ d() {
 #
 # Kill current tmux window
 #
+
 tkw() {
     tmux kill-window
 }
