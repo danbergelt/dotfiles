@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# OSX specific tasks
+pkgs='ripgrep fd fzf node'
+
 osx() {
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-    brew install ripgrep
-    brew install fd
-    brew install fzf
-    brew install node
-    brew install --cask docker; open /Applications/Docker.app
+    echo "$pkgs" | xargs -n 1 -P 1 -I {} brew install {}
 }
 
-# Global tasks
 main() {
     mkdir -p ~/me
     rsync --exclude={"README.md","bootstrap",".git/"} -avh --no-perms . ~
@@ -20,7 +16,6 @@ main() {
     vim -E +'CocInstall -sync coc-tsserver coc-pyright' +qall
 }
 
-# Run OSX
 read -p "Install native dependencies on OSX? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     printf "\nInstalling native dependencies for osx...\n"
@@ -30,7 +25,6 @@ else
     printf "\nNo action taken\n"
 fi;
 
-# Run main
 read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     printf "\nInstalling dotfiles...\n"
