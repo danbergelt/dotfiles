@@ -5,7 +5,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -38,11 +38,11 @@ filetype plugin indent on
 set encoding=utf-8
 set hidden
 set updatetime=300
-nmap <leader><space>n <Plug>(coc-rename)
-nmap <leader><space>d <Plug>(coc-definition)
-nmap <leader><space>r <Plug>(coc-references)
-nmap <leader><space>i <Plug>(coc-implementation)
-nnoremap <leader><space>k :call <sid>show_documentation()<cr>
+nmap <leader>cn <Plug>(coc-rename)
+nmap <leader>cd <Plug>(coc-definition)
+nmap <leader>cr <Plug>(coc-references)
+nmap <leader>ci <Plug>(coc-implementation)
+nnoremap <leader>ck :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
 "
@@ -73,12 +73,6 @@ nmap <leader>gs :G<cr>
 
 nnoremap <leader>sf :GFiles<cr>
 nnoremap <leader>sg :Rg<cr>
-
-"
-" nerdcommenter config
-"
-
-let g:NERDSpaceDelims=1
 
 "
 " More ergonomic window switching
