@@ -39,7 +39,7 @@ tiles() {
 #
 
 __find() {
-    find ~/me \( -name node_modules -o -name .git \) -prune -o -type "$1" -print
+    find ~/me \( -name node_modules -o -name .git \) -prune -o -type $1 -print
 }
 
 #
@@ -47,7 +47,7 @@ __find() {
 #
 
 d() {
-    local path=`__find "d" | fzf`
+    local path=`__find 'd' | fzf`
     [[ ! -z $path ]] && cd $path
 }
 
@@ -56,7 +56,7 @@ d() {
 #
 
 f() {
-    local path=`__find "f" | fzf --preview "cat {}"`
+    local path=`__find 'f' | fzf --preview 'head -$LINES {}'`
     [[ ! -z $path ]] && vim $path
 }
 
