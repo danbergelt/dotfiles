@@ -43,6 +43,14 @@ d() {
 }
 
 #
+# Open a file
+#
+
+f() {
+    vim `rg --files --hidden --follow --no-ignore-vcs -g "!{node_modules,.git}" ~/me | fzf --preview "cat {}"`
+}
+
+#
 # Kill current tmux window
 #
 
