@@ -35,11 +35,19 @@ tiles() {
 }
 
 #
+# Default find command for locating files & directories
+#
+
+__find() {
+    find ~/me \( -name node_modules -o -name .git \) -prune -o -type "$1" -print
+}
+
+#
 # Navigate to a directory
 #
 
 d() {
-    local path=`find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -type d -print | fzf`
+    local path=`__find "d" | fzf`
     [[ ! -z $path ]] && cd $path
 }
 
@@ -48,7 +56,7 @@ d() {
 #
 
 f() {
-    local path=`find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -print | fzf`
+    local path=`__find "f" | fzf`
     [[ ! -z $path ]] && vim $path
 }
 
@@ -75,6 +83,5 @@ tks() {
 #
 
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-    cd ~/me
-    exec tmux
+    cd ~/me; exec tmux
 fi
