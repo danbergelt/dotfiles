@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pkgs='ripgrep fd fzf node'
+pkgs='ripgrep fzf node'
 
 osx() {
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh

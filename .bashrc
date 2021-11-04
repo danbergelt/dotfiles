@@ -39,7 +39,8 @@ tiles() {
 #
 
 d() {
-    cd `find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -type d -print | fzf`
+    local path=`find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -type d -print | fzf`
+    [[ ! -z $path ]] && cd $path
 }
 
 #
@@ -47,7 +48,8 @@ d() {
 #
 
 f() {
-    vim `rg --files --hidden --follow --no-ignore-vcs -g "!{node_modules,.git}" ~/me | fzf --preview "cat {}"`
+    local path=`find ~/me \( -name node_modules -o -name .git \) -prune -o -name "*" -print | fzf`
+    [[ ! -z $path ]] && vim $path
 }
 
 #
