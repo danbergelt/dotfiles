@@ -56,7 +56,7 @@ d() {
 #
 
 f() {
-    local path=`__find "f" | fzf`
+    local path=`__find "f" | fzf --preview "cat {}"`
     [[ ! -z $path ]] && vim $path
 }
 
