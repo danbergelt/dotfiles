@@ -48,7 +48,7 @@ __find() {
 
 d() {
     local path=`__find 'd' | fzf`
-    [[ ! -z $path ]] && cd $path
+    [[ -n $path ]] && cd $path
 }
 
 #
@@ -57,7 +57,7 @@ d() {
 
 f() {
     local path=`__find 'f' | fzf --preview 'head -$LINES {}'`
-    [[ ! -z $path ]] && vim $path
+    [[ -n $path ]] && vim $path
 }
 
 #
