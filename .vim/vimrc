@@ -22,7 +22,7 @@ let mapleader=" "
 " Set theme
 "
 
-colorscheme zellner
+colorscheme delek
 
 "
 " Enable syntax highlighting + filetype detection
