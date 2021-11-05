@@ -61,6 +61,14 @@ f() {
 }
 
 #
+# Find and kill a process
+#
+
+kp() {
+    ps -ef | fzf | awk '{print $2}' | xargs kill -9
+}
+
+#
 # Kill current tmux window
 #
 
