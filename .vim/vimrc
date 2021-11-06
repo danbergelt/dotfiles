@@ -1,40 +1,30 @@
-"
-" Plugins
-"
-
-call plug#begin('~/.vim/plugged')
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
-
-"
-" Make leader=space
-"
-
+" map leader key to space
 nnoremap <space> <nop>
 let mapleader=" "
 
-"
-" Set theme
-"
+call plug#begin('~/.vim/plugged')
 
-colorscheme delek
+" auto close quotes, brackets, etc.
+Plug 'Raimondi/delimitMate'
 
-"
-" Enable syntax highlighting + filetype detection
-"
+" fuzzy finding
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+nnoremap <leader>sf :GFiles<cr>
+nnoremap <leader>sg :Rg<cr>
 
-syntax on
-filetype plugin indent on
+" comment hotkeys
+Plug 'tpope/vim-commentary'
 
-"
-" Coc.nvim config
-"
+" git integration
+Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'
+nmap <leader>g<left> :diffget //2<cr>
+nmap <leader>g<right> :diffget //3<cr>
+nmap <leader>gs :G<cr>
 
+" language server
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 set encoding=utf-8
 set hidden
 set updatetime=300
@@ -45,62 +35,38 @@ nmap <leader>ci <Plug>(coc-implementation)
 nnoremap <leader>ck :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
-"
-" Functions
-"
+call plug#end()
 
-function! s:show_documentation()
-    if (index(['vim', 'help'], &filetype) >= 0)
-        execute 'h ' . expand('<cword>')
-    elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
-    else
-        execute '!' . &keywordprg . ' ' . expand('<cword>')
-    endif
-endfunction
+" theme + syntax
+colorscheme delek
+syntax on
+filetype plugin indent on
 
-"
-" fugitive config
-"
+" show file name in tmux
+autocmd BufEnter * call system("tmux rename-window " . expand("%:p"))
+autocmd VimLeave * call system("tmux rename-window bash")
 
-nmap <leader>g<left> :diffget //2<cr>
-nmap <leader>g<right> :diffget //3<cr>
-nmap <leader>gs :G<cr>
-
-"
-" fzf config
-"
-
-nnoremap <leader>sf :GFiles<cr>
-nnoremap <leader>sg :Rg<cr>
-
-"
-" More ergonomic window switching
-"
-
+" window switching
 nnoremap <leader>a <C-W>w
 
-"
-" File tree config
-"
-
+" file tree
 nnoremap <leader>t :Lex<cr>
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_winsize=30
 let g:netrw_list_hide='.*\.swp$'
 
-"
-" Search settings
-"
+" page down/up
+nnoremap <leader>d <C-d>
+nnoremap <leader>u <C-u>
 
+" jump to beginning/end of line
+nnoremap A 0
+nnoremap L $
+
+" misc. settings
 set incsearch
 set ignorecase
-
-"
-" Misc. settings
-"
-
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -115,36 +81,29 @@ set autoread
 set backspace=indent,eol,start
 set noerrorbells
 set nowrap
+set ruler
 
-"
-" Toggle paste mode
-"
+" toggle paste mode
+nnoremap <leader>p :set paste!<cr>:set paste?<cr>
 
-nnoremap <leader>p :set paste!<cr>
-
-"
-" Auto strip trailing whitespace
-"
-
+" auto strip trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin |
     \ silent! %s/\s\+$//ge |
     \ silent! %s/\n\{3,}/\r\r/e |
     \ endif
 
-"
-" Local settings
-"
-
+" source local settings
 if filereadable(expand("~/.vim/vimlocal"))
     source ~/.vim/vimlocal
 endif
 
-"
-" YAML overrides
-"
-
-autocmd FileType yaml
-    \ setlocal
-    \ ts=2
-    \ sts=2
-    \ sw=2
+" functions
+function! s:show_documentation()
+    if (index(['vim', 'help'], &filetype) >= 0)
+        execute 'h ' . expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . ' ' . expand('<cword>')
+    endif
+endfunction
