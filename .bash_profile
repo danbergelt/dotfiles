@@ -1,4 +1,4 @@
-export PS1="\w -> "
+export PS1="\w :: "
 
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
