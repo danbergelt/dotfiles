@@ -42,10 +42,6 @@ colorscheme delek
 syntax on
 filetype plugin indent on
 
-" show file name in tmux
-autocmd BufEnter * call system("tmux rename-window " . expand("%:p"))
-autocmd VimLeave * call system("tmux rename-window bash")
-
 " window switching
 nnoremap <leader>a <C-W>w
 

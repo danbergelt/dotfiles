@@ -25,7 +25,7 @@ else
     printf "\nNo action taken\n"
 fi;
 
-read -p "Install dotfiles? This may overwrite files, and programs may fail if missing native dependencies (y/n) " -n 1;
+read -p "Install dotfiles? (y/n) " -n 1;
 if [[ $REPLY = "y" ]]; then
     printf "\nInstalling dotfiles...\n"
     main &> /dev/null

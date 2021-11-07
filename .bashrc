@@ -1,7 +1,4 @@
-#
 # Guiding principles
-#
-
 zen() {
 cat << EOF
 
@@ -21,10 +18,7 @@ cat << EOF
 EOF
 }
 
-#
 # Launch 4 tmux tiles
-#
-
 tiles() {
     tmux new-window \
         \; split-window \
@@ -34,62 +28,41 @@ tiles() {
         \; select-pane -t 0
 }
 
-#
 # Default find command for locating files & directories
-#
-
 __find() {
     find ~/me \( -name node_modules -o -name .git \) -prune -o -type $1 -print
 }
 
-#
 # Navigate to a directory
-#
-
 d() {
     local path=`__find 'd' | fzf`
     [[ -n $path ]] && cd $path
 }
 
-#
 # Open a file
-#
-
 f() {
     local path=`__find 'f' | fzf --preview 'head -$LINES {}'`
     [[ -n $path ]] && vim $path
 }
 
-#
 # Find and kill a process
-#
-
 kp() {
     ps -ef | fzf | awk '{print $2}' | xargs kill -9
 }
 
-#
 # Kill current tmux window
-#
-
 tkw() {
     tmux kill-window
 }
 
-#
 # Kill all non-attached tmux sessions
-#
-
 tks() {
     tmux ls \
         | awk 'BEGIN {FS=":"} !/(attached)/ {print $1}' \
         | xargs -n 1 tmux kill-session -t 2> /dev/null
 }
 
-#
 # Open tmux on launch
-#
-
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
     cd ~/me; exec tmux
 fi
