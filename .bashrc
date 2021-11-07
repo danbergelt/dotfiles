@@ -14,6 +14,13 @@ cat << EOF
     10. DSLs are fantastic. Accidental DSLs are disasters.
     11. There are no silver bullets - it's always a tradeoff.
     12. Small, pure functions.
+    13. Steps:
+        a. Analyse problem, derive data representations.
+        b. Write essential function signature.
+        c. Write out examples.
+        d. Pseudocode the definition.
+        e. Write out the definition.
+        f. Iterate, ironing out inefficiencies.
 
 EOF
 }
