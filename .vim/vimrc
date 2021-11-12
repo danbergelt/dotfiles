@@ -41,7 +41,7 @@ call plug#end()
 colorscheme delek
 syntax on
 filetype plugin indent on
-highlight Pmenu ctermbg=gray guibg=gray
+highlight Pmenu ctermbg=DarkGray
 
 " window switching
 nnoremap <leader>w <C-W>w
