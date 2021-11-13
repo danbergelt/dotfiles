@@ -10,8 +10,10 @@ Plug 'Raimondi/delimitMate'
 " fuzzy finding
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-nnoremap <leader>sf :GFiles<cr>
-nnoremap <leader>sg :Rg<cr>
+nnoremap <leader>gf :GFiles<cr>
+command! -bang -nargs=* Go
+    \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- " . shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': '~/me'}), <bang>0)
+nnoremap <leader>go :Go<cr>
 
 " comment hotkeys
 Plug 'tpope/vim-commentary'
