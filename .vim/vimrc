@@ -4,6 +4,10 @@ let mapleader=" "
 
 call plug#begin('~/.vim/plugged')
 
+" for autowrapping function declarations
+Plug 'FooSoft/vim-argwrap'
+nnoremap <leader>x :ArgWrap<CR>
+
 " auto close quotes, brackets, etc.
 Plug 'Raimondi/delimitMate'
 
@@ -48,6 +52,11 @@ highlight Pmenu ctermbg=DarkGray
 " window switching
 nnoremap <leader>w <C-W>w
 
+" tab switching
+nnoremap <C-t> :tabnew<CR>
+nnoremap <tab> :tabn<CR>
+nnoremap <S-tab> :tabp<CR>
+
 " file tree
 nnoremap <leader>t :Lex<cr>
 let g:netrw_liststyle=3
@@ -81,6 +90,9 @@ set ruler
 " toggle paste mode
 nnoremap <leader>p :set paste!<cr>:set paste?<cr>
 
+" more ergonomic global replace
+vnoremap <leader>r :call Replace()<CR>
+
 " auto strip trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin |
     \ silent! %s/\s\+$//ge |
@@ -101,4 +113,12 @@ function! s:show_documentation()
     else
         execute '!' . &keywordprg . ' ' . expand('<cword>')
     endif
+endfunction
+
+function! Replace()
+  normal! gv"ry
+  let replacement = input("Replace " . @r . " with :: ")
+  if replacement != ""
+    exe "%s/" . @r . "/" . replacement . "/g"
+  endif
 endfunction
