@@ -42,13 +42,13 @@ nmap <leader>ci <Plug>(coc-implementation)
 nnoremap <leader>ck :call <sid>show_documentation()<cr>
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
-call plug#end()
-
 " theme + syntax
-colorscheme delek
+Plug 'agude/vim-eldar'
+colorscheme eldar
 syntax on
 filetype plugin indent on
-highlight Pmenu ctermbg=DarkGray
+
+call plug#end()
 
 " window switching
 nnoremap <leader>w <C-W>w
