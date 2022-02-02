@@ -97,7 +97,6 @@ vnoremap <leader>r :call Replace()<CR>
 " auto strip trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin |
     \ silent! %s/\s\+$//ge |
-    \ silent! %s/\n\{3,}/\r\r/e |
     \ endif
 
 " source local settings
