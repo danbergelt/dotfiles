@@ -60,11 +60,6 @@ set relativenumber
 set modelines=0
 set ruler
 set scrolloff=8
-au BufWrite * :Autoformat
-autocmd BufWinEnter <buffer> match Error /\s\+$/
-autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/
-autocmd InsertLeave <buffer> match Error /\s\+$/
-autocmd BufWinLeave <buffer> call clearmatches()
 
 " Spacing/formatting
 set tabstop=4
