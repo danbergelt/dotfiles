@@ -1,3 +1,3 @@
 ```bash
-git clone git@github.com:danbergelt/dotfiles.git && cd dotfiles && source bootstrap
+curl https://raw.githubusercontent.com/danbergelt/dotfiles/main/sync | bash
 ```
