@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+# External dependencies
+declare -a deps=(
+    "fzf" "node" "git" "docker" "tmux" "ctags" "vim" "tsc" "rg" "python3"
+)
+
+# Check all dependencies are installed
+has_deps=true
+for dep in "${deps[@]}"; do
+    if [ -z `which $dep` ]; then
+        has_deps=false
+        echo "ERROR: '$dep' is not installed"
+    fi
+done
+
+if [ $has_deps = false ]; then
+    echo "Exiting..."; exit 1
+fi
+
+# Make the virtual home
+mkdir -p ~/me
+
+# Get dotfiles
+url="https://raw.githubusercontent.com/danbergelt/dotfiles/main"
+curl --create-dirs "$url/.bash_profile" -o "~/.bash_profile"
+curl --create-dirs "$url/.vim/vimrc" -o "~/.vim/vimrc"
+curl --create-dirs "$url/.config/tmux/tmux.conf" -o "~/.config/tmux/tmux.conf"
+
+# Bootstrap vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall
+
+echo "Finished syncing, you should probably restart your terminal"

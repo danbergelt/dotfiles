@@ -1,124 +1,80 @@
-" map leader key to space
-nnoremap <space> <nop>
-let mapleader=" "
-
+" Plugins
 call plug#begin('~/.vim/plugged')
 
-" for autowrapping function declarations
-Plug 'FooSoft/vim-argwrap'
-nnoremap <leader>x :ArgWrap<CR>
-
-" auto close quotes, brackets, etc.
-Plug 'Raimondi/delimitMate'
-
-" fuzzy finding
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-nnoremap <leader>gf :GFiles<cr>
-let rg="rg --column --line-number --no-heading --color=always --smart-case -- "
-command! -bang -nargs=* Go
-    \ call fzf#vim#grep(rg . shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': '~/me'}), <bang>0)
-nnoremap <leader>go :Go<cr>
-
-" comment hotkeys
-Plug 'tpope/vim-commentary'
-
-" git integration
-Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'
-nmap <leader>g<left> :diffget //2<cr>
-nmap <leader>g<right> :diffget //3<cr>
-nmap <leader>gs :G<cr>
-
-" language server
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-set encoding=utf-8
-set hidden
-set updatetime=300
-nmap <leader>cn <Plug>(coc-rename)
-nmap <leader>cd <Plug>(coc-definition)
-nmap <leader>cr <Plug>(coc-references)
-nmap <leader>ci <Plug>(coc-implementation)
-nnoremap <leader>ck :call <sid>show_documentation()<cr>
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
-
-" theme + syntax
-Plug 'agude/vim-eldar'
-colorscheme eldar
-syntax on
-filetype plugin indent on
+Plug 'danbergelt/vim-eldar'          " color scheme
+Plug 'FooSoft/vim-argwrap'           " function argument wrapping
+Plug 'Raimondi/delimitMate'          " auto-closing pairs
+Plug 'junegunn/fzf'                  " fzf hookup
+Plug 'junegunn/fzf.vim'              " fzf hookup enhancement
+Plug 'tpope/vim-commentary'          " comment bindings
+Plug 'tpope/vim-fugitive'            " git bindings
+Plug 'sheerun/vim-polyglot'          " syntax highlighting
+Plug 'vim-autoformat/vim-autoformat' " auto format code
 
 call plug#end()
 
-" window switching
+" Remappings
+nnoremap <space> <nop>
+let mapleader=" "
+
+" Theme
+colorscheme eldar
+
+" Syntax
+syntax on
+filetype plugin indent on
+
+" Keyboard
+nnoremap <leader>a :ArgWrap<CR>
+
+nnoremap <leader>b <C-o>
+nnoremap <leader>d <C-]>
+
+nnoremap <leader>e :echo @%<CR>
+
+nnoremap <leader>ff :GFiles<CR>
+nnoremap <leader>fc :Rg<CR>
+
+nmap <leader>gb :Git blame<CR>
+nmap <leader>gd :Git diff<CR>
+nmap <leader>gs :G<CR>
+nmap <leader>gw :Gwrite<CR>
+
+nnoremap <leader>p :set paste!<CR>:set paste?<CR>
+
+nnoremap <leader>t :Lex<CR>
+
 nnoremap <leader>w <C-W>w
 
-" tab switching
-nnoremap <C-t> :tabnew<CR>
+nnoremap <C-tab> :tabnew<CR>
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
 
-" file tree
-nnoremap <leader>t :Lex<cr>
+" Explore mode
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_winsize=30
-let g:netrw_list_hide='.*\.swp$'
 
-" jump to beginning/end of line
-nnoremap <leader>a 0
-nnoremap <leader>l $
+" Appearance
+set number
+set relativenumber
+set modelines=0
+set ruler
+set scrolloff=8
+au BufWrite * :Autoformat
 
-" misc. settings
-set incsearch
-set ignorecase
-set tabstop=4 softtabstop=4
+" Spacing/formatting
+set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
-set scrolloff=8
-set number
-set relativenumber
-set mouse=a
-set nocompatible
-set modelines=0
-set autoread
 set backspace=indent,eol,start
-set noerrorbells
-set nowrap
-set ruler
 
-" toggle paste mode
-nnoremap <leader>p :set paste!<cr>:set paste?<cr>
+" Search
+set incsearch
+set ignorecase
 
-" more ergonomic global replace
-vnoremap <leader>r :call Replace()<CR>
-
-" auto strip trailing whitespace
-autocmd BufRead,BufWrite * if ! &bin |
-    \ silent! %s/\s\+$//ge |
-    \ endif
-
-" source local settings
-if filereadable(expand("~/.vim/vimlocal"))
-    source ~/.vim/vimlocal
-endif
-
-" functions
-function! s:show_documentation()
-    if (index(['vim', 'help'], &filetype) >= 0)
-        execute 'h ' . expand('<cword>')
-    elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
-    else
-        execute '!' . &keywordprg . ' ' . expand('<cword>')
-    endif
-endfunction
-
-function! Replace()
-    normal! gv"ry
-    let replacement=input("Replace " . @r . " with :: ")
-    if replacement != ""
-      exe "%s/" . @r . "/" . replacement . "/g"
-    endif
-endfunction
+" Interaction
+set mouse=a
+set autoread
