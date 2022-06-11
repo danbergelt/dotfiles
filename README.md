@@ -1,3 +1,3 @@
 ```bash
-curl https://raw.githubusercontent.com/danbergelt/dotfiles/main/sync | bash
+curl -s https://raw.githubusercontent.com/danbergelt/dotfiles/main/sync | bash
 ```
