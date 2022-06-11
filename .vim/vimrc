@@ -1,7 +1,6 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'danbergelt/vim-eldar'          " color scheme
 Plug 'FooSoft/vim-argwrap'           " function argument wrapping
 Plug 'Raimondi/delimitMate'          " auto-closing pairs
 Plug 'junegunn/fzf'                  " fzf hookup
@@ -17,7 +16,7 @@ nnoremap <space> <nop>
 let mapleader=" "
 
 " Theme
-colorscheme eldar
+colorscheme industry
 
 " Syntax
 syntax on

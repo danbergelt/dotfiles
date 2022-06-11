@@ -31,6 +31,6 @@ curl -s "$url/.config/tmux/tmux.conf" > ~/.config/tmux/tmux.conf
 # Bootstrap vim
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim -E -s -u "~/.vim/vimrc" +PlugInstall +qall
+vim -E -u "~/.vim/vimrc" +PlugInstall +qall
 
-echo -e "Finished syncing, you should probably restart your terminal"
+echo "Finished syncing, you should probably restart your terminal"
