@@ -1,13 +1,14 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'FooSoft/vim-argwrap'           " function argument wrapping
-Plug 'Raimondi/delimitMate'          " auto-closing pairs
-Plug 'junegunn/fzf'                  " fzf hookup
-Plug 'junegunn/fzf.vim'              " fzf hookup enhancement
-Plug 'tpope/vim-commentary'          " comment bindings
-Plug 'tpope/vim-fugitive'            " git bindings
-Plug 'sheerun/vim-polyglot'          " syntax highlighting
+Plug 'danbergelt/vim-eldar' " color scheme
+Plug 'FooSoft/vim-argwrap'  " function argument wrapping
+Plug 'Raimondi/delimitMate' " auto-closing pairs
+Plug 'junegunn/fzf'         " fzf hookup
+Plug 'junegunn/fzf.vim'     " fzf hookup enhancement
+Plug 'tpope/vim-commentary' " comment bindings
+Plug 'tpope/vim-fugitive'   " git bindings
+Plug 'sheerun/vim-polyglot' " syntax highlighting
 
 call plug#end()
 
