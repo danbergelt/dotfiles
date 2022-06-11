@@ -9,7 +9,6 @@ Plug 'junegunn/fzf.vim'              " fzf hookup enhancement
 Plug 'tpope/vim-commentary'          " comment bindings
 Plug 'tpope/vim-fugitive'            " git bindings
 Plug 'sheerun/vim-polyglot'          " syntax highlighting
-Plug 'vim-autoformat/vim-autoformat' " auto format code
 
 call plug#end()
 
@@ -62,9 +61,7 @@ set modelines=0
 set ruler
 set scrolloff=8
 au BufWrite * :Autoformat
-autocmd BufWinEnter <buffer> match Error /\s\+$/
-autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/
-autocmd InsertLeave <buffer> match Error /\s\+$/
+autocmd BufWinEnter <buffer> match Error /\s\+$//ge
 autocmd BufWinLeave <buffer> call clearmatches()
 
 " Spacing/formatting
