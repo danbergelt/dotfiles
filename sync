@@ -26,9 +26,9 @@ mkdir -p ~/.config
 
 # Get dotfiles
 url="https://raw.githubusercontent.com/danbergelt/dotfiles/main"
-curl -s "$url/.bash_profile" > "~/.bash_profile"
-curl -s "$url/.vim/vimrc" > "~/.vim/vimrc"
-mkdir -p ~/.config/tmux && curl -s "$url/.config/tmux/tmux.conf" > "~/.config/tmux/tmux.conf"
+curl -s "$url/.bash_profile" > ~/.bash_profile
+curl -s "$url/.vim/vimrc" > ~/.vim/vimrc
+mkdir -p ~/.config/tmux && curl -s "$url/.config/tmux/tmux.conf" > ~/.config/tmux/tmux.conf
 
 # Bootstrap vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
