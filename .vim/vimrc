@@ -17,7 +17,7 @@ nnoremap <space> <nop>
 let mapleader=" "
 
 " Theme
-colorscheme industry
+colorscheme eldar
 
 " Syntax
 syntax on
