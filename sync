@@ -27,7 +27,8 @@ declare -a pydeps=(
 
 # Node dependencies
 declare -a jsdeps=(
-    "quick-lint-js"
+    "typescript"
+    "typescript-language-server"
 )
 
 # Check all dependencies are installed

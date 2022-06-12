@@ -40,6 +40,8 @@ nmap <leader>gd :Git diff<CR>
 nmap <leader>gs :G<CR>
 nmap <leader>gw :Gwrite<CR>
 
+nnoremap <leader>i K
+
 nnoremap <leader>p :set paste!<CR>:set paste?<CR>
 
 nnoremap <leader>t :Lex<CR>
@@ -85,5 +87,12 @@ fun! Trim()
 endfun
 
 " Language server
-let g:lsc_server_commands = {'python': 'pylsp', 'javascript': 'quick-lint-js'}
-let g:lsc_auto_map = {'Completion': 'completefunc'}
+let g:lsc_auto_map = {
+    \ 'Completion': 'completefunc',
+    \ 'ShowHover': v:true
+}
+let g:lsc_server_commands = {
+    \ 'python': 'pylsp',
+    \ 'javascript': 'typescript-language-server --stdio',
+    \ 'typescript': 'typescript-language-server --stdio'
+}
