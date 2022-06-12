@@ -39,8 +39,8 @@ justfind() {
         echo "Usage: justfind [d | f] path"
         return
     fi
-
-	local -r IGNORE="-name node_modules -o -name .git"
+    
+    local -r IGNORE="-name node_modules -o -name .git"
 
     find $2 \( $IGNORE \) -prune -o -type $1
 }
