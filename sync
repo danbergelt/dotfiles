@@ -27,17 +27,21 @@ declare -a pydeps=(
 
 # Check all dependencies are installed
 has_deps=true
+
+missing() {
+    has_deps=false
+    echo "ERROR: $2 dependency $1 is not installed or is not in PATH"
+}
+
 for dep in "${deps[@]}"; do
     if [ -z `which $dep` ]; then
-        has_deps=false
-        echo "ERROR: system dependency $dep is not installed or is not in PATH"
+        missing $dep "system"
     fi
 
     if [ $dep = "python3" ]; then
         for pydep in "${pydeps[@]}"; do
             if [ -z `python3 -m pip freeze | grep "^$pydep=="` ]; then
-                has_deps=false
-                echo "ERROR: python3 dependency $pydep is not installed or is not in PATH"
+                missing $pydep "python3"
             fi
         done
     fi
