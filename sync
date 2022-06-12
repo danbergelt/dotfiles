@@ -25,12 +25,17 @@ declare -a pydeps=(
     "python-lsp-server"
 )
 
+# Node dependencies
+declare -a jsdeps=(
+    "quick-lint-js"
+)
+
 # Check all dependencies are installed
 has_deps=true
 
 missing() {
     has_deps=false
-    echo "ERROR: $2 dependency $1 is not installed or is not in PATH"
+    echo "ERROR: missing $2 dependency $1"
 }
 
 for dep in "${deps[@]}"; do
@@ -42,6 +47,14 @@ for dep in "${deps[@]}"; do
         for pydep in "${pydeps[@]}"; do
             if [ -z `python3 -m pip freeze | grep "^$pydep=="` ]; then
                 missing $pydep "python3"
+            fi
+        done
+    fi
+
+    if [ $dep = "node" ]; then
+        for jsdep in "${jsdeps[@]}"; do
+            if [ -z `npm list -g --depth=0 --parseable | grep $jsdep` ]; then
+                missing $jsdep "node"
             fi
         done
     fi

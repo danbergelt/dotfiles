@@ -85,5 +85,5 @@ fun! Trim()
 endfun
 
 " Language server
-let g:lsc_server_commands = {'python': 'pylsp'}
+let g:lsc_server_commands = {'python': 'pylsp', 'javascript': 'quick-lint-js'}
 let g:lsc_auto_map = {'Completion': 'completefunc'}
