@@ -33,13 +33,13 @@ tks() {
         | xargs -I {} tmux kill-session -t {}
 }
 
-# Find non-private dirs or files in the provided path
-justfind() {
+# Show all dirs or files in the provided path
+show() {
     if [[ $1 != "d" ]] && [[ $1 != "f" ]] || [ -z $2 ]; then
-        echo "Usage: justfind [d | f] path"
+        echo "Usage: show [d | f] path"
         return
     fi
-    
+
     local -r IGNORE="-name node_modules -o -name .git"
 
     find $2 \( $IGNORE \) -prune -o -type $1
@@ -49,10 +49,10 @@ justfind() {
 to() {
     case "$1" in
         d)
-            local -r DIR=`justfind $1 ~/me | fzf`
+            local -r DIR=`show $1 ~/me | fzf`
             [[ -n $DIR ]] && cd $DIR ;;
         f)
-            local -r FIL=`justfind $1 ~/me | fzf --preview 'head -$LINES {}'`
+            local -r FIL=`show $1 ~/me | fzf --preview 'head -$LINES {}'`
             [[ -n $FIL ]] && vim $FIL ;;
         *)
             echo "Usage: to [d | f]" ;;
