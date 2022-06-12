@@ -1,15 +1,22 @@
 # Prompt styling
 export PS1="\w :: "
 
+# Run a command from history
+h() {
+    local -r CMD=`history | fzf --height="50%" | xargs | cut -d ' ' -f 2-`
+    [[ -n $CMD ]] && echo $CMD | bash
+}
+
 # Launch 1 - 4 tmux panes, format and switch to 0th pane
-panes() {
-    if [ -z $1 ] || [ $1 -le 0 ] || [ $1 -ge 5 ]; then
-        echo "Usage: panes [1-4]"
+p() {
+    if [ -z "${TMUX}" ]; then
+        echo "Must be inside tmux"
         return
     fi
 
-    if [ -z "$TMUX" ]; then
-        tmux new-window
+    if [ -z $1 ] || [ $1 -le 0 ] || [ $1 -ge 5 ]; then
+        echo "Usage: panes [1-4]"
+        return
     fi
 
     for _ in `seq 1 $1`; do
@@ -67,6 +74,10 @@ tscjs() {
         | grep '.js$' \
         | xargs tsc $TSC_FLAGS
 }
+
+# Aliases
+alias d='to d'
+alias f='to f'
 
 # Source the .bashrc if it exists
 if [ -f ~/.bashrc ]; then
