@@ -54,7 +54,7 @@ for dep in "${deps[@]}"; do
 
     if [ $dep = "node" ]; then
         for jsdep in "${jsdeps[@]}"; do
-            if [ -z `npm list -g --depth=0 --parseable | grep $jsdep` ]; then
+            if [ -z `npm list -g --depth=0 --parseable | grep "$jsdep$"` ]; then
                 missing $jsdep "node"
             fi
         done

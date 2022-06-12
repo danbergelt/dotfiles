@@ -89,10 +89,10 @@ endfun
 " Language server
 let g:lsc_auto_map = {
     \ 'Completion': 'completefunc',
-    \ 'ShowHover': v:true
+    \ 'ShowHover': v:true,
 }
 let g:lsc_server_commands = {
     \ 'python': 'pylsp',
     \ 'javascript': 'typescript-language-server --stdio',
-    \ 'typescript': 'typescript-language-server --stdio'
+    \ 'typescript': 'typescript-language-server --stdio',
 }
