@@ -1,8 +1,7 @@
 set -e
 
-# External dependencies
+# System dependencies
 declare -a deps=(
-    # native
     "fzf"
     "node"
     "git"
@@ -13,7 +12,10 @@ declare -a deps=(
     "tsc"
     "rg"
     "python3"
-    # python
+)
+
+# Python dependencies
+declare -a pydeps=(
     "mypy"
     "pylsp-mypy"
     "pydocstyle"
@@ -28,7 +30,16 @@ has_deps=true
 for dep in "${deps[@]}"; do
     if [ -z `which $dep` ]; then
         has_deps=false
-        echo "ERROR: '$dep' is not installed or is not in PATH"
+        echo "ERROR: system dependency $dep is not installed or is not in PATH"
+    fi
+
+    if [ $dep = "python3" ]; then
+        for pydep in "${pydeps[@]}"; do
+            if [ -z `python3 -m pip freeze | grep "^$pydep=="` ]; then
+                has_deps=false
+                echo "ERROR: python3 dependency $pydep is not installed or is not in PATH"
+            fi
+        done
     fi
 done
 
