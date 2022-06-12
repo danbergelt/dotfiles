@@ -75,6 +75,14 @@ tscjs() {
         | xargs tsc $TSC_FLAGS
 }
 
+# Run ctags from the repo root
+tag() {
+    local -r LOC=`pwd`
+    cd `git rev-parse --show-toplevel`
+    ctags -R .
+    cd $LOC
+}
+
 # Aliases
 alias d='to d'
 alias f='to f'

@@ -1,6 +1,7 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+Plug 'natebosch/vim-lsc'    " language server
 Plug 'agude/vim-eldar'      " color scheme
 Plug 'FooSoft/vim-argwrap'  " function argument wrapping
 Plug 'Raimondi/delimitMate' " auto-closing pairs
@@ -82,3 +83,7 @@ fun! Trim()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+" Language server
+let g:lsc_server_commands = {'python': 'pylsp'}
+let g:lsc_auto_map = {'Completion': 'completefunc'}

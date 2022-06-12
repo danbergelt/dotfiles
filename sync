@@ -2,7 +2,25 @@ set -e
 
 # External dependencies
 declare -a deps=(
-    "fzf" "node" "git" "docker" "tmux" "ctags" "vim" "tsc" "rg" "python3"
+    # native
+    "fzf"
+    "node"
+    "git"
+    "docker"
+    "tmux"
+    "ctags"
+    "vim"
+    "tsc"
+    "rg"
+    "python3"
+    # python
+    "mypy"
+    "pylsp-mypy"
+    "pydocstyle"
+    "pyflakes"
+    "rope"
+    "yapf"
+    "python-lsp-server"
 )
 
 # Check all dependencies are installed
@@ -10,7 +28,7 @@ has_deps=true
 for dep in "${deps[@]}"; do
     if [ -z `which $dep` ]; then
         has_deps=false
-        echo "ERROR: '$dep' is not installed"
+        echo "ERROR: '$dep' is not installed or is not in PATH"
     fi
 done
 
