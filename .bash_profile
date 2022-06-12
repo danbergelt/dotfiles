@@ -9,7 +9,7 @@ h() {
 
 # Launch 1 - 4 tmux panes, format and switch to 0th pane
 p() {
-    if [ -z "${TMUX}" ]; then
+    if [ -z $TMUX ]; then
         echo "Must be inside tmux"
         return
     fi
