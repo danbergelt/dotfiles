@@ -30,7 +30,7 @@ p() {
 tks() {
     tmux ls \
         | awk 'BEGIN {FS=":"} !/(attached)/ {print $1}' \
-        | xargs tmux kill-session -t
+        | xargs -I {} tmux kill-session -t {}
 }
 
 # Find non-private dirs or files in the provided path
