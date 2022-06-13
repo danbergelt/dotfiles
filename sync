@@ -17,7 +17,6 @@ declare -a deps=(
 # Python dependencies
 declare -a pydeps=(
     "rope"
-    "yapf"
     "pyflakes"
     "mypy"
     "pylsp-mypy"
