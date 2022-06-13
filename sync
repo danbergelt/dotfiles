@@ -42,22 +42,21 @@ missing() {
 for dep in "${deps[@]}"; do
     if [ -z `which $dep` ]; then
         missing $dep "system"
-    fi
-
-    if [ $dep = "python3" ]; then
-        for pydep in "${pydeps[@]}"; do
-            if [ -z `python3 -m pip freeze | grep "^$pydep=="` ]; then
-                missing $pydep "python3"
-            fi
-        done
-    fi
-
-    if [ $dep = "node" ]; then
-        for jsdep in "${jsdeps[@]}"; do
-            if [ -z `npm list -g --depth=0 --parseable | grep "$jsdep$"` ]; then
-                missing $jsdep "node"
-            fi
-        done
+    else
+        if [ $dep = "python3" ]; then
+            for pydep in "${pydeps[@]}"; do
+                if [ -z `python3 -m pip freeze | grep "^$pydep=="` ]; then
+                    missing $pydep "python3"
+                fi
+            done
+        fi
+        if [ $dep = "node" ]; then
+            for jsdep in "${jsdeps[@]}"; do
+                if [ -z `npm list -g --depth=0 --parseable | grep "$jsdep$"` ]; then
+                    missing $jsdep "node"
+                fi
+            done
+        fi
     fi
 done
 
