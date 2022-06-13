@@ -16,15 +16,13 @@ declare -a deps=(
 
 # Python dependencies
 declare -a pydeps=(
-    "mypy"
-    "pycodestyle"
-    "autopep8"
-    "pylint"
-    "pylsp-mypy"
-    "pydocstyle"
-    "pyflakes"
     "rope"
     "yapf"
+    "pyflakes"
+    "mypy"
+    "pylsp-mypy"
+    "pydocstyle"
+    "pycodestyle"
     "python-lsp-server"
 )
 

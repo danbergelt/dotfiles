@@ -26,6 +26,7 @@ p() {
     tmux select-layout tiled
     tmux select-pane -t 0
 }
+
 # Kill all non-attached tmux sessions
 tks() {
     tmux ls \
