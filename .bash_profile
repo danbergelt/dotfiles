@@ -1,8 +1,8 @@
 # Prompt styling
 export PS1="\w :: "
 
-# Launch a tmux pane
-p() {
+# Tmux pane
+tp() {
     if [ -z $TMUX ]; then
         tmux; return
     fi
@@ -23,18 +23,16 @@ show() {
     find $2 \( $IGNORE \) -prune -o -type $1
 }
 
-# Navigate to a dir or open a file in ~/me via fzf
-to() {
-    case "$1" in
-        d)
-            local -r DIR=`show $1 ~/me | fzf`
-            [[ -n $DIR ]] && cd $DIR ;;
-        f)
-            local -r FIL=`show $1 ~/me | fzf --preview 'head -$LINES {}'`
-            [[ -n $FIL ]] && vim $FIL ;;
-        *)
-            echo "Usage: to [d | f]" ;;
-    esac
+# To directory in ~/me
+td() {
+    local -r dir=`show d ~/me | fzf`
+    [[ -n $dir ]] && cd $dir
+}
+
+# To file in ~/me
+tf() {
+    local -r F=`show f ~/me | fzf --preview 'head -$LINES {}'`
+    [[ -n $F ]] && vim $F
 }
 
 # Find and kill a process
@@ -60,10 +58,6 @@ tag() {
     ctags -R .
     cd $LOC
 }
-
-# Aliases
-alias d='to d'
-alias f='to f'
 
 # Source the .bashrc if it exists
 if [ -f ~/.bashrc ]; then
