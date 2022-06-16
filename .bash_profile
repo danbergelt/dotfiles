@@ -1,29 +1,15 @@
 # Prompt styling
 export PS1="\w :: "
 
-# Launch 1 - 4 tmux panes, format and switch to 0th pane
+# Launch a tmux pane
 p() {
     if [ -z $TMUX ]; then
-        echo "Must be inside tmux"; return
+        tmux; return
     fi
 
-    if [ -z $1 ] || [ $1 -le 0 ] || [ $1 -ge 5 ]; then
-        echo "Usage: panes [1-4]"; return
-    fi
-
-    for _ in `seq 1 $1`; do
-        tmux split-window
-    done
-
-    tmux select-layout tiled
-    tmux select-pane -t 0
-}
-
-# Kill all non-attached tmux sessions
-tks() {
-    tmux ls \
-        | awk 'BEGIN {FS=":"} !/(attached)/ {print $1}' \
-        | xargs -I {} tmux kill-session -t {}
+    tmux split-window \
+        \; select-layout tiled \
+        \; select-pane -t 0
 }
 
 # Show all dirs or files in the provided path
