@@ -1,7 +1,7 @@
 # Prompt styling
 export PS1="\w :: "
 
-# Tmux pane
+# One tmux pane
 tp() {
     if [ -z $TMUX ]; then
         tmux; return
@@ -12,7 +12,7 @@ tp() {
         \; select-pane -t 0
 }
 
-# Show all dirs or files in the provided path
+# Show dirs or files in a path
 show() {
     if [[ $1 != "d" ]] && [[ $1 != "f" ]] || [ -z $2 ]; then
         echo "Usage: show [d | f] path"; return
@@ -25,8 +25,8 @@ show() {
 
 # To directory in ~/me
 td() {
-    local -r dir=`show d ~/me | fzf`
-    [[ -n $dir ]] && cd $dir
+    local -r D=`show d ~/me | fzf`
+    [[ -n $D ]] && cd $D
 }
 
 # To file in ~/me
@@ -35,13 +35,13 @@ tf() {
     [[ -n $F ]] && vim $F
 }
 
-# Find and kill a process
+# Find and kill process
 kp() {
     local -r PID=`ps -ef | fzf | awk '{print $2}'`
     [[ -n $PID ]] && kill -9 $PID
 }
 
-# Typecheck all changed JS files in current repo
+# Typecheck changed JS in repo
 tscjs() {
     local -r TSC_FLAGS="--noEmit --strict --allowJs --checkJs"
 
@@ -51,7 +51,7 @@ tscjs() {
         | xargs tsc $TSC_FLAGS
 }
 
-# Run ctags from the repo root
+# Run ctags in repo root
 tag() {
     local -r LOC=`pwd`
     cd `git rev-parse --show-toplevel`
@@ -59,7 +59,7 @@ tag() {
     cd $LOC
 }
 
-# Source the .bashrc if it exists
+# Source the .bashrc
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
