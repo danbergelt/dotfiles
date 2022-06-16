@@ -1,5 +1,7 @@
 set -e
 
+echo "Syncing..."
+
 # System dependencies
 declare -a deps=(
     "fzf"
