@@ -1,22 +1,14 @@
 # Prompt styling
 export PS1="\w :: "
 
-# Run a command from history
-h() {
-    local -r CMD=`history | fzf --height="50%" | xargs | cut -d ' ' -f 2-`
-    [[ -n $CMD ]] && echo $CMD | bash
-}
-
 # Launch 1 - 4 tmux panes, format and switch to 0th pane
 p() {
     if [ -z $TMUX ]; then
-        echo "Must be inside tmux"
-        return
+        echo "Must be inside tmux"; return
     fi
 
     if [ -z $1 ] || [ $1 -le 0 ] || [ $1 -ge 5 ]; then
-        echo "Usage: panes [1-4]"
-        return
+        echo "Usage: panes [1-4]"; return
     fi
 
     for _ in `seq 1 $1`; do
@@ -37,8 +29,7 @@ tks() {
 # Show all dirs or files in the provided path
 show() {
     if [[ $1 != "d" ]] && [[ $1 != "f" ]] || [ -z $2 ]; then
-        echo "Usage: show [d | f] path"
-        return
+        echo "Usage: show [d | f] path"; return
     fi
 
     local -r IGNORE="-name node_modules -o -name .git"

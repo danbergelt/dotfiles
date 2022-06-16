@@ -30,7 +30,7 @@ nnoremap <leader>a :ArgWrap<CR>
 nnoremap <leader>b <C-o>
 nnoremap <leader>d <C-]>
 
-nnoremap <leader>e :echo @%<CR>
+nnoremap <leader>e :echo expand('%:p')<CR>
 
 nnoremap <leader>ff :GFiles<CR>
 nnoremap <leader>fc :Rg<CR>
