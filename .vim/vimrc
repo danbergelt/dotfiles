@@ -1,7 +1,9 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
+Plug 'dense-analysis/ale'   " linting + formatting
 Plug 'natebosch/vim-lsc'    " language server
+Plug 'tpope/vim-surround'   " pairs helper
 Plug 'agude/vim-eldar'      " color scheme
 Plug 'FooSoft/vim-argwrap'  " function argument wrapping
 Plug 'Raimondi/delimitMate' " auto-closing pairs
@@ -25,28 +27,20 @@ syntax on
 filetype plugin indent on
 
 " Keyboard
-nnoremap <leader>a :ArgWrap<CR>
-
-nnoremap <leader>b <C-o>
-
-nnoremap <leader>e :echo expand('%:p')<CR>
-
-nnoremap <leader>ff :GFiles<CR>
-nnoremap <leader>fc :Rg<CR>
-
+nmap <leader>a :ArgWrap<CR>
+nmap <leader>b <C-o>
+nmap <leader>e :echo expand('%:p')<CR>
+nmap <leader>ff :GFiles<CR>
+nmap <leader>fc :Rg<CR>
 nmap <leader>gb :Git blame<CR>
 nmap <leader>gd :Git diff<CR>
 nmap <leader>gs :G<CR>
 nmap <leader>gw :Gwrite<CR>
-
-nnoremap <leader>p :set paste!<CR>:set paste?<CR>
-
-nnoremap <leader>t :Lex<CR>
-
-nnoremap <leader>w <C-W>w
-
-nnoremap <tab> :tabn<CR>
-nnoremap <S-tab> :tabp<CR>
+nmap <leader>p :set paste!<CR>:set paste?<CR>
+nmap <leader>t :Lex<CR>
+nmap <leader>w <C-W>w
+nmap <tab> :tabn<CR>
+nmap <S-tab> :tabp<CR>
 
 " Explore mode
 let g:netrw_liststyle=3
@@ -75,13 +69,18 @@ set ignorecase
 " Interaction
 set mouse=a
 set autoread
-autocmd BufWritePre * call Trim()
-fun! Trim()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-    execute 'redraw!'
-endfun
+
+" Linting + formatting
+let g:ale_fix_on_save = 1
+let g:ale_linters_explicit = 1
+let g:ale_fixers = {
+    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \ }
+let g:ale_linters = {
+    \ 'javascript': ['eslint']
+    \ }
+
+let g:ale_javascript_eslint_options = '-c ~/.eslintrc.json'
 
 " Language server
 let g:lsc_enable_popup_syntax = v:false

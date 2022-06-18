@@ -24,20 +24,20 @@ tf() {
     [[ -n $F ]] && vim $F
 }
 
+# To repo root
+tr() {
+    cd `git rev-parse --show-toplevel`
+}
+
 # Find and kill process
 kp() {
     local -r PID=`ps -ef | fzf | awk '{print $2}'`
     [[ -n $PID ]] && kill -9 $PID
 }
 
-# Typecheck changed JS in repo
-tscjs() {
-    local -r TSC_FLAGS="--noEmit --strict --allowJs --checkJs"
-
-    git status --porcelain \
-        | sed s/^...// \
-        | grep '.js$' \
-        | xargs tsc $TSC_FLAGS
+# Create a tsconfig.json file in the project root
+ts() {
+    cat ~/tsconfig.json > "`git rev-parse --show-toplevel`/tsconfig.json"
 }
 
 # Source fzf key bindings

@@ -22,6 +22,7 @@ declare -a pydeps=(
 
 # Node dependencies
 declare -a jsdeps=(
+    "eslint"
     "typescript"
     "typescript-language-server"
 )
@@ -67,6 +68,8 @@ url="https://raw.githubusercontent.com/danbergelt/dotfiles/main"
 curl -s "$url/.bash_profile" > ~/.bash_profile
 curl -s "$url/.vim/vimrc" > ~/.vim/vimrc
 curl -s "$url/.config/tmux/tmux.conf" > ~/.config/tmux/tmux.conf
+curl -s "$url/tsconfig.json" > ~/tsconfig.json
+curl -s "$url/.eslintrc.json" > ~/.eslintrc.json
 
 # Bootstrap vim
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
