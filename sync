@@ -76,10 +76,10 @@ mkdir -p ~/.config/tmux
 # Fetch dotfiles
 url="https://raw.githubusercontent.com/danbergelt/dotfiles/main"
 for df in "${files[@]}"; do
-    curl -s "$url/src/$df" > "~/$df"
+    curl -s "$url/src/$df" -o "~/$df"
 done
 
 # Bootstrap vim
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim -N -E -s -u "~/.vim/vimrc" +PlugInstall +qall
+vim -N -E -s -u "~/.vimrc" +PlugInstall +qall
