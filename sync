@@ -28,7 +28,6 @@ declare -a pydeps=(
     "flake8"
     "bandit"
     "pyright"
-    "pyright-langserver"
 )
 
 # Node dependencies
