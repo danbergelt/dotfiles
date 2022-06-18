@@ -59,6 +59,11 @@ tag() {
     cd $LOC
 }
 
+# Source fzf key bindings
+if [ -f /usr/local/opt/fzf/shell/key-bindings.bash ]; then
+    . /usr/local/opt/fzf/shell/key-bindings.bash
+fi
+
 # Source the .bashrc
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc

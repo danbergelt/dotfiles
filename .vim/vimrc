@@ -28,7 +28,6 @@ filetype plugin indent on
 nnoremap <leader>a :ArgWrap<CR>
 
 nnoremap <leader>b <C-o>
-nnoremap <leader>d <C-]>
 
 nnoremap <leader>e :echo expand('%:p')<CR>
 
@@ -48,7 +47,6 @@ nnoremap <leader>t :Lex<CR>
 
 nnoremap <leader>w <C-W>w
 
-nnoremap <C-tab> :tabnew<CR>
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
 
@@ -91,7 +89,8 @@ endfun
 let g:lsc_auto_map = {
     \ 'Completion': 'completefunc',
     \ 'ShowHover': v:true,
-    \ 'Rename': '<leader>qr'
+    \ 'Rename': '<leader>qr',
+    \ 'GoToDefinition': '<leader>qd',
     \ }
 let g:lsc_server_commands = {
     \ 'python': 'pylsp',
