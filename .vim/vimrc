@@ -77,7 +77,8 @@ let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ }
 let g:ale_linters = {
-    \ 'javascript': ['eslint']
+    \ 'javascript': ['eslint'],
+    \ 'python': ['flake8', "bandit"]
     \ }
 
 let g:ale_javascript_eslint_options = '-c ~/.eslintrc.json'
