@@ -69,14 +69,13 @@ if [ $has_deps = false ]; then
     echo "Exiting..."; exit 1
 fi
 
-# Bootstrap dirs
+# Bootstrap workdir
 mkdir -p ~/me
-mkdir -p ~/.config/tmux
 
 # Fetch dotfiles
 url="https://raw.githubusercontent.com/danbergelt/dotfiles/main"
 for df in "${files[@]}"; do
-    curl -s "$url/src/$df" -o "~/$df"
+    curl -s $url/src/$df -o ~/$df
 done
 
 # Bootstrap vim
