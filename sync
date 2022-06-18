@@ -7,9 +7,7 @@ declare -a deps=(
     "fzf"
     "node"
     "git"
-    "docker"
     "tmux"
-    "ctags"
     "vim"
     "tsc"
     "rg"
@@ -18,13 +16,7 @@ declare -a deps=(
 
 # Python dependencies
 declare -a pydeps=(
-    "rope"
-    "pyflakes"
-    "mypy"
-    "pylsp-mypy"
-    "pydocstyle"
-    "pycodestyle"
-    "python-lsp-server"
+    "pyright"
 )
 
 # Node dependencies
