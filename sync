@@ -4,19 +4,20 @@ echo "Syncing..."
 
 # System dependencies
 declare -a deps=(
+    "rg"
     "fzf"
-    "node"
     "git"
-    "tmux"
     "vim"
     "tsc"
-    "rg"
+    "node"
+    "tmux"
     "python3"
 )
 
 # Python dependencies
 declare -a pydeps=(
     "pyright"
+    "pyright-langserver"
 )
 
 # Node dependencies

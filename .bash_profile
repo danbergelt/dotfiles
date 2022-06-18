@@ -1,17 +1,6 @@
 # Prompt styling
 export PS1="\w :: "
 
-# One tmux pane
-tp() {
-    if [ -z $TMUX ]; then
-        tmux; return
-    fi
-
-    tmux split-window \
-        \; select-layout tiled \
-        \; select-pane -t 0
-}
-
 # Show dirs or files in a path
 show() {
     if [[ $1 != "d" ]] && [[ $1 != "f" ]] || [ -z $2 ]; then
@@ -49,14 +38,6 @@ tscjs() {
         | sed s/^...// \
         | grep '.js$' \
         | xargs tsc $TSC_FLAGS
-}
-
-# Run ctags in repo root
-tag() {
-    local -r LOC=`pwd`
-    cd `git rev-parse --show-toplevel`
-    ctags -R .
-    cd $LOC
 }
 
 # Source fzf key bindings
