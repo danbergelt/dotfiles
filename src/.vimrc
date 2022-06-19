@@ -73,6 +73,7 @@ set autoread
 " Linting + formatting
 let g:ale_fix_on_save = 1
 let g:ale_linters_explicit = 1
+let g:ale_javascript_eslint_options = '-c ~/.eslintrc.json'
 let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ }
@@ -81,7 +82,6 @@ let g:ale_linters = {
     \ 'python': ['flake8', "bandit"]
     \ }
 
-let g:ale_javascript_eslint_options = '-c ~/.eslintrc.json'
 
 " Language server
 let g:lsc_enable_popup_syntax = v:false
