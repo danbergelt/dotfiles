@@ -7,7 +7,7 @@ declare -a files=(
     ".vimrc"
     ".tmux.conf"
     ".bash_profile"
-    "tsconfig.json"
+    "jsconfig.json"
     ".eslintrc.json"
 )
 
@@ -48,6 +48,7 @@ missing() {
 for dep in "${deps[@]}"; do
     if [ -z `which $dep` ]; then
         missing $dep "system"
+
     elif [ $dep = "python3" ]; then
         installed=`python3 -m pip freeze`
         for pydep in "${pydeps[@]}"; do
@@ -55,6 +56,7 @@ for dep in "${deps[@]}"; do
                 missing $pydep "python3"
             fi
         done
+
     elif [ $dep = "node" ]; then
         installed=`npm list -g --depth=0 --parseable`
         for jsdep in "${jsdeps[@]}"; do

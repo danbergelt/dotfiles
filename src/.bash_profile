@@ -35,9 +35,9 @@ kp() {
     [[ -n $PID ]] && kill -9 $PID
 }
 
-# Create a tsconfig.json file in the project root
-ts() {
-    cat ~/tsconfig.json > "`git rev-parse --show-toplevel`/tsconfig.json"
+# Create a jsconfig.json file in the project root
+jsc() {
+    cat ~/jsconfig.json > "`git rev-parse --show-toplevel`/jsconfig.json"
 }
 
 # Source fzf key bindings
