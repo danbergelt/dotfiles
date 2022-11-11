@@ -3,8 +3,13 @@
         "checkJs": true,
         "moduleResolution": "node",
         "target": "esnext",
+        "strictNullChecks": true,
         "paths": {
-            "*": ["src/*", "test/*", "*"]
+            "*": [
+                "src/*",
+                "test/*",
+                "*"
+            ]
         }
     }
 }
