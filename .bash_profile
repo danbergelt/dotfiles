@@ -24,9 +24,6 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Use neovim
 alias vim="nvim"
 
-# Construct PATH
-export PATH=$PATH:$HOME/.local/bin:~/bin/lua-lsp/bin
-
 # Prompt styling
 __parse_git_branch__() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ {\1}/'
