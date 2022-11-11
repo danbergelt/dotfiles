@@ -1,0 +1,4 @@
+utils.vmap(
+  '<leader>y',
+  'y:new ' .. buf ..'<CR>VGp:x<CR> | :!cat ' .. buf .. ' | clip.exe <CR><CR>'
+)

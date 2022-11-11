@@ -1,0 +1,7 @@
+fun! GlobalReplace()
+    let replacement = input("Replace " . @r . " with: ")
+    if replacement != ""
+        exe "%s/" . @r . "/" . replacement . "/g"
+    endif
+endfun
+vnoremap <leader>r :call GlobalReplace()<CR>
