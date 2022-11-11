@@ -31,5 +31,5 @@ end)
 -- Copy to system clipboard in WSL
 utils.vmap(
   '<leader>y',
-  'y:new ~/.config/nvim/.buffer<CR>VGp:x<CR> | :!cat ~/.config/nvim/.buffer | clip.exe <CR><CR>'
+  'y:new ~/.vimbuffer<CR>VGp:x<CR> | :!cat ~/.vimbuffer | clip.exe <CR><CR>'
 )

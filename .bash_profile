@@ -18,6 +18,9 @@ scratch() {
     markdown ~/scratch.md
 }
 
+# Dotfiles alias
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 # Use neovim
 alias vim="nvim"
 

@@ -42,7 +42,5 @@ vim.o.autoread = true
 
 -- Indentation overrides
 vim.cmd [[
-  autocmd filetype ocaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd filetype scheme setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd filetype lua setlocal tabstop=2 softtabstop=2 shiftwidth=2
 ]]
