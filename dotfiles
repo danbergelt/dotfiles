@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Show usage info
+usage() {
+    cat <<-EOF
+
+Usage: dotfiles [COMMAND]
+
+Commands:
+
+    dotfiles        Display help info
+    dotfiles audit  Ensure all dependencies are installed
+
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+    usage; exit
+fi
+
+case "$1" in
+    *) usage ;;
+esac
