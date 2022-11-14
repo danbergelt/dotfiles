@@ -2,7 +2,16 @@
 
 set -euo pipefail
 
+#
+# Upstream location of dotfiles repo
+#
+
+readonly GITHUB_RAW="https://raw.githubusercontent.com/danbergelt/dotfiles"
+
+#
 # Show usage info
+#
+
 usage() {
     cat <<-EOF
 
@@ -10,10 +19,123 @@ Usage: dotfiles [COMMAND]
 
 Commands:
 
-    dotfiles        Display help info
-    dotfiles audit  Ensure all dependencies are installed
+    dotfiles        Display usage info
+    dotfiles init   Initialize the local environment
+    dotfiles deps   Log out dependencies
+    dotfiles audit  Ensure dependencies are installed
+
+Environments:
+
+    wsl2
 
 EOF
+}
+
+#
+# Print a red string
+#
+
+red() {
+    echo -e "\033[0;31m$1\033[0m"
+}
+
+#
+# Print a green string
+#
+
+green() {
+    echo -e "\033[0;32m$1\033[0m"
+}
+
+#
+# Determine if an executable is in the PATH
+#
+
+is_callable() {
+    command -v "$1"
+}
+
+#
+# Determine if running in wsl2
+#
+
+running_wsl2() {
+    grep -i wsl2 /proc/version
+}
+
+#
+# Get dependency manifest from upstream
+#
+
+deps() {
+    curl -s "$GITHUB_RAW/.dotfiles/control"
+}
+
+#
+# Determine if current directory is a git repo
+#
+
+is_git_repo() {
+    git rev-parse --is-inside-work-tree 2> /dev/null
+}
+
+get_dotfiles() {
+    local src="$HOME/.dotfiles"
+    local ups="https://github.com/danbergelt/dotfiles"
+
+    mkdir -p "$src"
+    cd "$src"
+
+    if [[ ! $(is_git_repo) ]]; then
+        git init -q
+        git remote add origin "$ups"
+    fi
+
+    git config core.sparseCheckout true
+    git config init.defaultBranch "main"
+
+    echo ".dotfiles/root/" >> .git/info/sparse-checkout
+
+    git pull -q origin main
+}
+
+#
+# Initialize local environment
+#
+
+init() {
+    if [[ $(running_wsl2) ]]; then
+        get_dotfiles
+    else
+        red "Unsupported environment"; exit 1
+    fi
+
+    green "All done!"
+}
+
+#
+# Audit currently installed dependencies
+#
+
+audit() {
+    local missing=0
+
+    # Fetch dependencies and log any missing
+    while read -r dep; do
+        if [[ ! $(is_callable "$dep") ]]; then
+            if (( ! missing )); then
+                echo; missing=1
+            fi
+
+            echo -e "$(red "✕") $dep"
+        fi
+    done <<< "$(deps)"
+
+    if (( missing )); then
+        red "\nMissing dependencies\n"; exit 1
+    fi
+
+    green "All dependencies satisfied"
 }
 
 if [[ $# -eq 0 ]]; then
@@ -21,5 +143,8 @@ if [[ $# -eq 0 ]]; then
 fi
 
 case "$1" in
+    audit) audit ;;
+    deps) deps ;;
+    init) get_dotfiles ;;
     *) usage ;;
 esac
