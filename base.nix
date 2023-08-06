@@ -2,11 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    # general executables
+    # general
     tmux
     ripgrep
     fzf
-        
+
     # python
     python310
     python310Packages.pip
@@ -26,7 +26,6 @@
 
   home.file = {
     ".hushlogin".text = "";
-
     ".tmux.conf".source = home/.tmux.conf;
     ".bash_profile".source = home/.bash_profile;
   };
@@ -38,10 +37,10 @@
     settings = {
       theme = "dark_plus";
       editor = {
+        auto-format = false;
+        color-modes = true;
+        bufferline = "multiple";
         line-number = "relative";
-        lsp = {
-          display-messages = true;
-        };
       };
     };
   };
