@@ -1,13 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # NOTE: these might need to be changed on new machines
-  home.username = "dan";
-  home.homeDirectory = "/home/dan";
-
-  # NOTE: do not change!
-  home.stateVersion = "23.05";
-
   home.packages = with pkgs; [
     # general executables
     tmux
@@ -34,8 +27,8 @@
   home.file = {
     ".hushlogin".text = "";
 
-    ".tmux.conf".source = cfg/.tmux.conf;
-    ".bash_profile".source = cfg/.bash_profile;
+    ".tmux.conf".source = home/.tmux.conf;
+    ".bash_profile".source = home/.bash_profile;
   };
 
   programs.home-manager.enable = true;
