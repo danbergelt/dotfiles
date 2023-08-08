@@ -8,16 +8,15 @@
     fzf
 
     # python
-    python310
-    python310Packages.pip
-    python310Packages.mypy
-    python310Packages.python-lsp-server
+    python3
+    python3Packages.pip
+    python3Packages.mypy
+    python3Packages.python-lsp-server
 
     # js
     nodejs
     nodePackages.typescript
     nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
 
     # go
     go
