@@ -12,8 +12,8 @@ export EDITOR="hx"
 export GIT_EDITOR="hx"
 export COLORTERM="truecolor"
 
-BASHRC="~/.bashrc"
-NIXPRF="~/.nix-profile/etc/profile.d/nix.sh"
+BASHRC=~/.bashrc
+NIXPRF=~/.nix-profile/etc/profile.d/nix.sh
 
 [[ -s $BASHRC ]] && . $BASHRC
 [[ -s $NIXPRF ]] && . $NIXPRF
