@@ -1,8 +1,3 @@
-# Rebase N commits from the HEAD
-rebase() {
-  git rebase -i HEAD~"${1:-2}";
-}
-
 alias hm="home-manager"
 
 # Prompt styling
@@ -13,9 +8,9 @@ export GIT_EDITOR="hx"
 export COLORTERM="truecolor"
 
 BASHRC=~/.bashrc
-NIXPRF=~/.nix-profile/etc/profile.d/nix.sh
-
 [[ -s $BASHRC ]] && . $BASHRC
+
+NIXPRF=~/.nix-profile/etc/profile.d/nix.sh
 [[ -s $NIXPRF ]] && . $NIXPRF
 
 # fzf bash bindings

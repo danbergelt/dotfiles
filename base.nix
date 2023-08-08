@@ -10,7 +10,6 @@
     # python
     python3
     python3Packages.pip
-    python3Packages.mypy
     python3Packages.python-lsp-server
 
     # js
