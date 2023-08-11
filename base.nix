@@ -28,12 +28,6 @@
     ".bash_profile".source = home/bash_profile;
   };
 
-  home.sessionVariables = {
-    EDITOR = "hx";
-    GIT_EDITOR = "hx";
-    COLORTERM = "truecolor";
-  };
-
   programs.helix = {
     enable = true;
     settings = {
