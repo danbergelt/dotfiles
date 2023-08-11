@@ -9,7 +9,6 @@ BASHRC=~/.bashrc
 NIXPRF=~/.nix-profile/etc/profile.d/nix.sh
 [[ -s $NIXPRF ]] && . $NIXPRF
 
-# fzf bash bindings
 if command -v fzf-share > /dev/null; then
   . "$(fzf-share)/key-bindings.bash"
   . "$(fzf-share)/completion.bash"

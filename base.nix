@@ -24,8 +24,8 @@
 
   home.file = {
     ".hushlogin".text = "";
-    ".tmux.conf".source = home/.tmux.conf;
-    ".bash_profile".source = home/.bash_profile;
+    ".tmux.conf".source = home/tmux.conf;
+    ".bash_profile".source = home/bash_profile;
   };
 
   home.sessionVariables = {
