@@ -28,8 +28,6 @@
     ".bash_profile".source = home/.bash_profile;
   };
 
-  programs.home-manager.enable = true;
-
   programs.helix = {
     enable = true;
     settings = {
