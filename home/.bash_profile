@@ -3,10 +3,6 @@ alias hm="home-manager"
 # Prompt styling
 export PS1="\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ {\1}/')\[\033[00m\] :: "
 
-export EDITOR="hx"
-export GIT_EDITOR="hx"
-export COLORTERM="truecolor"
-
 BASHRC=~/.bashrc
 [[ -s $BASHRC ]] && . $BASHRC
 
