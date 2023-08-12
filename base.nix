@@ -11,7 +11,6 @@ in
 {
   home.packages = with pkgs; [
     # general
-    tmux
     ripgrep
     fzf
 
