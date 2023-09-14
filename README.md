@@ -27,6 +27,17 @@ home-manager init
 git clone https://github.com/danbergelt/dotfiles.git ~/dotfiles
 ```
 
+Inside the repo, you'll probably want to set the remote to include a Github access token:
+
+```sh
+git remote remove origin
+git remote add origin "https://<TOKEN>@github.com/danbergelt/dotfiles.git"
+
+# Recommended for consistency when pushing commits
+git config user.name "danbergelt"
+git config user.email "dan@danbergelt.com"
+```
+
 5. Open up the config generated in step 3:
 
 ```sh

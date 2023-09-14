@@ -13,6 +13,7 @@ in
     # general
     ripgrep
     fzf
+    jq
 
     # python
     python3
