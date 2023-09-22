@@ -27,7 +27,7 @@ home-manager init
 git clone https://github.com/danbergelt/dotfiles.git ~/dotfiles
 ```
 
-Inside the repo, you'll probably want to set the remote to include a Github access token:
+5. Set the remote to include a Github access token:
 
 ```sh
 git remote remove origin
@@ -38,13 +38,13 @@ git config user.name "danbergelt"
 git config user.email "dan@danbergelt.com"
 ```
 
-5. Open up the config generated in step 3:
+6. Open up the config generated in step 3:
 
 ```sh
 home-manager edit
 ```
 
-6. Import the cloned `base.nix`:
+7. Import the cloned `base.nix`:
 
 ```nix
 imports = [
@@ -52,7 +52,7 @@ imports = [
 ];
 ```
 
-7. Install:
+8. Install:
 
 ```sh
 home-manager switch
