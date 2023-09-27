@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
-# https://lazamar.co.uk/nix-versions/ to generate archives (useful for pinning old package versions)
+# https://lazamar.co.uk/nix-versions/ to generate archives of old nixpkgs versions
 let
-  # 03/11/2023
-  archive = import (builtins.fetchTarball {
+  # 03/11/2023 - pinning due to https://github.com/helix-editor/helix/issues/7905
+  helix_archive = import (builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
   }) {};
 in
@@ -91,8 +91,7 @@ in
   programs.helix = {
     enable = true;
 
-    # NOTE: pinning due to https://github.com/helix-editor/helix/issues/7905
-    package = archive.helix;
+    package = helix_archive.helix;
     
     settings = {
       theme = "dark_plus";
