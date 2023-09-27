@@ -31,10 +31,6 @@ in
     gopls
   ];
 
-  home.file = {
-    ".hushlogin".text = "";
-  };
-
   programs.bash = {
     enable = true;
 
@@ -49,8 +45,7 @@ in
     };
 
     initExtra = ''
-      NIXPRF=~/.nix-profile/etc/profile.d/nix.sh
-      [[ -s $NIXPRF ]] && . $NIXPRF
+      source ~/.nix-profile/etc/profile.d/nix.sh 2> /dev/null
 
       PS1="\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ {\1}/')\[\033[00m\] :: "
 
@@ -59,9 +54,7 @@ in
         . "$(fzf-share)/completion.bash"
       fi
 
-      # Local overrides
-      BSHLCL=~/.bash_local
-      [[ -s $BSHLCL ]] && . $BSHLCL
+      source ~/.local_overrides 2> /dev/null
     '';
    
   };
