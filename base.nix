@@ -64,7 +64,6 @@ in
 
       source ~/.local_overrides 2> /dev/null
     '';
-   
   };
 
   programs.tmux = {
