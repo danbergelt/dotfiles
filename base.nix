@@ -25,15 +25,15 @@ in
     fzf
     jq
 
-    # python
-    python3
-    python3Packages.pip
-    python3Packages.python-lsp-server
-
     # js
     nodejs
     nodePackages.typescript
     nodePackages.typescript-language-server
+
+    # python
+    python3
+    python3Packages.pip
+    nodePackages.pyright
 
     # go
     go
@@ -109,6 +109,19 @@ in
         bufferline = "multiple";
         line-number = "relative";
       };
+    };
+
+    languages = {
+      language = [
+        {
+          name = "python";
+          language-server = {
+            command = "pyright-langserver";
+            args = ["--stdio"];
+          };
+          config = {}; # REQUIRED
+        }
+      ];
     };
   };
 }
