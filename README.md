@@ -21,19 +21,20 @@ nix-shell '<home-manager>' -A install
 home-manager init
 ```
 
-4. Clone the dotfiles:
+4. Clone the dotfiles to your home directory:
 
 ```sh
 git clone https://github.com/danbergelt/dotfiles.git ~/dotfiles
 ```
 
-5. Set the remote to include a Github access token:
+5. Configure your cloned dotfiles repo:
 
 ```sh
+# Set an access token
 git remote remove origin
 git remote add origin "https://<TOKEN>@github.com/danbergelt/dotfiles.git"
 
-# Recommended for consistency when pushing commits
+# Set the user
 git config user.name "danbergelt"
 git config user.email "dan@danbergelt.com"
 ```
@@ -47,9 +48,13 @@ home-manager edit
 7. Import the cloned `base.nix`:
 
 ```nix
-imports = [
-  <your_home_dir>/dotfiles/base.nix
-];
+{ config, pkgs, ... }:
+
+{
+  # ...other generated fields
+
+  imports = [~/dotfiles/base.nix];
+}
 ```
 
 8. Install:
