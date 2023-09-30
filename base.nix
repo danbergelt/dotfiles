@@ -1,11 +1,19 @@
 { config, pkgs, ... }:
 
-# https://lazamar.co.uk/nix-versions/ to generate archives of old nixpkgs versions
 let
-  # 03/11/2023 - pinning due to https://github.com/helix-editor/helix/issues/7905
-  helixArchive = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
-  }) {};
+  clipboard =
+    if builtins.pathExists "/mnt/c" then
+      "clip.exe" # WSL
+    else
+      abort "Could not derive system clipboard";
+
+  # https://lazamar.co.uk/nix-versions/ to generate archives of old nixpkgs versions
+  archives = {
+    # 03/11/2023 - pinning due to https://github.com/helix-editor/helix/issues/7905
+    helix = (import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
+    }) {}).helix;
+  };
 in
 
 {
@@ -83,7 +91,7 @@ in
       bind R respawn-pane -k -c '#{pane_current_path}'
       
       bind -T copy-mode-vi v send -X begin-selection
-      bind -T copy-mode-vi y send -X copy-pipe-and-cancel 'clip.exe'
+      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${clipboard}'
       bind -T copy-mode-vi Enter send -X cancel
     '';
   };
@@ -91,7 +99,7 @@ in
   programs.helix = {
     enable = true;
 
-    package = helixArchive.helix;
+    package = archives.helix;
     
     settings = {
       theme = "dark_plus";
