@@ -6,15 +6,6 @@ let
       "clip.exe" # WSL
     else
       abort "Could not derive system clipboard";
-
-  # https://lazamar.co.uk/nix-versions/ to generate archives of old nixpkgs versions
-  archives = {
-    # 03/11/2023 - pinning due to https://github.com/helix-editor/helix/issues/7905
-    # When https://github.com/NixOS/nixpkgs/pull/249414 is merged, should be able to just use stable
-    helix = (import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
-    }) {}).helix;
-  };
 in
 
 {
@@ -95,8 +86,6 @@ in
   programs.helix = {
     enable = true;
 
-    package = archives.helix;
-    
     settings = {
       theme = "dark_plus";
       editor = {
