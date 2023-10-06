@@ -44,8 +44,13 @@ in
     };
 
     initExtra = ''
-      PS1="\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ {\1}/')\[\033[00m\] :: "
       source ~/.nix-profile/etc/profile.d/nix.sh 2> /dev/null
+
+      function fmt_git_branch {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ {\1}/'
+      }
+      PS1="\w\[\033[36m\]\$(fmt_git_branch)\[\033[00m\] :: "
+
       source ~/.local_overrides 2> /dev/null
     '';
   };
