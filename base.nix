@@ -2,7 +2,7 @@
 
 let
   clipboard =
-    if builtins.pathExists /mnt/c then
+    if builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop then
       "clip.exe" # WSL
     else
       abort "Could not derive system clipboard";
