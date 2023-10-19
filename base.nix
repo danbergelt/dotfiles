@@ -47,7 +47,7 @@ in
       source ~/.nix-profile/etc/profile.d/nix.sh 2> /dev/null
 
       _git_branch() {
-        git symbolic-ref --short -q HEAD 2> /dev/null | xargs -I % echo " {%}"
+        git branch --show-current 2> /dev/null | xargs -I % echo " {%}"
       }
       PS1="\w\[\033[36m\]\$(_git_branch)\[\033[00m\] :: "
 
