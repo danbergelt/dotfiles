@@ -3,7 +3,7 @@
 let
   clipboard =
     if builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop then
-      "clip.exe" # WSL
+      "clip.exe"
     else
       abort "Could not derive system clipboard";
 in
@@ -51,7 +51,7 @@ in
       }
       PS1="\w\[\033[36m\]\$(_git_branch)\[\033[00m\] :: "
 
-      source ~/.local_overrides 2> /dev/null
+      source ~/.overrides 2> /dev/null
     '';
   };
 
