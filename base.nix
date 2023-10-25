@@ -14,6 +14,7 @@ in
     shellcheck
     ripgrep
     jq
+    git
 
     # js
     nodejs
@@ -44,19 +45,16 @@ in
     };
 
     initExtra = ''
-      source ~/.nix-profile/etc/profile.d/nix.sh 2> /dev/null
-
-      _git_branch() {
-        git branch --show-current 2> /dev/null | xargs -I % echo " {%}"
-      }
-      PS1="\w\[\e[01;36m\]\$(_git_branch)\[\e[00m\] :: "
-
+      source ~/.nix-profile/etc/profile.d/nix.sh
+      source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
+      PS1="\w\[\e[01;36m\]\$(__git_ps1)\[\e[00m\] :: "
       source ~/.overrides 2> /dev/null
     '';
   };
 
   programs.fzf = {
     enable = true;
+    enableBashIntegration = true;
   };
 
   programs.tmux = {
