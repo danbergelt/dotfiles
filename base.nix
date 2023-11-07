@@ -67,7 +67,7 @@ in
     extraConfig = ''
       set -g mouse on
       set -g pane-active-border-style fg=green
-      set -g status-right '%I:%M %p - %A, %b %d, %Y'
+      set -g status-right '%I:%M %p - %A, %b %d %Y'
       
       bind c new-window -c '#{pane_current_path}'
       bind x split-window -h -c '#{pane_current_path}'
