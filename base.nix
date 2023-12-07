@@ -100,14 +100,22 @@ in
     };
 
     languages = {
+      language-server = {
+        pyright = {
+          command = "pyright-langserver";
+          args = ["--stdio"];
+          config = {}; # REQUIRED
+        };
+      };
+
       language = [
         {
           name = "python";
-          language-server = {
-            command = "pyright-langserver";
-            args = ["--stdio"];
-          };
-          config = {}; # REQUIRED
+          language-servers = [
+            {
+              name = "pyright";
+            }
+          ];
         }
       ];
     };
