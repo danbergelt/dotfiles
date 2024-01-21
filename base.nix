@@ -1,9 +1,15 @@
 { pkgs, ... }:
 
 let
+  isWSL = builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop;
+
   clipboard =
-    if builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop then
+    if isWSL then
       "clip.exe"
+    else if pkgs.stdenv.isDarwin then
+      "pbcopy"
+    else if pkgs.stdenv.isLinux then
+      "xclip -selection clipboard"
     else
       abort "Could not derive system clipboard";
 in
