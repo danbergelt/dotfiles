@@ -16,6 +16,6 @@ $ setup.sh -h
     --github-token=[token]      GitHub API token used when pushing config changes upstream
     --git-username=[username]   Git username used when pushing config changes upstream
     --git-email=[email]         Git email used when pushing config changes upstream
-    --repo-location=[location]  Local repo location [default: $DEFAULT_REPO_LOCATION]
+    --repo-location=[location]  Local repo location [default: ~/<username>/dotfiles]
  
 ```
