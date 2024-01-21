@@ -7,8 +7,6 @@ PROFILE_PATH="$HOME/.config/home-manager/home.nix"
 UPSTREAM="github.com/danbergelt/dotfiles.git"
 REPO_LOCATION="$HOME/dotfiles"
 
-# Default values
-
 # Inputs
 FORCE=
 GITHUB_TOKEN=
