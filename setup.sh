@@ -5,16 +5,15 @@ set -euo pipefail
 # Constants
 PROFILE_PATH="$HOME/.config/home-manager/home.nix"
 UPSTREAM="github.com/danbergelt/dotfiles.git"
+REPO_LOCATION="$HOME/dotfiles"
 
 # Default values
-DEFAULT_REPO_LOCATION="$HOME/dotfiles"
 
 # Inputs
 FORCE=
 GITHUB_TOKEN=
 GIT_USERNAME=
 GIT_EMAIL=
-REPO_LOCATION="$DEFAULT_REPO_LOCATION"
 
 usage() {
   cat <<-EOF
@@ -28,7 +27,6 @@ usage() {
     --github-token=[token]      GitHub API token used when pushing config changes upstream
     --git-username=[username]   Git username used when pushing config changes upstream
     --git-email=[email]         Git email used when pushing config changes upstream
-    --repo-location=[location]  Local repo location [default: $DEFAULT_REPO_LOCATION]
  
 EOF
 }
@@ -107,7 +105,6 @@ while test $# -ne 0; do
     --github-token) shift; GITHUB_TOKEN="$1" ;;
     --git-username) shift; GIT_USERNAME="$1" ;;
     --git-email) shift; GIT_EMAIL="$1" ;;
-    --repo-location) shift; REPO_LOCATION="$1" ;;
   esac
   shift
 done
