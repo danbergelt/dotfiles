@@ -13,8 +13,8 @@ $ setup.sh -h
 
     -h, --help                  Display usage information
     -f, --force                 Skip user confirmations
-    --github-token=[token]      GitHub API token used when pushing config changes upstream
-    --git-username=[username]   Git username used when pushing config changes upstream
-    --git-email=[email]         Git email used when pushing config changes upstream
+    --github-token [token]      GitHub API token used when pushing config changes upstream
+    --git-username [username]   Git username used when pushing config changes upstream
+    --git-email [email]         Git email used when pushing config changes upstream
  
 ```

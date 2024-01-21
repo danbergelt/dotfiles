@@ -22,9 +22,9 @@ usage() {
 
     -h, --help                  Display usage information
     -f, --force                 Skip user confirmations
-    --github-token=[token]      GitHub API token used when pushing config changes upstream
-    --git-username=[username]   Git username used when pushing config changes upstream
-    --git-email=[email]         Git email used when pushing config changes upstream
+    --github-token [token]      GitHub API token used when pushing config changes upstream
+    --git-username [username]   Git username used when pushing config changes upstream
+    --git-email [email]         Git email used when pushing config changes upstream
  
 EOF
 }
@@ -107,8 +107,8 @@ while test $# -ne 0; do
   shift
 done
 
-assert_exists "git"
-assert_exists "curl"
+assert_exists git
+assert_exists curl
 get_user_confirmation
 clean
 install_nix  
@@ -116,4 +116,5 @@ install_home_manager
 clone_dotfiles_repo
 expose_dotfiles_config
 home-manager switch
+
 echo "All done, please reload your shell"
