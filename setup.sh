@@ -90,7 +90,7 @@ clone_dotfiles_repo() (
 )
 
 expose_dotfiles_config() {
-  local import anchor
+  local target import
 
   target="enable = true;"
   import="imports = [$REPO_LOCATION/base.nix];"
