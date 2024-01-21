@@ -44,7 +44,7 @@ get_user_confirmation() {
     return
   fi
 
-  read -p "Setup dotfiles from scratch? (y/n) " choice
+  read -p "Bootstrap dotfiles? (y/n) " choice
 
   case "$choice" in
     y|Y) return ;;
@@ -116,4 +116,4 @@ install_home_manager
 clone_dotfiles_repo
 expose_dotfiles_config
 home-manager switch
-echo "Setup complete. Please reload your shell"
+echo "All done, please reload your shell"
