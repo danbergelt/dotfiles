@@ -12,6 +12,7 @@ in
   home.packages = with pkgs; [
     # general
     shellcheck
+    sqlfluff
     ripgrep
     jq
     git
@@ -41,7 +42,7 @@ in
     };
 
     shellAliases = {
-      hm = "home-manager";
+      hms = "home-manager switch";
     };
 
     initExtra = ''

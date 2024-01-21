@@ -1,64 +1,21 @@
 # dotfiles
 
-1. Install nix:
+Repo containing my dotfiles
 
-```sh
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
-. $HOME/.nix-profile/etc/profile.d/nix.sh
-```
+# Setup
 
-2. Install Home Manager:
+```bash
+$ setup.sh -h
 
-```sh
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
-```
+  Usage: setup.sh [options]
 
-3. Initialize a local config:
+  Options:
 
-```sh
-home-manager init
-```
-
-4. Clone the dotfiles to your home directory:
-
-```sh
-git clone https://github.com/danbergelt/dotfiles.git ~/dotfiles
-```
-
-5. Configure your cloned dotfiles repo:
-
-```sh
-# Set an access token
-git remote remove origin
-git remote add origin "https://<TOKEN>@github.com/danbergelt/dotfiles.git"
-
-# Set the user
-git config user.name "danbergelt"
-git config user.email "dan@danbergelt.com"
-```
-
-6. Open up the config generated in step 3:
-
-```sh
-home-manager edit
-```
-
-7. Import the cloned `base.nix`:
-
-```nix
-{ config, pkgs, ... }:
-
-{
-  # ...other generated fields
-
-  imports = [~/dotfiles/base.nix];
-}
-```
-
-8. Install:
-
-```sh
-home-manager switch
+    -h, --help                  Display usage information
+    -f, --force                 Skip user confirmations
+    --github-token=[token]      GitHub API token used when pushing config changes upstream
+    --git-username=[username]   Git username used when pushing config changes upstream
+    --git-email=[email]         Git email used when pushing config changes upstream
+    --repo-location=[location]  Local repo location [default: $DEFAULT_REPO_LOCATION]
+ 
 ```
