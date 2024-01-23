@@ -23,6 +23,9 @@ in
     jq
     git
 
+    # nix
+    nil
+
     # js
     nodejs
     nodePackages.typescript
@@ -103,6 +106,7 @@ in
         color-modes = true;
         bufferline = "multiple";
         line-number = "relative";
+        rulers = [100];
       };
     };
 
