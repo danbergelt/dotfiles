@@ -30,7 +30,7 @@ EOF
 }
 
 abort() {
-  >&2 echo "[ERROR]: $1" && exit 1
+  >&2 echo "[ERROR] $1" && exit 1
 }
 
 assert_exists() {
@@ -103,6 +103,7 @@ while test $# -ne 0; do
     --github-token) shift; GITHUB_TOKEN="$1" ;;
     --git-username) shift; GIT_USERNAME="$1" ;;
     --git-email) shift; GIT_EMAIL="$1" ;;
+    *) usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
 done
