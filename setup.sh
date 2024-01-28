@@ -91,7 +91,7 @@ expose_dotfiles_config() {
   local target import
 
   target="enable = true;"
-  import="imports = [$REPO_LOCATION/base.nix];"
+  import="imports = [$REPO_LOCATION];"
 
   sed -i "s:$target:$target\n\n  $import:" "$PROFILE_PATH"
 }

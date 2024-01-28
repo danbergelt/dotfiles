@@ -11,7 +11,7 @@ let
     else if pkgs.stdenv.isLinux then
       "xclip -selection clipboard"
     else
-      abort "Could not derive system clipboard";
+      abort "Unknown clipboard";
 in
 
 {
