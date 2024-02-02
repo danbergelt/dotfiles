@@ -64,11 +64,8 @@ assert_exists git
 assert_exists curl
 
 if test -z "$FORCE"; then
-  ask "Setup dotfiles? (y/n) "
+  ask "Bootstrap dotfiles? (y/n) "
 fi
-
-# TODO: remove
-rm -f "$PROFILE_PATH"
 
 # Install nix and home-manager
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
@@ -100,12 +97,14 @@ fi
 if test -n "$GIT_EMAIL"; then
   git config user.email "$GIT_EMAIL"
 fi
+
 popd
 
-# TODO: do not write if already importing in the file
-target="enable = true;"
+# Import the dotfiles config, if not doing so already
 import="imports = [$REPO_LOCATION];"
-sed -i "s:$target:$target\n\n  $import:" "$PROFILE_PATH"
+if ! grep -Fq "$import" "$PROFILE_PATH"; then
+  sed -i "\$s:}:  $import\n}:" "$PROFILE_PATH"
+fi
 
 home-manager switch
 
