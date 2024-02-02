@@ -69,7 +69,6 @@ fi
 
 # TODO: remove
 rm -f "$PROFILE_PATH"
-rm -rf "$REPO_LOCATION"
 
 # Install nix and home-manager
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
@@ -78,10 +77,17 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-# TODO: do not clone if already exists, just fetch
-git clone "https://$UPSTREAM" "$REPO_LOCATION"
+# Hydrate the repo to match the upstream
+if test -d "$REPO_LOCATION"; then
+  pushd "$REPO_LOCATION"
+  git fetch origin main
+  git reset --hard origin/main
+else
+  git clone "https://$UPSTREAM" "$REPO_LOCATION"
+  pushd "$REPO_LOCATION"
+fi
 
-pushd "$REPO_LOCATION"
+# Configure the repo
 if test -n "$GITHUB_TOKEN"; then
   git remote remove origin
   git remote add origin "https://$GITHUB_TOKEN@$UPSTREAM"
@@ -96,7 +102,7 @@ if test -n "$GIT_EMAIL"; then
 fi
 popd
 
-# TODO: do not write if already exists
+# TODO: do not write if already importing in the file
 target="enable = true;"
 import="imports = [$REPO_LOCATION];"
 sed -i "s:$target:$target\n\n  $import:" "$PROFILE_PATH"
