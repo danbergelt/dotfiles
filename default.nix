@@ -22,6 +22,8 @@ in
     ripgrep
     jq
     git
+    curl
+    glow
 
     # nix
     nil
