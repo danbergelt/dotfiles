@@ -4,11 +4,13 @@ set -euo pipefail
 
 # Constants
 PROFILE_PATH="$HOME/.config/home-manager/home.nix"
-UPSTREAM="github.com/danbergelt/dotfiles.git"
+ORIGIN="github.com/danbergelt/dotfiles.git"
 REPO_LOCATION="$HOME/dotfiles"
+DEFAULT_NIX_IMPORT="imports = [$REPO_LOCATION];"
 
 # Inputs
 FORCE=
+NO_SYNC=
 GITHUB_TOKEN=
 GIT_USERNAME=
 GIT_EMAIL=
@@ -22,9 +24,10 @@ usage() {
 
     -h, --help                  Display usage information
     -f, --force                 Skip user confirmations
-    --github-token [token]      GitHub API token used when pushing config changes upstream
-    --git-username [username]   Git username used when pushing config changes upstream
-    --git-email [email]         Git email used when pushing config changes upstream
+    --no-sync                   If already cloned, do not sync with the origin
+    --github-token [token]      GitHub API token used when pushing changes
+    --git-username [username]   Git username used when pushing changes
+    --git-email [email]         Git email used when pushing changes
  
 EOF
 }
@@ -52,6 +55,7 @@ while test $# -ne 0; do
   case "$1" in
     -h|--help) usage && exit ;;
     -f|--force) FORCE="true" ;; 
+    --no-sync) NO_SYNC="true" ;;
     --github-token) shift; GITHUB_TOKEN="$1" ;;
     --git-username) shift; GIT_USERNAME="$1" ;;
     --git-email) shift; GIT_EMAIL="$1" ;;
@@ -74,20 +78,22 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-# Hydrate the repo to match the upstream
 if test -d "$REPO_LOCATION"; then
   pushd "$REPO_LOCATION"
-  git fetch origin main
-  git reset --hard origin/main
+
+  # Fetch from the origin unless otherwise specified
+  if test -z "$NO_SYNC"; then
+    git fetch origin main
+    git reset --hard origin/main
+  fi
 else
-  git clone "https://$UPSTREAM" "$REPO_LOCATION"
+  git clone "https://$ORIGIN" "$REPO_LOCATION"
   pushd "$REPO_LOCATION"
 fi
 
-# Configure the repo
 if test -n "$GITHUB_TOKEN"; then
   git remote remove origin
-  git remote add origin "https://$GITHUB_TOKEN@$UPSTREAM"
+  git remote add origin "https://$GITHUB_TOKEN@$ORIGIN"
 fi
 
 if test -n "$GIT_USERNAME"; then
@@ -100,10 +106,9 @@ fi
 
 popd
 
-# Import the dotfiles config, if not doing so already
-import="imports = [$REPO_LOCATION];"
-if ! grep -Fq "$import" "$PROFILE_PATH"; then
-  sed -i "\$s:}:  $import\n}:" "$PROFILE_PATH"
+# Expose default.nix if not doing so already
+if ! grep -Fq "$DEFAULT_NIX_IMPORT" "$PROFILE_PATH"; then
+  sed -i "\$s:}:  $DEFAULT_NIX_IMPORT\n}:" "$PROFILE_PATH"
 fi
 
 home-manager switch
