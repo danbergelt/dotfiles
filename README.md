@@ -11,9 +11,9 @@ $ setup.sh -h
 
   Options:
 
-    -h, --help                  Display usage information
-    -f, --force                 Skip user confirmations
-    --no-sync                   If already cloned, do not sync with the origin
-    --github-token [token]      GitHub API token used when pushing changes
+    -h, --help              Display usage information
+    -f, --force             Skip user confirmations
+    --no-sync               If already cloned, do not sync with the origin
+    --github-token [token]  GitHub API token used when pushing changes
  
 ```

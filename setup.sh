@@ -20,10 +20,10 @@ usage() {
 
   Options:
 
-    -h, --help                  Display usage information
-    -f, --force                 Skip user confirmations
-    --no-sync                   If already cloned, do not sync with the origin
-    --github-token [token]      GitHub API token used when pushing changes
+    -h, --help              Display usage information
+    -f, --force             Skip user confirmations
+    --no-sync               If already cloned, do not sync with the origin
+    --github-token [token]  GitHub API token used when pushing changes
  
 EOF
 }
@@ -94,11 +94,11 @@ fi
 
 popd
 
-# Import the dotfiles config in the home-manager config,
-# this is a little naive but works well enough for
-# newly-generated home-manager config files
+# Import the dotfiles config in the home-manager config
 if ! grep -Fq "$DEFAULT_NIX_IMPORT" "$PROFILE_PATH"; then
-  sed -i "\$s:}:  $DEFAULT_NIX_IMPORT\n}:" "$PROFILE_PATH"
+  line="programs.home-manager.enable = true;"
+  replacement="$line\n\n  $DEFAULT_NIX_IMPORT"
+  sed -i "s:$line:$replacement:" "$PROFILE_PATH"
 fi
 
 home-manager switch
