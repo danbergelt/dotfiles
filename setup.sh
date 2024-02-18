@@ -10,7 +10,6 @@ DEFAULT_NIX_IMPORT="imports = [$REPO_LOCATION];"
 
 # Inputs
 FORCE=
-NO_SYNC=
 GITHUB_TOKEN=
 
 usage() {
@@ -22,8 +21,7 @@ usage() {
 
     -h, --help              Display usage information
     -f, --force             Skip user confirmations
-    --no-sync               If already cloned, do not sync with the origin
-    --github-token [token]  GitHub API token used when pushing changes
+    --github-token <token>  GitHub API token used when pushing changes
  
 EOF
 }
@@ -39,7 +37,7 @@ assert_exists() {
 }
 
 ask() {
-  read -p "$1" choice
+  read -rp "$1 (y/n) " choice
   case "$choice" in
     y|Y) return ;;
     n|N) exit 0 ;;
@@ -51,19 +49,27 @@ while test $# -ne 0; do
   case "$1" in
     -h|--help) usage && exit ;;
     -f|--force) FORCE="true" ;; 
-    --no-sync) NO_SYNC="true" ;;
     --github-token) shift; GITHUB_TOKEN="$1" ;;
     *) usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
 done
 
+if test -z "$GITHUB_TOKEN"; then
+  usage
+  abort "Missing GitHub API token"
+fi
+
 assert_exists git
 assert_exists curl
 
 if test -z "$FORCE"; then
-  ask "Bootstrap dotfiles? (y/n) "
+  ask "Bootstrap dotfiles?"
 fi
+
+# Cleanup
+rm -rf "$REPO_LOCATION"
+rm -f "$PROFILE_PATH"
 
 # Install nix and home-manager
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
@@ -72,34 +78,17 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-if test -d "$REPO_LOCATION"; then
-  pushd "$REPO_LOCATION"
-
-  # Hard sync w/ the origin unless otherwise
-  # specified, skip this with --no-sync to
-  # bootstrap against your local copy
-  if test -z "$NO_SYNC"; then
-    git fetch origin main
-    git reset --hard origin/main
-  fi
-else
-  git clone "https://$ORIGIN" "$REPO_LOCATION"
-  pushd "$REPO_LOCATION"
-fi
-
-if test -n "$GITHUB_TOKEN"; then
-  git remote remove origin
-  git remote add origin "https://$GITHUB_TOKEN@$ORIGIN"
-fi
-
+# Clone the dotfiles repo and apply the API token
+git clone "https://$ORIGIN" "$REPO_LOCATION"
+pushd "$REPO_LOCATION"
+git remote remove origin
+git remote add origin "https://$GITHUB_TOKEN@$ORIGIN"
 popd
 
 # Import the dotfiles config in the home-manager config
-if ! grep -Fq "$DEFAULT_NIX_IMPORT" "$PROFILE_PATH"; then
-  line="programs.home-manager.enable = true;"
-  replacement="$line\n\n  $DEFAULT_NIX_IMPORT"
-  sed -i "s:$line:$replacement:" "$PROFILE_PATH"
-fi
+line="programs.home-manager.enable = true;"
+replacement="$line\n\n  $DEFAULT_NIX_IMPORT"
+sed -i "s:$line:$replacement:" "$PROFILE_PATH"
 
 home-manager switch
 

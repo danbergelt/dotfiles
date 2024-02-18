@@ -24,6 +24,7 @@ in
     git
     curl
     glow
+    entr
 
     # nix
     nil
