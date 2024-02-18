@@ -13,7 +13,7 @@ let
     else
       abort "Unknown clipboard";
 
-  mkHook = hook : lib.hm.dag.entryAfter ["installPackages"] hook;
+  mkHook = lib.hm.dag.entryAfter ["installPackages"];
 in
 
 {
@@ -47,6 +47,16 @@ in
     gopls
   ];
 
+  home.file.".vale.ini".text = ''
+    MinAlertLevel = suggestion
+    Packages = Microsoft
+
+    [*]
+    BasedOnStyles = Vale, Microsoft
+  '';
+
+  home.activation.valeSync = mkHook "${pkgs.vale}/bin/vale sync";
+
   programs.bash = {
     enable = true;
 
@@ -65,6 +75,8 @@ in
       source ~/.nix-profile/etc/profile.d/nix.sh
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
       PS1="\w\[\e[01;36m\]\$(__git_ps1)\[\e[00m\] :: "
+      grm() { echo "$1" | entr -c vale "$1"; } # Grammar checker
+      mdv() { echo "$1" | entr -cr glow "$1"; } # Markdown viewer
       source ~/.overrides 2> /dev/null # MUST BE LAST
     '';
   };
@@ -138,14 +150,4 @@ in
       ];
     };
   };
-
-  home.file.".vale.ini".text = ''
-    MinAlertLevel = warning
-    Packages = Google
-
-    [*]
-    BasedOnStyles = Vale, Google
-  '';
-
-  home.activation.valeSync = mkHook "${pkgs.vale}/bin/vale sync";
 }
