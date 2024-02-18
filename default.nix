@@ -51,6 +51,7 @@ in
       EDITOR = "hx";
       GIT_EDITOR = "hx";
       COLORTERM = "truecolor";
+      ENTR_INOTIFY_WORKAROUND = 1;
     };
 
     shellAliases = {
