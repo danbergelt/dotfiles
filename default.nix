@@ -25,6 +25,7 @@ in
     curl
     glow
     entr
+    vale
 
     # nix
     nil
@@ -44,6 +45,14 @@ in
     gopls
   ];
 
+  home.file.".vale.ini".text = ''
+    MinAlertLevel = warning
+    Packages = Google
+
+    [*]
+    BasedOnStyles = Vale, Google
+  '';
+
   programs.bash = {
     enable = true;
 
@@ -62,7 +71,8 @@ in
       source ~/.nix-profile/etc/profile.d/nix.sh
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
       PS1="\w\[\e[01;36m\]\$(__git_ps1)\[\e[00m\] :: "
-      source ~/.overrides 2> /dev/null
+      [ "$(ls -A ~/.local/share/vale/styles 2> /dev/null)" ] || vale sync
+      source ~/.overrides 2> /dev/null # MUST BE LAST
     '';
   };
 
