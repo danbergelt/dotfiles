@@ -49,10 +49,10 @@ in
 
   home.file.".vale.ini".text = ''
     MinAlertLevel = suggestion
-    Packages = Microsoft
+    Packages = Microsoft, proselint
 
     [*]
-    BasedOnStyles = Vale, Microsoft
+    BasedOnStyles = Vale, Microsoft, proselint
   '';
 
   home.activation.valeSync = mkHook "${pkgs.vale}/bin/vale sync";

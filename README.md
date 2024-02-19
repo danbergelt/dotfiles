@@ -1,8 +1,6 @@
-# dotfiles
+…by way of `nix` + `home-manager`
 
-Repo containing my dotfiles
-
-# setup
+## Setup
 
 ```bash
 $ setup.sh -h
