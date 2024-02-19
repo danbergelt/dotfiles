@@ -10,18 +10,18 @@ DEFAULT_NIX_IMPORT="imports = [$REPO_LOCATION];"
 
 # Inputs
 FORCE=
-GITHUB_TOKEN=
+TOKEN=
 
 usage() {
   cat <<-EOF
 
-  Usage: setup.sh [options]
+  Usage: setup.sh [options] --token <token>
 
   Options:
 
-    -h, --help              Display usage information
-    -f, --force             Skip user confirmations
-    --github-token <token>  GitHub API token used when pushing changes
+    -h, --help           Display usage information
+    -f, --force          Skip user confirmations
+    -t, --token <token>  GitHub API token
  
 EOF
 }
@@ -49,13 +49,13 @@ while test $# -ne 0; do
   case "$1" in
     -h|--help) usage && exit ;;
     -f|--force) FORCE="true" ;; 
-    --github-token) shift; GITHUB_TOKEN="$1" ;;
+    -t|--token) shift; TOKEN="$1" ;;
     *) usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
 done
 
-if test -z "$GITHUB_TOKEN"; then
+if test -z "$TOKEN"; then
   usage
   abort "Missing GitHub API token"
 fi
@@ -82,7 +82,7 @@ nix-shell '<home-manager>' -A install
 git clone "https://$ORIGIN" "$REPO_LOCATION"
 pushd "$REPO_LOCATION"
 git remote remove origin
-git remote add origin "https://$GITHUB_TOKEN@$ORIGIN"
+git remote add origin "https://$TOKEN@$ORIGIN"
 popd
 
 # Import the dotfiles config in the home-manager config
