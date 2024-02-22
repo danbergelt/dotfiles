@@ -47,8 +47,15 @@ in
     gopls
   ];
 
+  # create an "ignore" directory. you can add an "ignore.txt" file here,
+  # containing words/jargon that you wish to ignore when spellchecking
+  #
+  # see https://vale.sh/docs/topics/styles/#ignoring-non-dictionary-words
+  xdg.dataFile."vale/styles/config/ignore/.keep".text = "";
+
+  # vale config file
   home.file.".vale.ini".text = ''
-    MinAlertLevel = suggestion
+    MinAlertLevel = warning
     Packages = Microsoft, proselint
 
     [*]
