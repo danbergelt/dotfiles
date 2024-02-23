@@ -25,6 +25,11 @@ in
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+
+      bind -n S-Left resize-pane -L 10
+      bind -n S-Right resize-pane -R 10
+      bind -n S-Up resize-pane -U 10
+      bind -n S-Down resize-pane -D 10
       
       bind R respawn-pane -k -c '#{pane_current_path}'
       
