@@ -6,9 +6,10 @@
 
     extraPackages = with pkgs; [
       nil
+      gopls
+      nodePackages.typescript
       nodePackages.typescript-language-server
       nodePackages.pyright
-      gopls
     ];
 
     settings = {

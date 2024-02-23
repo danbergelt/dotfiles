@@ -2,8 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    shellcheck
-    sqlfluff
     ripgrep
     jq
     git
@@ -13,8 +11,6 @@
     vale
     go
     nodejs
-    nodePackages.typescript
     python3
-    python3Packages.pip
   ];
 }
