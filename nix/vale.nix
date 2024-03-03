@@ -12,7 +12,7 @@ in
   xdg.dataFile."vale/styles/config/ignore/.keep".text = "";
 
   home.file.".vale.ini".text = ''
-    MinAlertLevel = warning
+    MinAlertLevel = suggestion
     Packages = Microsoft, proselint
 
     [*]

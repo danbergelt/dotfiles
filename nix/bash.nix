@@ -13,6 +13,7 @@
 
     shellAliases = {
       hms = "home-manager switch";
+      ncg = "nix-collect-garbage -d";
     };
 
     initExtra = ''
