@@ -17,6 +17,7 @@ in
 
     [*]
     BasedOnStyles = Vale, Microsoft, proselint
+    Microsoft.Acronyms = NO
   '';
 
   home.activation.valeSync = utils.mkHook "${pkgs.vale}/bin/vale sync";
