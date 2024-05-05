@@ -6,11 +6,9 @@
     jq
     git
     curl
-    glow
-    entr
-    vale
+    tealdeer
     go
     nodejs
-    python3
+    python310
   ];
 }

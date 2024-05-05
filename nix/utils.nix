@@ -14,9 +14,6 @@ let
       "xclip -selection clipboard"
     else
       abort "Unknown clipboard";
-
-  # Run a command after having installed packages
-  mkHook = lib.hm.dag.entryAfter ["installPackages"];
 in
 
-{ inherit isWSL clipboard mkHook; }
+{ inherit isWSL clipboard; }
