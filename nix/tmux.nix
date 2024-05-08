@@ -1,7 +1,15 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
-  utils = import ./utils.nix { inherit pkgs lib; };
+  clipboard =
+    if builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop then
+      "clip.exe"
+    else if pkgs.stdenv.isDarwin then
+      "pbcopy"
+    else if pkgs.stdenv.isLinux then
+      "xclip -selection clipboard"
+    else
+      abort "Unknown clipboard";
 in
 
 {
@@ -35,7 +43,7 @@ in
       bind R respawn-pane -k -c '#{pane_current_path}'
       
       bind -T copy-mode-vi v send -X begin-selection
-      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${utils.clipboard}'
+      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${clipboard}'
       bind -T copy-mode-vi Enter send -X cancel
     '';
   };
