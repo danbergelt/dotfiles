@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+let
+  # Default indentation settings (4 spaces)
+  indent = { tab-width = 4; unit = "    "; };
+in
 {
   programs.helix = {
     enable = true;
@@ -40,6 +44,14 @@
               name = "pyright";
             }
           ];
+        }
+        {
+          name = "javascript";
+          inherit indent;
+        }
+        {
+          name = "typescript";
+          inherit indent;
         }
       ];
     };
