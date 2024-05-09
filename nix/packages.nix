@@ -7,6 +7,7 @@
     git
     curl
     tealdeer
+    glow
     go
     nodejs
     python310
