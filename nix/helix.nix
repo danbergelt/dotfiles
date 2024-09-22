@@ -11,9 +11,10 @@ in
     extraPackages = with pkgs; [
       nil
       gopls
+      pyright
+      harper
       nodePackages.typescript
       nodePackages.typescript-language-server
-      nodePackages.pyright
     ];
 
     settings = {
@@ -34,9 +35,22 @@ in
           args = ["--stdio"];
           config = {}; # REQUIRED
         };
+        harper = {
+          command = "harper-ls";
+          args = ["--stdio"];
+        };
       };
 
       language = [
+        {
+          name = "markdown";
+          inherit indent;
+          language-servers = [
+            {
+              name = "harper";
+            }
+          ];
+        }
         {
           name = "python";
           inherit indent;

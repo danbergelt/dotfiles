@@ -7,9 +7,10 @@
     git
     curl
     tealdeer
-    glow
+    bat
+    entr
     go
-    nodejs
+    nodejs_22
     python310
   ];
 }

@@ -6,7 +6,6 @@ set -euo pipefail
 PROFILE_PATH="$HOME/.config/home-manager/home.nix"
 ORIGIN="github.com/danbergelt/dotfiles.git"
 REPO_LOCATION="$HOME/dotfiles"
-DEFAULT_NIX_IMPORT="imports = [$REPO_LOCATION];"
 
 # Inputs
 FORCE=
@@ -85,10 +84,10 @@ git remote remove origin
 git remote add origin "https://$TOKEN@$ORIGIN"
 popd
 
-# Import the dotfiles config in the home-manager config
-line="programs.home-manager.enable = true;"
-replacement="$line\n\n  $DEFAULT_NIX_IMPORT"
-sed -i "s:$line:$replacement:" "$PROFILE_PATH"
+# Expose dotfiles config by importing inside of base profile
+profile_line="programs.home-manager.enable = true;"
+profile_line_replace="$profile_line\n\n  imports = [$REPO_LOCATION];"
+sed -i "s:$profile_line:$profile_line_replace:" "$PROFILE_PATH"
 
 home-manager switch
 
