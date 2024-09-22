@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  # Default indentation settings (4 spaces)
+  # Default indentation settings
   indent = { tab-width = 4; unit = "    "; };
 in
 {
@@ -39,6 +39,7 @@ in
       language = [
         {
           name = "python";
+          inherit indent;
           language-servers = [
             {
               name = "pyright";
@@ -51,6 +52,10 @@ in
         }
         {
           name = "typescript";
+          inherit indent;
+        }
+        {
+          name = "jsx";
           inherit indent;
         }
       ];
