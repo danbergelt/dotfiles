@@ -41,6 +41,9 @@
         NIX_PKGS_ALLOW_INSECURE=1 nix-shell --pure "$program"
       }
 
+      # Activate Node from version manager
+      eval "$(fnm env --use-on-cd --shell bash)"
+
       ######### MUST BE LAST #########
       source ~/.overrides 2> /dev/null
     '';

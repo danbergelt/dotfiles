@@ -10,7 +10,7 @@
     bat
     entr
     go
-    nodejs_22
+    fnm # Node version manager
     python310
   ];
 }
