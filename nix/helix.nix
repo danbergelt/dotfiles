@@ -1,9 +1,5 @@
 { pkgs, ... }:
 
-let
-  # Default indentation settings
-  indent = { tab-width = 4; unit = "    "; };
-in
 {
   programs.helix = {
     enable = true;
@@ -18,13 +14,13 @@ in
     ];
 
     settings = {
-      theme = "dark_plus";
+      theme = "base16_transparent";
       editor = {
         auto-format = false;
         color-modes = true;
         bufferline = "multiple";
         line-number = "relative";
-        rulers = [100];
+        rulers = [ 100 ];
       };
     };
 
@@ -32,45 +28,23 @@ in
       language-server = {
         pyright = {
           command = "pyright-langserver";
-          args = ["--stdio"];
-          config = {}; # REQUIRED
+          args = [ "--stdio" ];
+          config = { }; # REQUIRED
         };
         harper = {
           command = "harper-ls";
-          args = ["--stdio"];
+          args = [ "--stdio" ];
         };
       };
 
       language = [
         {
           name = "markdown";
-          inherit indent;
-          language-servers = [
-            {
-              name = "harper";
-            }
-          ];
+          language-servers = [ { name = "harper"; } ];
         }
         {
           name = "python";
-          inherit indent;
-          language-servers = [
-            {
-              name = "pyright";
-            }
-          ];
-        }
-        {
-          name = "javascript";
-          inherit indent;
-        }
-        {
-          name = "typescript";
-          inherit indent;
-        }
-        {
-          name = "jsx";
-          inherit indent;
+          language-servers = [ { name = "pyright"; } ];
         }
       ];
     };

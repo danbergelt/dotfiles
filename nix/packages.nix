@@ -7,10 +7,11 @@
     git
     curl
     tealdeer
+    hyperfine
     bat
     entr
     go
     fnm # Node version manager
-    python310
+    uv # Python version manager
   ];
 }
