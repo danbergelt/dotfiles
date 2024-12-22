@@ -9,7 +9,7 @@
       GIT_EDITOR = "hx";
       COLORTERM = "truecolor";
       ENTR_INOTIFY_WORKAROUND = 1;
-      BAT_THEME = "Visual Studio Dark+";
+      BAT_THEME = "base16";
     };
 
     shellAliases = {

@@ -11,6 +11,7 @@ let
     else
       abort "Unknown clipboard";
 in
+
 {
   programs.tmux = {
     enable = true;
