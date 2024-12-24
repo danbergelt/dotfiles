@@ -10,7 +10,8 @@
   ];
 
   _module.args = {
-    utils = rec {
+    # Expose some extra utils to the imported modules
+    my = rec {
       isWSL = builtins.getEnv "WSL_DISTRO_NAME" != "";
 
       clipboard =

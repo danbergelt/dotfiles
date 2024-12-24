@@ -7,9 +7,7 @@
     git
     curl
     tealdeer
-    hyperfine
     bat
-    entr
     go
     fnm # Node version manager
     uv # Python version manager

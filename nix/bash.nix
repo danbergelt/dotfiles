@@ -8,7 +8,6 @@
       EDITOR = "hx";
       GIT_EDITOR = "hx";
       COLORTERM = "truecolor";
-      ENTR_INOTIFY_WORKAROUND = 1;
       BAT_THEME = "base16";
     };
 
@@ -31,5 +30,4 @@
       source ~/.overrides 2> /dev/null
     '';
   };
-
 }
