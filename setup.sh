@@ -11,7 +11,7 @@ REPO_LOCATION="$HOME/dotfiles"
 FORCE=
 TOKEN=
 
-usage() {
+show_usage() {
   cat <<-EOF
 
   Usage: setup.sh [options] --token <token>
@@ -29,12 +29,6 @@ abort() {
   >&2 echo "[ERROR] $1" && exit 1
 }
 
-assert_exists() {
-  if ! command -v "$1" &> /dev/null; then
-    abort "$1 is required"
-  fi
-}
-
 ask() {
   read -rp "$1 (y/n) " choice
   case "$choice" in
@@ -44,24 +38,37 @@ ask() {
   esac
 }
 
+# Nix cannot already exist. This script is for fresh installations
+if command -v nix &> /dev/null; then
+  abort "Nix is already installed on this machine. You must \
+must uninstall Nix before proceeding with this setup script"
+fi
+
+# Parse input
 while test $# -ne 0; do
   case "$1" in
-    -h|--help) usage && exit ;;
+    -h|--help) show_usage && exit ;;
     -f|--force) FORCE="true" ;; 
     -t|--token) shift; TOKEN="$1" ;;
-    *) usage && abort "Unrecognized argument: $1" ;;
+    *) show_usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
 done
 
+# Github token is required
 if test -z "$TOKEN"; then
-  usage
+  show_usage
   abort "Missing GitHub API token"
 fi
 
-assert_exists git
-assert_exists curl
+# Test that required commands exist
+for cmd in git curl; do
+  if ! command -v "$cmd" &> /dev/null; then
+    abort "$cmd not found"
+  fi
+done
 
+# Show a prompt to confirm the setup
 if test -z "$FORCE"; then
   ask "Bootstrap dotfiles?"
 fi
@@ -84,7 +91,7 @@ git remote remove origin
 git remote add origin "https://$TOKEN@$ORIGIN"
 popd
 
-# Expose dotfiles config by importing inside of base profile
+# Patch the dotfiles config into the generated home-manager config
 profile_line="programs.home-manager.enable = true;"
 profile_line_replace="$profile_line\n\n  imports = [$REPO_LOCATION];"
 sed -i "s:$profile_line:$profile_line_replace:" "$PROFILE_PATH"
