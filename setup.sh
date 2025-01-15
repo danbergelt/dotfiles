@@ -38,11 +38,17 @@ ask() {
   esac
 }
 
-# Nix cannot already exist. This script is for fresh installations
+# Nix cannot already exist
 if command -v nix &> /dev/null; then
-  abort "Nix is already installed on this machine. You must \
-must uninstall Nix before proceeding with this setup script"
+  abort "Nix is already installed"
 fi
+
+# Test that required commands exist
+for cmd in git curl; do
+  if ! command -v "$cmd" &> /dev/null; then
+    abort "$cmd not found"
+  fi
+done
 
 # Parse input
 while test $# -ne 0; do
@@ -61,13 +67,6 @@ if test -z "$TOKEN"; then
   abort "Missing GitHub API token"
 fi
 
-# Test that required commands exist
-for cmd in git curl; do
-  if ! command -v "$cmd" &> /dev/null; then
-    abort "$cmd not found"
-  fi
-done
-
 # Show a prompt to confirm the setup
 if test -z "$FORCE"; then
   ask "Bootstrap dotfiles?"
@@ -84,11 +83,12 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-# Clone the dotfiles repo and apply the API token
+# Set up the dotfiles repo locally
 git clone "https://$ORIGIN" "$REPO_LOCATION"
 pushd "$REPO_LOCATION"
 git remote remove origin
 git remote add origin "https://$TOKEN@$ORIGIN"
+git config user.name "danbergelt"
 popd
 
 # Patch the dotfiles config into the generated home-manager config
@@ -96,6 +96,4 @@ profile_line="programs.home-manager.enable = true;"
 profile_line_replace="$profile_line\n\n  imports = [$REPO_LOCATION];"
 sed -i "s:$profile_line:$profile_line_replace:" "$PROFILE_PATH"
 
-home-manager switch
-
-echo "All done, please reload your shell"
+echo "All done, run 'home-manager switch' and reload your shell"
