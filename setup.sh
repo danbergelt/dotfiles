@@ -40,8 +40,8 @@ ask() {
 
 # Nix cannot already exist. This script is for fresh installations
 if command -v nix &> /dev/null; then
-  abort "Nix is already installed on this machine. You must \
-must uninstall Nix before proceeding with this setup script"
+  abort "Nix is already installed on this machine. You \
+must uninstall Nix before executing this setup script"
 fi
 
 # Parse input
