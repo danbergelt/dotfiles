@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 
 set -euo pipefail
 
@@ -10,6 +11,7 @@ REPO_LOCATION="$HOME/dotfiles"
 # Inputs
 FORCE=
 TOKEN=
+OVERWRITE=
 
 show_usage() {
   cat <<-EOF
@@ -21,6 +23,7 @@ show_usage() {
     -h, --help           Display usage information
     -f, --force          Skip user confirmations
     -t, --token <token>  GitHub API token
+    --overwrite          Overwrite local dotfiles
  
 EOF
 }
@@ -41,7 +44,7 @@ ask() {
 # Test that required commands exist
 for cmd in git curl; do
   if ! command -v "$cmd" &> /dev/null; then
-    abort "$cmd not found"
+    abort "$cmd missing in PATH"
   fi
 done
 
@@ -51,6 +54,7 @@ while test $# -ne 0; do
     -h|--help) show_usage && exit ;;
     -f|--force) FORCE="true" ;; 
     -t|--token) shift; TOKEN="$1" ;;
+    --overwrite-repo) OVERWRITE="true" ;;
     *) show_usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
@@ -58,8 +62,7 @@ done
 
 # Github token is required
 if test -z "$TOKEN"; then
-  show_usage
-  abort "Missing GitHub API token"
+  show_usage && abort "Missing GitHub API token"
 fi
 
 # Show a prompt to confirm the setup
@@ -67,25 +70,27 @@ if test -z "$FORCE"; then
   ask "Bootstrap dotfiles?"
 fi
 
-# Cleanup
-rm -rf "$REPO_LOCATION"
-rm -f "$PROFILE_PATH"
+# Set up dotfiles locally
+if test -z "$OVERWRITE" && test -d "$REPO_LOCATION"; then
+  echo "$REPO_LOCATION already exists, leaving it unchanged..."
+else
+  rm -rf "$REPO_LOCATION"
+  git clone "https://$ORIGIN" "$REPO_LOCATION"
+  pushd "$REPO_LOCATION"
+  git remote remove origin
+  git remote add origin "https://$TOKEN@$ORIGIN"
+  git config user.name "danbergelt"
+  git config user.email "dan@danbergelt.com"
+  popd
+fi
 
 # Install nix and home-manager
+rm -f "$PROFILE_PATH"
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
-
-# Set up the dotfiles repo locally
-git clone "https://$ORIGIN" "$REPO_LOCATION"
-pushd "$REPO_LOCATION"
-git remote remove origin
-git remote add origin "https://$TOKEN@$ORIGIN"
-git config user.name "danbergelt"
-git config user.email "dan@danbergelt.com"
-popd
 
 # Expose the dotfiles config (kinda hacky, but works well enough)
 profile_line="programs.home-manager.enable = true;"
