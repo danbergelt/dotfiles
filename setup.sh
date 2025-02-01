@@ -38,11 +38,6 @@ ask() {
   esac
 }
 
-# Nix cannot already exist
-if command -v nix &> /dev/null; then
-  abort "Nix is already installed"
-fi
-
 # Test that required commands exist
 for cmd in git curl; do
   if ! command -v "$cmd" &> /dev/null; then
@@ -92,7 +87,7 @@ git config user.name "danbergelt"
 git config user.email "dan@danbergelt.com"
 popd
 
-# Patch the dotfiles config into the generated home-manager config
+# Expose the dotfiles config (kinda hacky, but works well enough)
 profile_line="programs.home-manager.enable = true;"
 profile_line_replace="$profile_line\n\n  imports = [$REPO_LOCATION];"
 sed -i "s:$profile_line:$profile_line_replace:" "$PROFILE_PATH"
