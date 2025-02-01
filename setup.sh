@@ -8,6 +8,12 @@ PROFILE_PATH="$HOME/.config/home-manager/home.nix"
 ORIGIN="github.com/danbergelt/dotfiles.git"
 REPO_LOCATION="$HOME/dotfiles"
 
+# Colors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+BLUE="\033[1;34m"
+NC="\033[0m"
+
 # Inputs
 FORCE=
 TOKEN=
@@ -29,11 +35,11 @@ EOF
 }
 
 abort() {
-  >&2 echo "[ERROR] $1" && exit 1
+  >&2 echo -e "${RED}[ERROR]${NC} $1" && exit 1
 }
 
 info() {
-  echo -e "\n[INFO] $1"
+  echo -e "\n${BLUE}[INFO]${NC} $1"
 }
 
 ask() {
@@ -104,4 +110,4 @@ else
   sed -i "s:$anchor:$anchor\n\n  $header\n  $imports:" "$PROFILE_PATH"
 fi
 
-echo -e "\nAll done, run 'home-manager switch' and reload your shell"
+echo -e "\n${GREEN}All done, run 'home-manager switch' and reload your shell${NC}"
