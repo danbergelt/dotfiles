@@ -89,6 +89,7 @@ pushd "$REPO_LOCATION"
 git remote remove origin
 git remote add origin "https://$TOKEN@$ORIGIN"
 git config user.name "danbergelt"
+git config user.email "dan@danbergelt.com"
 popd
 
 # Patch the dotfiles config into the generated home-manager config
