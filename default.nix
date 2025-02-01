@@ -7,6 +7,7 @@
     nix/fzf.nix
     nix/tmux.nix
     nix/helix.nix
+    nix/vale.nix
   ];
 
   _module.args = {

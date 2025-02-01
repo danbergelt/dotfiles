@@ -8,7 +8,6 @@
       nil
       gopls
       pyright
-      harper
       nodePackages.typescript
       nodePackages.typescript-language-server
     ];
@@ -31,17 +30,9 @@
           args = [ "--stdio" ];
           config = { }; # REQUIRED
         };
-        harper = {
-          command = "harper-ls";
-          args = [ "--stdio" ];
-        };
       };
 
       language = [
-        {
-          name = "markdown";
-          language-servers = [ { name = "harper"; } ];
-        }
         {
           name = "python";
           language-servers = [ { name = "pyright"; } ];
