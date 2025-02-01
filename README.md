@@ -5,12 +5,13 @@ Local configuration and packages
 ```bash
 $ setup.sh -h
 
-  Usage: setup.sh [options] --token <token>
+  Usage: setup.sh [options]
 
   Options:
 
     -h, --help           Display usage information
     -f, --force          Skip user confirmations
-    -t, --token <token>  GitHub API token
+    -t, --token [token]  GitHub API token
+    --overwrite          Overwrite local dotfiles
  
 ```
