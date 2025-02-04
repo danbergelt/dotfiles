@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, my, ... }:
 
 let
   stylesPath = ".vale/styles";
@@ -24,12 +24,10 @@ in
   '';
 
   # Sync on every install
-  home.activation.valeSync =
-    lib.hm.dag.entryAfter ["installPackages"] "${pkgs.vale}/bin/vale sync";  
+  home.activation.valeSync = my.mkHook "${pkgs.vale}/bin/vale sync";
 
   # Ensure global vocab path exists
-  home.activation.valeMkVocab =
-    lib.hm.dag.entryAfter ["installPackages"] "mkdir -p ${vocabPath}";
+  home.activation.valeMkVocab = my.mkHook "mkdir -p ${vocabPath}";
 
   # Expose accept/reject file paths
   home.sessionVariables = {
