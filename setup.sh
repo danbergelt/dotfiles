@@ -108,4 +108,4 @@ else
   sed -i "s:$anchor:$anchor\n\n  $header\n  $imports:" "$PROFILE_PATH"
 fi
 
-echo -e "\n${GREEN}All done, please reload your shell${NC}"
+echo -e "\n${GREEN}All done, run 'home-manager switch' and reload your shell${NC}"
