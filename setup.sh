@@ -17,7 +17,6 @@ NC="\033[0m"
 # Inputs
 FORCE=
 TOKEN=
-OVERWRITE=
 
 show_usage() {
   cat <<-EOF
@@ -29,7 +28,6 @@ show_usage() {
     -h, --help           Display usage information
     -f, --force          Skip user confirmations
     -t, --token [token]  GitHub API token
-    --overwrite          Overwrite local dotfiles
  
 EOF
 }
@@ -64,7 +62,6 @@ while test $# -ne 0; do
     -h|--help) show_usage && exit ;;
     -f|--force) FORCE="true" ;; 
     -t|--token) shift; TOKEN="$1" ;;
-    --overwrite-repo) OVERWRITE="true" ;;
     *) show_usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
@@ -74,15 +71,8 @@ if test -z "$FORCE"; then
   ask "Bootstrap dotfiles?"
 fi
 
-info "Installing nix and home-manager"
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
-source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
-
 info "Cloning dotfiles repo"
-if test -z "$OVERWRITE" && test -d "$REPO_LOCATION"; then
+if test -d "$REPO_LOCATION"; then
   echo "$REPO_LOCATION already exists"
 else
   # A token is required to push changes upstream
@@ -100,6 +90,13 @@ else
   popd > /dev/null
 fi
 
+info "Installing nix and home-manager"
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
+source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+
 info "Exposing dotfiles to nix"
 imports="imports = [$REPO_LOCATION];"
 if grep -q -F "$imports" "$PROFILE_PATH"; then
@@ -111,4 +108,4 @@ else
   sed -i "s:$anchor:$anchor\n\n  $header\n  $imports:" "$PROFILE_PATH"
 fi
 
-echo -e "\n${GREEN}All done, run 'home-manager switch' and reload your shell${NC}"
+echo -e "\n${GREEN}All done, please reload your shell${NC}"

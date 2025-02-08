@@ -12,6 +12,5 @@ $ setup.sh -h
     -h, --help           Display usage information
     -f, --force          Skip user confirmations
     -t, --token [token]  GitHub API token
-    --overwrite          Overwrite local dotfiles
  
 ```
