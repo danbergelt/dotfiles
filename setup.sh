@@ -105,10 +105,7 @@ else
   hm="https://github.com/nix-community/home-manager/archive/master.tar.gz"
   nix-channel --add "$hm" home-manager
   nix-channel --update
-
-  if ! test -f "$PROFILE_PATH"; then
-    nix-shell '<home-manager>' -A install
-  fi
+  nix-shell '<home-manager>' -A install
 fi
 
 # Inject dotfiles config into home-manager profile
