@@ -1,16 +1,5 @@
-Local configuration and packages
-
-## Setup
+# Local configurations and packages
 
 ```bash
-$ setup.sh -h
-
-  Usage: setup.sh [options]
-
-  Options:
-
-    -h, --help           Display usage information
-    -f, --force          Skip user confirmations
-    -t, --token [token]  GitHub API token
- 
+bash <(curl -s https://raw.githubusercontent.com/danbergelt/dotfiles/main/setup.sh) --help
 ```
