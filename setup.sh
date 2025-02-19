@@ -124,4 +124,4 @@ fi
 info "Installing packages"
 home-manager switch -b bak
 
-echo -e "${GREEN}All done, please reload your shell${NC}"
+echo -e "${GREEN}All done, please reload your shell${NC}\n"
