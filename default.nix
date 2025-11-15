@@ -1,4 +1,4 @@
-{ stdenv, lib, ... }:
+{ stdenv, ... }:
 
 {
   imports = [
@@ -7,11 +7,10 @@
     nix/fzf.nix
     nix/tmux.nix
     nix/helix.nix
-    nix/vale.nix
   ];
 
   _module.args = {
-    # Expose some extra utils to the imported modules
+    # Extra utils
     my = rec {
       # Check if we are running inside of WSL or not
       isWSL = builtins.getEnv "WSL_DISTRO_NAME" != "";
@@ -26,10 +25,6 @@
           "xclip -selection clipboard"
         else
           abort "Unknown clipboard";
-
-      # Run a command when switching
-      mkHook = lib.hm.dag.entryAfter ["installPackages"];
     };
-
   };
 }

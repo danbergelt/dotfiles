@@ -19,7 +19,7 @@
         color-modes = true;
         bufferline = "multiple";
         line-number = "relative";
-        rulers = [ 100 ];
+        rulers = [ 120 ];
       };
     };
 
