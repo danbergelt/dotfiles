@@ -32,12 +32,10 @@
         };
       };
 
-      language = [
-        {
-          name = "python";
-          language-servers = [ { name = "pyright"; } ];
-        }
-      ];
+      language = [{
+        name = "python";
+        language-servers = [{ name = "pyright"; }];
+      }];
     };
   };
 }

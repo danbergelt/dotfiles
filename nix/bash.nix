@@ -15,7 +15,8 @@
       hms = "home-manager switch";
       ncg = "nix-collect-garbage -d";
       ncu = "nix-channel --update";
-      gcb = "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
+      gcb =
+        "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
     };
 
     initExtra = ''

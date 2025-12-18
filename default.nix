@@ -7,6 +7,7 @@
     nix/fzf.nix
     nix/tmux.nix
     nix/helix.nix
+    nix/rust.nix
   ];
 
   _module.args = {
@@ -16,15 +17,14 @@
       isWSL = builtins.getEnv "WSL_DISTRO_NAME" != "";
 
       # Derive system clipboard based on environment
-      clipboard =
-        if isWSL then
-          "clip.exe"
-        else if stdenv.isDarwin then
-          "pbcopy"
-        else if stdenv.isLinux then
-          "xclip -selection clipboard"
-        else
-          abort "Unknown clipboard";
+      clipboard = if isWSL then
+        "clip.exe"
+      else if stdenv.isDarwin then
+        "pbcopy"
+      else if stdenv.isLinux then
+        "xclip -selection clipboard"
+      else
+        abort "Unknown clipboard";
     };
   };
 }
