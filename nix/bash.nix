@@ -24,10 +24,15 @@
       source ~/.nix-profile/etc/profile.d/nix.sh
 
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
-      colored_git_ps1="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\]"
-      nix_shell="$(test -n "$IN_NIX_SHELL" && echo "<nix-shell> ")"
-      colored_nix_shell="\[\e[01;35m\]\$nix_shell\[\e[00m\]"
-      PS1="$colored_nix_shell\w$colored_git_ps1 :: "
+      git_state_indicator="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\]"
+
+      # NOTE: this is only reliable for `nix-shell`, if at some point
+      # I switch to using the experimental API, we'll have to find some
+      # other way of determining whether we are inside of a nix shell
+      nix_shell="$(test -n "$IN_NIX_SHELL" && echo "<''${name:-shell}> ")"
+      nix_shell_indicator="\[\e[01;35m\]\$nix_shell\[\e[00m\]"
+
+      PS1="$nix_shell_indicator\w$git_state_indicator :: "
 
       # Activate Node from version manager
       XDG_RUNTIME_DIR=/tmp/run/user/$(id -u)
