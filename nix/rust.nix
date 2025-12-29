@@ -7,7 +7,9 @@ in {
 
   home.activation.rustupComponents =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${rustup} default stable
+      if ! ${rustup} default &> /dev/null; then
+        ${rustup} default stable
+      fi
 
       is_component_installed() {
         ${rustup} component list --installed | grep -q "$1"
