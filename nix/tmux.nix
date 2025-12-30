@@ -4,13 +4,12 @@
   programs.tmux = {
     enable = true;
 
+    mouse = true;
     historyLimit = 25000;
     terminal = "screen-256color";
     keyMode = "vi";
 
     extraConfig = ''
-      set -g mouse on
-      set -g escape-time 10
       set -g pane-active-border-style fg=green
       set -g status-right '%I:%M %p - %A, %b %d %Y'
 
