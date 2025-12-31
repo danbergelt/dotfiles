@@ -8,6 +8,7 @@
     historyLimit = 25000;
     terminal = "screen-256color";
     keyMode = "vi";
+    escapeTime = 100;
 
     extraConfig = ''
       set -g pane-active-border-style fg=green
