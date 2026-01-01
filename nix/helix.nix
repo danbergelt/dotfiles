@@ -14,12 +14,19 @@
 
     settings = {
       theme = "base16_transparent";
+
       editor = {
         auto-format = false;
         color-modes = true;
         bufferline = "multiple";
         line-number = "relative";
         rulers = [ 120 ];
+      };
+
+      keys = {
+        normal = {
+          X = "select_line_above";
+        };
       };
     };
 
