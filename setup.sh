@@ -57,9 +57,8 @@ get_token() {
 
   if test -n "$token"; then
     echo "$token"
-    exit 0
   else
-    exit 1
+    return 1
   fi
 }
 
@@ -74,7 +73,6 @@ set_token() {
   fi
 
   git -C "$REPO_LOCATION" remote set-url origin "https://$token@$ORIGIN"
-  exit 0
 }
 
 ask() {
@@ -101,8 +99,8 @@ while test $# -ne 0; do
     -t|--token) shift; TOKEN="${1:-}" ;;
 
     # Top-level commands to get/set access token
-    --get-token) get_token ;;
-    --set-token) shift; set_token "${1:-}" ;;
+    --get-token) get_token; exit $? ;;
+    --set-token) shift; set_token "${1:-}"; exit ;;
 
     *) show_usage && abort "Unrecognized argument: $1" ;;
   esac
@@ -118,17 +116,14 @@ if test -e "$REPO_LOCATION"; then
   echo "$REPO_LOCATION already exists"
 else
   git clone "https://$ORIGIN" "$REPO_LOCATION"
-  pushd "$REPO_LOCATION" > /dev/null
+  git -C "$REPO_LOCATION" config user.name "danbergelt"
+  git -C "$REPO_LOCATION" config user.email "dan@danbergelt.com"
   # A token is required to push changes upstream
   if test -n "$TOKEN"; then
-    git remote remove origin
-    git remote add origin "https://$TOKEN@$ORIGIN"
+    set_token "$TOKEN"
   else
     warn "No token provided, push access will not be configured"
   fi
-  git config user.name "danbergelt"
-  git config user.email "dan@danbergelt.com"
-  popd > /dev/null
 fi
 
 info "Installing nix"
