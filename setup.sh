@@ -11,6 +11,7 @@ REPO_LOCATION="$HOME/dotfiles"
 # Colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
 BLUE="\033[1;34m"
 NC="\033[0m"
 
@@ -27,7 +28,9 @@ show_usage() {
 
     -h, --help           Display usage information
     -f, --force          Skip user confirmations
-    -t, --token [token]  GitHub API token
+    -t, --token [token]  GitHub API token (for initial setup)
+    --get-token          Print the current GitHub API token
+    --set-token [token]  Update the GitHub API token
  
 EOF
 }
@@ -38,6 +41,40 @@ abort() {
 
 info() {
   echo -e "\n${BLUE}[INFO]${NC} $1"
+}
+
+warn() {
+  echo -e "\n${YELLOW}[WARN]${NC} $1"
+}
+
+# Get the current access token
+get_token() {
+  local url token
+
+  url="$(git -C "$REPO_LOCATION" remote get-url origin 2>/dev/null)"
+  # Get the value between 'https://' and '@' (should be the token)
+  token="$(echo "$url" | awk -F 'https://|@' 'NF >= 3 {print $2}')"
+
+  if test -n "$token"; then
+    echo "$token"
+    exit 0
+  else
+    exit 1
+  fi
+}
+
+# Set the access token
+set_token() {
+  local token
+
+  token="$1"
+
+  if test -z "$token"; then
+    abort "No access token provided"
+  fi
+
+  git -C "$REPO_LOCATION" remote set-url origin "https://$token@$ORIGIN"
+  exit 0
 }
 
 ask() {
@@ -60,8 +97,13 @@ done
 while test $# -ne 0; do
   case "$1" in
     -h|--help) show_usage && exit ;;
-    -f|--force) FORCE="true" ;; 
-    -t|--token) shift; TOKEN="$1" ;;
+    -f|--force) FORCE="true" ;;
+    -t|--token) shift; TOKEN="${1:-}" ;;
+
+    # Top-level commands to get/set access token
+    --get-token) get_token ;;
+    --set-token) shift; set_token "${1:-}" ;;
+
     *) show_usage && abort "Unrecognized argument: $1" ;;
   esac
   shift
@@ -75,15 +117,15 @@ info "Cloning dotfiles repo"
 if test -e "$REPO_LOCATION"; then
   echo "$REPO_LOCATION already exists"
 else
-  # A token is required to push changes upstream
-  if test -z "$TOKEN"; then
-    show_usage && abort "Missing GitHub API token"
-  fi
-
   git clone "https://$ORIGIN" "$REPO_LOCATION"
   pushd "$REPO_LOCATION" > /dev/null
-  git remote remove origin
-  git remote add origin "https://$TOKEN@$ORIGIN"
+  # A token is required to push changes upstream
+  if test -n "$TOKEN"; then
+    git remote remove origin
+    git remote add origin "https://$TOKEN@$ORIGIN"
+  else
+    warn "No token provided, push access will not be configured"
+  fi
   git config user.name "danbergelt"
   git config user.email "dan@danbergelt.com"
   popd > /dev/null

@@ -7,6 +7,7 @@
     extraPackages = with pkgs; [
       nil
       gopls
+      harper
       pyright
       nodePackages.typescript
       nodePackages.typescript-language-server
@@ -23,11 +24,7 @@
         rulers = [ 120 ];
       };
 
-      keys = {
-        normal = {
-          X = "select_line_above";
-        };
-      };
+      keys.normal.X = "select_line_above";
     };
 
     languages = {
@@ -37,12 +34,23 @@
           args = [ "--stdio" ];
           config = { }; # REQUIRED
         };
+
+        harper = {
+          command = "harper-ls";
+          args = [ "--stdio" ];
+        };
       };
 
-      language = [{
-        name = "python";
-        language-servers = [{ name = "pyright"; }];
-      }];
+      language = [
+        {
+          name = "python";
+          language-servers = [{ name = "pyright"; }];
+        }
+        {
+          name = "markdown";
+          language-servers = [{ name = "harper"; }];
+        }
+      ];
     };
   };
 }
