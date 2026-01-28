@@ -130,7 +130,12 @@ info "Installing nix"
 if command -v nix &> /dev/null; then
   echo "Nix is already installed"
 else
-  bash <(curl -L https://nixos.org/nix/install)
+  curl -L https://releases.nixos.org/nix/nix-2.31.2/install -o /tmp/nix-install
+  bash /tmp/nix-install
+fi
+
+if ! test -f "$HOME/.nix-profile/etc/profile.d/nix.sh"; then
+  abort "nix.sh file not found at expected location"
 fi
 
 source "$HOME/.nix-profile/etc/profile.d/nix.sh"
@@ -139,10 +144,13 @@ info "Installing home-manager"
 if nix-channel --list | grep -q home-manager; then
   echo "Home-manager is already installed"
 else
-  hm="https://github.com/nix-community/home-manager/archive/master.tar.gz"
-  nix-channel --add "$hm" home-manager
+  nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
   nix-channel --update
   nix-shell '<home-manager>' -A install
+fi
+
+if ! test -f "$PROFILE_PATH"; then
+  abort "Home Manager profile not found at expected location"
 fi
 
 # Inject dotfiles config into home-manager profile
