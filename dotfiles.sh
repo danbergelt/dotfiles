@@ -22,16 +22,20 @@ TOKEN=
 show_usage() {
   cat <<-EOF
 
-  Usage: setup.sh [options]
+  Usage: dotfiles.sh <command> [options]
+
+  Commands:
+
+    setup                Bootstrap dotfiles environment
+    get-token            Print the current GitHub API token
+    set-token <token>    Update the GitHub API token
 
   Options:
 
     -h, --help           Display usage information
-    -f, --force          Skip user confirmations
-    -t, --token [token]  GitHub API token (for initial setup)
-    --get-token          Print the current GitHub API token
-    --set-token [token]  Update the GitHub API token
- 
+    -f, --force          Skip user confirmations (setup only)
+    -t, --token <token>  GitHub API token (setup only)
+
 EOF
 }
 
@@ -91,21 +95,68 @@ for cmd in git curl; do
   fi
 done
 
-# Parse input
-while test $# -ne 0; do
-  case "$1" in
-    -h|--help) show_usage && exit ;;
-    -f|--force) FORCE="true" ;;
-    -t|--token) shift; TOKEN="${1:-}" ;;
+# Require a command
+if test $# -eq 0; then
+  show_usage
+  abort "No command provided"
+fi
 
-    # Top-level commands to get/set access token
-    --get-token) get_token; exit $? ;;
-    --set-token) shift; set_token "${1:-}"; exit ;;
+COMMAND="$1"
+shift
 
-    *) show_usage && abort "Unrecognized argument: $1" ;;
-  esac
-  shift
-done
+# Argument parsing
+case "$COMMAND" in
+  -h|--help)
+    show_usage
+    exit
+    ;;
+
+  get-token)
+    if test $# -ne 0; then
+      show_usage
+      abort "get-token accepts no arguments"
+    fi
+
+    get_token
+    exit $?
+    ;;
+
+  set-token)
+    if test $# -eq 0; then
+      show_usage
+      abort "set-token requires a token argument"
+    fi
+
+    set_token "$1"
+    exit
+    ;;
+
+  setup)
+    while test $# -ne 0; do
+      case "$1" in
+        -f|--force)
+          FORCE="true"
+          ;;
+        -t|--token)
+          shift
+          test $# -eq 0 && abort "--token requires a value"
+          TOKEN="$1"
+          ;;
+        *)
+          show_usage
+          abort "setup: unrecognized option: $1" ;;
+      esac
+      shift
+    done
+    ;; # continue below
+
+  *)
+    show_usage
+    abort "Unknown command: $COMMAND"
+    ;;
+esac
+
+# --- setup command ---
 
 if test -z "$FORCE"; then
   ask "Bootstrap dotfiles?"
