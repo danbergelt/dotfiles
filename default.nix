@@ -1,6 +1,8 @@
 { stdenv, ... }:
 
-{
+let local = ~/.local.nix;
+
+in {
   imports = [
     nix/packages.nix
     nix/bash.nix
@@ -8,7 +10,7 @@
     nix/tmux.nix
     nix/helix.nix
     nix/rust.nix
-  ];
+  ] ++ (if builtins.pathExists local then [local] else []);
 
   _module.args = {
     # Extra utils
