@@ -13,11 +13,10 @@
     };
 
     shellAliases = {
-      hms = "home-manager switch";
+      hms = "home-manager switch --impure --flake ~/dotfiles#home";
       ncg = "nix-collect-garbage -d";
-      ncu = "nix-channel --update";
-      gcb =
-        "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
+      nfu = "nix flake update --flake ~/dotfiles";
+      gcb = "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
     };
 
     initExtra = ''

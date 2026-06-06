@@ -1,25 +1,17 @@
-{ pkgs, ... }:
-
-let
-  # 25.01
-  pinned = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/de0fe301211c267807afd11b12613f5511ff7433.tar.gz";
-    sha256 = "0lw17azfdh3gmh75ddha01j4c7fn38nz4w3jwzbaz0ngb8nchb3a";
-  }) { inherit (pkgs) system; };
-in
+{ helix-pkgs, ... }:
 
 {
   programs.helix = {
     enable = true;
-    package = pinned.helix;
+    package = helix-pkgs.helix;
 
-    extraPackages = with pkgs; [
+    extraPackages = with helix-pkgs; [
       nil
       gopls
       harper
       pyright
-      nodePackages.typescript
-      nodePackages.typescript-language-server
+      typescript
+      typescript-language-server
     ];
 
     settings = {

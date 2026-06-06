@@ -1,4 +1,4 @@
-{ my, ... }:
+{ clipboard, ... }:
 
 {
   programs.tmux = {
@@ -31,7 +31,7 @@
       bind R respawn-pane -k -c '#{pane_current_path}'
 
       bind -T copy-mode-vi v send -X begin-selection
-      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${my.clipboard}'
+      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${clipboard}'
       bind -T copy-mode-vi Enter send -X cancel
 
       bind 4 split-window -h -c '#{pane_current_path}' \; \
