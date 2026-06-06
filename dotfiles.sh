@@ -35,7 +35,7 @@ show_usage() {
     -h, --help            Display usage information
     -f, --force           Skip user confirmations (setup only)
     -t, --token <token>   GitHub API token (setup only)
-    -c, --config <name>   Flake config name: wsl, linux, mac (setup only)
+    -c, --config <name>   Flake config name: wsl, linux, mac (setup only, auto-detected if omitted)
 
 EOF
 }
@@ -59,6 +59,22 @@ ask() {
     n|N) exit 0 ;;
     *) ask "$1" ;;
   esac
+}
+
+# Get all possible config values from the nix configuration
+get_valid_configs() {
+  nix eval "$REPO_LOCATION#homeConfigurations" --apply builtins.attrNames --json 2> /dev/null
+}
+
+# Derive the config from the environment
+detect_config() {
+  if test -n "${WSL_DISTRO_NAME:-}"; then
+    echo "wsl"
+  elif test "$(uname -s)" = "Darwin"; then
+    echo "mac"
+  elif test "$(uname -s)" = "Linux"; then
+    echo "linux"
+  fi
 }
 
 # Get the current access token
@@ -133,13 +149,9 @@ setup() {
   fi
 
   info "Installing packages"
-  # Validate that a config was passed and exists in the home configurations
-  local configs
-  configs=$(nix eval "$REPO_LOCATION#homeConfigurations" --apply builtins.attrNames --json)
-  if test -z "$CONFIG"; then
-    abort "No config specified (expected one of: $configs)"
-  elif ! echo "$configs" | grep -q "\"$CONFIG\""; then
-    abort "Unknown config '$CONFIG' (expected one of: $configs)"
+  CONFIG="${CONFIG:-$(detect_config)}"
+  if ! get_valid_configs | grep -q "\"$CONFIG\""; then
+    abort "Unknown config '$CONFIG' (expected one of: $(get_valid_configs))"
   fi
   # Do the initial switch and pin to the current config
   nix run home-manager -- switch --impure -b bak --flake "$REPO_LOCATION#$CONFIG"
