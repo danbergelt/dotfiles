@@ -1,19 +1,25 @@
 { pkgs, ... }:
 
-let local = ~/.local.nix;
+let
+  local = builtins.getEnv "HOME" + "/.local.nix";
 
-in {
+in
+{
   imports = [
-    nix/bash.nix
-    nix/fzf.nix
-    nix/tmux.nix
-    nix/helix.nix
-    nix/rust.nix
-  ] ++ (if builtins.pathExists local then [ local ] else []);
+    modules/bash.nix
+    modules/fzf.nix
+    modules/tmux.nix
+    modules/helix.nix
+    modules/rust.nix
+  ]
+  ++ (if builtins.pathExists local then [ local ] else [ ]);
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   programs.home-manager.enable = true;

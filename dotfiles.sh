@@ -17,6 +17,7 @@ NC="\033[0m"
 # Inputs
 FORCE=
 TOKEN=
+CONFIG=
 
 show_usage() {
   cat <<-EOF
@@ -31,9 +32,10 @@ show_usage() {
 
   Options:
 
-    -h, --help           Display usage information
-    -f, --force          Skip user confirmations (setup only)
-    -t, --token <token>  GitHub API token (setup only)
+    -h, --help            Display usage information
+    -f, --force           Skip user confirmations (setup only)
+    -t, --token <token>   GitHub API token (setup only)
+    -c, --config <name>   Flake config name: wsl, linux, mac (setup only)
 
 EOF
 }
@@ -131,7 +133,16 @@ setup() {
   fi
 
   info "Installing packages"
-  nix run home-manager -- switch --impure -b bak --flake "$REPO_LOCATION#home"
+  # Validate that a config was passed and exists in the home configurations
+  local configs
+  configs=$(nix eval "$REPO_LOCATION#homeConfigurations" --apply builtins.attrNames --json)
+  if test -z "$CONFIG"; then
+    abort "No config specified (expected one of: $configs)"
+  elif ! echo "$configs" | grep -q "\"$CONFIG\""; then
+    abort "Unknown config '$CONFIG' (expected one of: $configs)"
+  fi
+  # Do the initial switch and pin to the current config
+  nix run home-manager -- switch --impure -b bak --flake "$REPO_LOCATION#$CONFIG"
 
   echo -e "${GREEN}All done, please reload your shell${NC}\n"
 }
@@ -189,6 +200,11 @@ case "$COMMAND" in
           shift
           test $# -eq 0 && abort "--token requires a value"
           TOKEN="$1"
+          ;;
+        -c|--config)
+          shift
+          test $# -eq 0 && abort "--config requires a value"
+          CONFIG="$1"
           ;;
         *)
           show_usage

@@ -13,25 +13,57 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-helix, home-manager, ... }:
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-helix,
+      home-manager,
+      ...
+    }:
     let
-      pkgs = nixpkgs.legacyPackages.${builtins.currentSystem};
-      isWSL = builtins.getEnv "WSL_DISTRO_NAME" != "";
-    in {
-      homeConfigurations.home = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = {
-          helix-pkgs = nixpkgs-helix.legacyPackages.${builtins.currentSystem};
-          clipboard = if isWSL then
-            "clip.exe"
-          else if pkgs.stdenv.isDarwin then
-            "pbcopy"
-          else if pkgs.stdenv.isLinux then
-            "xclip -selection clipboard"
-          else
-            abort "Unknown clipboard";
+      configs = {
+        wsl = {
+          system = "x86_64-linux";
+          clipboard = "clip.exe";
+        };
+
+        linux = {
+          system = "x86_64-linux";
+          clipboard = "xclip -selection clipboard";
+        };
+
+        mac = {
+          system = "aarch64-darwin";
+          clipboard = "pbcopy";
         };
       };
+    in
+    {
+      formatter =
+        let
+          systems = nixpkgs.lib.unique (map (cfg: cfg.system) (builtins.attrValues configs));
+        in
+        nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+
+      homeConfigurations = builtins.mapAttrs (
+        name: cfg:
+        let
+          pkgs = nixpkgs.legacyPackages.${cfg.system};
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          modules = [
+            ./home.nix
+          ];
+
+          extraSpecialArgs = {
+            helix-pkgs = nixpkgs-helix.legacyPackages.${cfg.system};
+
+            inherit name;
+            inherit (cfg) clipboard;
+          };
+        }
+      ) configs;
     };
 }

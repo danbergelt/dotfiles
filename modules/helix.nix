@@ -1,11 +1,11 @@
-{ helix-pkgs, ... }:
+{ pkgs, helix-pkgs, ... }:
 
 {
   programs.helix = {
     enable = true;
     package = helix-pkgs.helix;
 
-    extraPackages = with helix-pkgs; [
+    extraPackages = with pkgs; [
       nil
       gopls
       harper
@@ -45,11 +45,11 @@
       language = [
         {
           name = "python";
-          language-servers = [{ name = "pyright"; }];
+          language-servers = [ { name = "pyright"; } ];
         }
         {
           name = "markdown";
-          language-servers = [{ name = "harper"; }];
+          language-servers = [ { name = "harper"; } ];
         }
       ];
     };
