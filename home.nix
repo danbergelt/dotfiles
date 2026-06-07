@@ -41,6 +41,6 @@
         fnm
         uv
       ]
-      ++ pkgs.lib.optionals (cfg.name == "linux") [ xclip ];
+      ++ pkgs.lib.optionals (pkgs.lib.hasPrefix "linux" cfg.name) [ xclip ];
   };
 }

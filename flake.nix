@@ -28,13 +28,23 @@
           clipboard = "clip.exe";
         }
         {
-          name = "linux";
+          name = "linux-intel";
           system = "x86_64-linux";
           clipboard = "xclip -selection clipboard";
         }
         {
-          name = "mac";
+          name = "linux-arm";
+          system = "aarch64-linux";
+          clipboard = "xclip -selection clipboard";
+        }
+        {
+          name = "mac-arm";
           system = "aarch64-darwin";
+          clipboard = "pbcopy";
+        }
+        {
+          name = "mac-intel";
+          system = "x86_64-darwin";
           clipboard = "pbcopy";
         }
       ];

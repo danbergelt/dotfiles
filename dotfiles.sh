@@ -38,7 +38,7 @@ show_usage() {
     -y, --yes             Skip user confirmations (setup only)
     -o, --overwrite       Regenerate local flake even if it exists (setup only)
     -t, --token <token>   GitHub API token (setup only)
-    -c, --config <name>   Flake config name: wsl, linux, mac (setup only, auto-detected if omitted)
+    -c, --config <name>   Flake config name (setup only, auto-detected if omitted)
 
 EOF
 }
@@ -90,9 +90,17 @@ detect_config() {
   if test -n "${WSL_DISTRO_NAME:-}"; then
     echo "wsl"
   elif test "$(uname -s)" = "Darwin"; then
-    echo "mac"
+    if test "$(uname -m)" = "arm64"; then
+      echo "mac-arm"
+    else
+      echo "mac-intel"
+    fi
   elif test "$(uname -s)" = "Linux"; then
-    echo "linux"
+    if test "$(uname -m)" = "aarch64"; then
+      echo "linux-arm"
+    else
+      echo "linux-intel"
+    fi
   fi
 }
 
