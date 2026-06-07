@@ -28,6 +28,8 @@ show_usage() {
   Commands:
 
     setup                Bootstrap dotfiles environment
+    sync                 Propagate committed lock to local lock
+    update               Bump flake inputs and propagate to local lock
     get-token            Print the current GitHub API token
     set-token <token>    Update the GitHub API token
 
@@ -90,6 +92,19 @@ is_wsl() {
   fi
 }
 
+# Propagate committed lock to local lock
+sync_lock() {
+  nix flake lock \
+    --reference-lock-file "$REPO_LOCATION/flake.lock" \
+    "$LOCAL_FLAKE"
+}
+
+# Bump repo inputs, then propagate to local lock
+update_lock() {
+  nix flake update "$REPO_LOCATION"
+  sync_lock
+}
+
 # Generate the host-specific flake from the template
 generate_local_flake() {
   mkdir -p "$LOCAL_FLAKE"
@@ -106,11 +121,7 @@ generate_local_flake() {
 
   mv "$tmp" "$LOCAL_FLAKE/flake.nix"
 
-  # The local flake needs its own lock file, but we seed/reuse input
-  # resolutions from the upstream committed lock file when possible
-  nix flake lock \
-    --reference-lock-file "$REPO_LOCATION/flake.lock" \
-    "$LOCAL_FLAKE"
+  sync_lock
 }
 
 # Get the current access token
@@ -217,6 +228,26 @@ shift
 case "$COMMAND" in
   -h|--help)
     show_usage
+    exit
+    ;;
+
+  sync)
+    if test $# -ne 0; then
+      show_usage
+      abort "sync accepts no arguments"
+    fi
+
+    sync_lock
+    exit
+    ;;
+
+  update)
+    if test $# -ne 0; then
+      show_usage
+      abort "update accepts no arguments"
+    fi
+
+    update_lock
     exit
     ;;
 

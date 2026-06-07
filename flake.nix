@@ -28,23 +28,13 @@
           username,
           homeDirectory,
         }:
-        let
-          cfg = {
-            inherit
-              system
-              isWsl
-              username
-              homeDirectory
-              ;
-          };
-        in
         {
           homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.${system};
             modules = [ ./home.nix ];
             extraSpecialArgs = {
               helix-pkgs = nixpkgs-helix.legacyPackages.${system};
-              inherit cfg;
+              cfg = { inherit system isWsl username homeDirectory; };
             };
           };
         };
