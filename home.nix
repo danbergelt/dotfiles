@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, cfg, ... }:
 
 {
   imports = [
@@ -20,21 +20,27 @@
   programs.home-manager.enable = true;
 
   home = {
+    username = cfg.username;
+    homeDirectory = cfg.homeDirectory;
     stateVersion = "24.11";
 
-    packages = with pkgs; [
-      just
-      ripgrep
-      shellcheck
-      jq
-      git
-      curl
-      tealdeer
-      bat
-      tree
-      go
-      fnm
-      uv
-    ];
+    packages =
+      with pkgs;
+      [
+        just
+        ripgrep
+        shellcheck
+        jq
+        git
+        curl
+        tealdeer
+        bat
+        tree
+        file
+        go
+        fnm
+        uv
+      ]
+      ++ pkgs.lib.optionals (cfg.name == "linux") [ xclip ];
   };
 }

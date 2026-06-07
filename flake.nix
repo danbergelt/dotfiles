@@ -21,22 +21,23 @@
       ...
     }:
     let
-      platforms = {
-        wsl = {
+      platforms = [
+        {
+          name = "wsl";
           system = "x86_64-linux";
           clipboard = "clip.exe";
-        };
-
-        linux = {
+        }
+        {
+          name = "linux";
           system = "x86_64-linux";
           clipboard = "xclip -selection clipboard";
-        };
-
-        mac = {
+        }
+        {
+          name = "mac";
           system = "aarch64-darwin";
           clipboard = "pbcopy";
-        };
-      };
+        }
+      ];
     in
     {
       inherit platforms;
@@ -48,26 +49,22 @@
           homeDirectory,
         }:
         let
-          cfg = platforms.${platform};
+          cfg = builtins.head (builtins.filter (p: p.name == platform) platforms) // {
+            inherit username homeDirectory;
+          };
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${cfg.system};
-          modules = [
-            ./home.nix
-            {
-              home.username = username;
-              home.homeDirectory = homeDirectory;
-            }
-          ];
+          modules = [ ./home.nix ];
           extraSpecialArgs = {
             helix-pkgs = nixpkgs-helix.legacyPackages.${cfg.system};
-            inherit (cfg) clipboard;
+            inherit cfg;
           };
         };
 
       formatter =
         let
-          systems = nixpkgs.lib.unique (map (cfg: cfg.system) (builtins.attrValues platforms));
+          systems = nixpkgs.lib.unique (map (p: p.system) platforms);
         in
         nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };

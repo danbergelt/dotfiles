@@ -66,7 +66,7 @@ ask() {
 
 # Get list of valid platform values from the Nix configuration
 get_valid_platforms() {
-  nix eval "$REPO_LOCATION#platforms" --apply builtins.attrNames --json 2> /dev/null
+  nix eval "$REPO_LOCATION#platforms" --apply 'map (p: p.name)' --json 2> /dev/null
 }
 
 # Generate the host-specific flake from the template
