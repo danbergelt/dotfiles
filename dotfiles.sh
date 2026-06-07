@@ -105,7 +105,12 @@ generate_local_flake() {
       "$REPO_LOCATION/local.template" > "$tmp"
 
   mv "$tmp" "$LOCAL_FLAKE/flake.nix"
-  nix flake update --flake "$LOCAL_FLAKE"
+
+  # The local flake needs its own lock file, but we seed/reuse input
+  # resolutions from the upstream committed lock file when possible
+  nix flake lock \
+    --reference-lock-file "$REPO_LOCATION/flake.lock" \
+    "$LOCAL_FLAKE"
 }
 
 # Get the current access token
