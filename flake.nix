@@ -21,7 +21,7 @@
       ...
     }:
     let
-      configs = {
+      platforms = {
         wsl = {
           system = "x86_64-linux";
           clipboard = "clip.exe";
@@ -39,31 +39,36 @@
       };
     in
     {
-      formatter =
-        let
-          systems = nixpkgs.lib.unique (map (cfg: cfg.system) (builtins.attrValues configs));
-        in
-        nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      inherit platforms;
 
-      homeConfigurations = builtins.mapAttrs (
-        name: cfg:
+      mkHome =
+        {
+          platform,
+          username,
+          homeDirectory,
+        }:
         let
-          pkgs = nixpkgs.legacyPackages.${cfg.system};
+          cfg = platforms.${platform};
         in
         home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
+          pkgs = nixpkgs.legacyPackages.${cfg.system};
           modules = [
             ./home.nix
+            {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+            }
           ];
-
           extraSpecialArgs = {
             helix-pkgs = nixpkgs-helix.legacyPackages.${cfg.system};
-
-            inherit name;
             inherit (cfg) clipboard;
           };
-        }
-      ) configs;
+        };
+
+      formatter =
+        let
+          systems = nixpkgs.lib.unique (map (cfg: cfg.system) (builtins.attrValues platforms));
+        in
+        nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }

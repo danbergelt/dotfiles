@@ -2,6 +2,8 @@
 
 let
   rustup = "${pkgs.rustup}/bin/rustup";
+  toolchain = "stable";
+  components = [ "rust-analyzer" ];
 
 in
 {
@@ -9,15 +11,13 @@ in
 
   home.activation.rustupComponents = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ! ${rustup} default &> /dev/null; then
-      ${rustup} default stable
+      ${rustup} default ${toolchain}
     fi
 
-    is_component_installed() {
-      ${rustup} component list --installed | grep -q "$1"
-    }
-
-    if ! is_component_installed rust-analyzer ; then
-      ${rustup} component add rust-analyzer
-    fi
+    for component in ${lib.concatStringsSep " " components}; do
+      if ! ${rustup} component list --installed | grep -q "$component"; then
+        ${rustup} component add "$component"
+      fi
+    done
   '';
 }

@@ -1,9 +1,5 @@
 { pkgs, ... }:
 
-let
-  local = builtins.getEnv "HOME" + "/.local.nix";
-
-in
 {
   imports = [
     modules/bash.nix
@@ -11,8 +7,7 @@ in
     modules/tmux.nix
     modules/helix.nix
     modules/rust.nix
-  ]
-  ++ (if builtins.pathExists local then [ local ] else [ ]);
+  ];
 
   nix = {
     package = pkgs.nix;
@@ -25,8 +20,6 @@ in
   programs.home-manager.enable = true;
 
   home = {
-    username = builtins.getEnv "USER";
-    homeDirectory = builtins.getEnv "HOME";
     stateVersion = "24.11";
 
     packages = with pkgs; [

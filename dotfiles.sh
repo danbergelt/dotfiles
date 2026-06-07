@@ -5,7 +5,8 @@ set -euo pipefail
 
 # Constants
 ORIGIN="github.com/danbergelt/dotfiles.git"
-REPO_LOCATION="$HOME/dotfiles"
+REPO_LOCATION="$HOME/dotfiles" # Source of truth
+LOCAL_FLAKE="$HOME/.dotfiles" # Host-only files
 
 # Colors
 RED="\033[0;31m"
@@ -15,9 +16,10 @@ BLUE="\033[1;34m"
 NC="\033[0m"
 
 # Inputs
-FORCE=
+YES=
 TOKEN=
 CONFIG=
+OVERWRITE=
 
 show_usage() {
   cat <<-EOF
@@ -33,7 +35,8 @@ show_usage() {
   Options:
 
     -h, --help            Display usage information
-    -f, --force           Skip user confirmations (setup only)
+    -y, --yes             Skip user confirmations (setup only)
+    -o, --overwrite       Regenerate local flake even if it exists (setup only)
     -t, --token <token>   GitHub API token (setup only)
     -c, --config <name>   Flake config name: wsl, linux, mac (setup only, auto-detected if omitted)
 
@@ -61,9 +64,25 @@ ask() {
   esac
 }
 
-# Get all possible config values from the nix configuration
-get_valid_configs() {
-  nix eval "$REPO_LOCATION#homeConfigurations" --apply builtins.attrNames --json 2> /dev/null
+# Get list of valid platform values from the Nix configuration
+get_valid_platforms() {
+  nix eval "$REPO_LOCATION#platforms" --apply builtins.attrNames --json 2> /dev/null
+}
+
+# Generate the host-specific flake from the template
+generate_local_flake() {
+  mkdir -p "$LOCAL_FLAKE"
+
+  local tmp
+  tmp="$(mktemp)"
+
+  sed -e "s|@PLATFORM@|$CONFIG|g" \
+      -e "s|@USERNAME@|$USER|g" \
+      -e "s|@HOME@|$HOME|g" \
+      -e "s|@DOTFILES@|$REPO_LOCATION|g" \
+      "$REPO_LOCATION/local.template.nix" > "$tmp"
+
+  mv "$tmp" "$LOCAL_FLAKE/flake.nix"
 }
 
 # Derive the config from the environment
@@ -107,7 +126,12 @@ set_token() {
 
 # Initialize dotfiles in an environment
 setup() {
-  if test -z "$FORCE"; then
+  CONFIG="${CONFIG:-$(detect_config)}"
+  if ! get_valid_platforms | grep -q "\"$CONFIG\""; then
+    abort "Unknown config '$CONFIG' (expected one of: $(get_valid_platforms))"
+  fi
+
+  if test -z "$YES"; then
     ask "Bootstrap dotfiles?"
   fi
 
@@ -148,13 +172,15 @@ setup() {
     echo "Flakes already enabled"
   fi
 
-  info "Installing packages"
-  CONFIG="${CONFIG:-$(detect_config)}"
-  if ! get_valid_configs | grep -q "\"$CONFIG\""; then
-    abort "Unknown config '$CONFIG' (expected one of: $(get_valid_configs))"
+  info "Generating local flake"
+  if test -f "$LOCAL_FLAKE/flake.nix" && test -z "$OVERWRITE"; then
+    echo "$LOCAL_FLAKE/flake.nix already exists"
+  else
+    generate_local_flake
   fi
-  # Do the initial switch and pin to the current config
-  nix run home-manager -- switch --impure -b bak --flake "$REPO_LOCATION#$CONFIG"
+
+  info "Installing packages"
+  nix run home-manager -- switch -b bak --flake "$LOCAL_FLAKE"
 
   echo -e "${GREEN}All done, please reload your shell${NC}\n"
 }
@@ -205,8 +231,8 @@ case "$COMMAND" in
   setup)
     while test $# -ne 0; do
       case "$1" in
-        -f|--force)
-          FORCE="true"
+        -y|--yes)
+          YES="true"
           ;;
         -t|--token)
           shift
@@ -217,6 +243,9 @@ case "$COMMAND" in
           shift
           test $# -eq 0 && abort "--config requires a value"
           CONFIG="$1"
+          ;;
+        -o|--overwrite)
+          OVERWRITE="true"
           ;;
         *)
           show_usage

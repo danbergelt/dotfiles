@@ -1,4 +1,4 @@
-{ pkgs, name, ... }:
+{ pkgs, ... }:
 
 {
   programs.bash = {
@@ -12,7 +12,7 @@
     };
 
     shellAliases = {
-      hms = "home-manager switch --impure --flake ~/dotfiles#${name}";
+      hms = "home-manager switch --flake ~/.dotfiles";
       ncg = "nix-collect-garbage -d";
       nfu = "nix flake update --flake ~/dotfiles";
       gcb = "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
