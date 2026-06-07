@@ -2,8 +2,6 @@
 {
   inputs = {
     dotfiles.url = "path:@DOTFILES@";
-    nixpkgs.follows = "dotfiles/nixpkgs";
-    home-manager.follows = "dotfiles/home-manager";
   };
 
   outputs =
