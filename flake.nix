@@ -20,62 +20,33 @@
       home-manager,
       ...
     }:
-    let
-      platforms = [
-        {
-          name = "wsl";
-          system = "x86_64-linux";
-          clipboard = "clip.exe";
-        }
-        {
-          name = "linux-intel";
-          system = "x86_64-linux";
-          clipboard = "xclip -selection clipboard";
-        }
-        {
-          name = "linux-arm";
-          system = "aarch64-linux";
-          clipboard = "xclip -selection clipboard";
-        }
-        {
-          name = "mac-arm";
-          system = "aarch64-darwin";
-          clipboard = "pbcopy";
-        }
-        {
-          name = "mac-intel";
-          system = "x86_64-darwin";
-          clipboard = "pbcopy";
-        }
-      ];
-    in
     {
-      inherit platforms;
-
       mkHome =
         {
-          platform,
+          system,
+          isWsl ? false,
           username,
           homeDirectory,
         }:
         let
-          cfg = builtins.head (builtins.filter (p: p.name == platform) platforms) // {
-            inherit username homeDirectory;
+          cfg = {
+            inherit
+              system
+              isWsl
+              username
+              homeDirectory
+              ;
           };
         in
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${cfg.system};
-          modules = [ ./home.nix ];
-          extraSpecialArgs = {
-            helix-pkgs = nixpkgs-helix.legacyPackages.${cfg.system};
-            inherit cfg;
+        {
+          homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.${system};
+            modules = [ ./home.nix ];
+            extraSpecialArgs = {
+              helix-pkgs = nixpkgs-helix.legacyPackages.${system};
+              inherit cfg;
+            };
           };
         };
-
-      formatter =
-        let
-          systems = nixpkgs.lib.unique (map (p: p.system) platforms);
-        in
-        nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }

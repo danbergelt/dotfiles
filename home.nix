@@ -41,6 +41,6 @@
         fnm
         uv
       ]
-      ++ pkgs.lib.optionals (pkgs.lib.hasPrefix "linux" cfg.name) [ xclip ];
+      ++ pkgs.lib.optionals (pkgs.stdenv.isLinux && !cfg.isWsl) [ xclip ];
   };
 }

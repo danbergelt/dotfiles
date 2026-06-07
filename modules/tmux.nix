@@ -1,5 +1,14 @@
-{ cfg, ... }:
+{ pkgs, cfg, ... }:
 
+let
+  clipboard =
+    if cfg.isWsl then
+      "clip.exe"
+    else if pkgs.stdenv.isDarwin then
+      "pbcopy"
+    else
+      "xclip -selection clipboard";
+in
 {
   programs.tmux = {
     enable = true;
@@ -31,7 +40,7 @@
       bind R respawn-pane -k -c '#{pane_current_path}'
 
       bind -T copy-mode-vi v send -X begin-selection
-      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${cfg.clipboard}'
+      bind -T copy-mode-vi y send -X copy-pipe-and-cancel '${clipboard}'
       bind -T copy-mode-vi Enter send -X cancel
 
       bind 4 split-window -h -c '#{pane_current_path}' \; \

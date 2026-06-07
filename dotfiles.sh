@@ -18,7 +18,6 @@ NC="\033[0m"
 # Inputs
 YES=
 TOKEN=
-CONFIG=
 OVERWRITE=
 
 show_usage() {
@@ -38,7 +37,6 @@ show_usage() {
     -y, --yes             Skip user confirmations (setup only)
     -o, --overwrite       Regenerate local flake even if it exists (setup only)
     -t, --token <token>   GitHub API token (setup only)
-    -c, --config <name>   Flake config name (setup only, auto-detected if omitted)
 
 EOF
 }
@@ -64,9 +62,32 @@ ask() {
   esac
 }
 
-# Get list of valid platform values from the Nix configuration
-get_valid_platforms() {
-  nix eval "$REPO_LOCATION#platforms" --apply 'map (p: p.name)' --json 2> /dev/null
+# Derive the Nix system identifier from the environment
+detect_system() {
+  local os arch
+
+  case "$(uname -s)" in
+    Darwin) os="darwin" ;;
+    Linux)  os="linux" ;;
+    *)      abort "Unable to determine system" ;;
+  esac
+
+  case "$(uname -m)" in
+    arm64|aarch64) arch="aarch64" ;;
+    x86_64)        arch="x86_64" ;;
+    *)             abort "Unable to determine architecture" ;;
+  esac
+
+  echo "${arch}-${os}"
+}
+
+# Outputs "true" or "false" depending on if we are in WSL
+is_wsl() {
+  if test -n "${WSL_DISTRO_NAME:-}"; then
+    echo "true"
+  else
+    echo "false"
+  fi
 }
 
 # Generate the host-specific flake from the template
@@ -76,32 +97,15 @@ generate_local_flake() {
   local tmp
   tmp="$(mktemp)"
 
-  sed -e "s|@PLATFORM@|$CONFIG|g" \
+  sed -e "s|@SYSTEM@|$(detect_system)|g" \
+      -e "s|@IS_WSL@|$(is_wsl)|g" \
       -e "s|@USERNAME@|$USER|g" \
       -e "s|@HOME@|$HOME|g" \
       -e "s|@DOTFILES@|$REPO_LOCATION|g" \
-      "$REPO_LOCATION/local.template.nix" > "$tmp"
+      "$REPO_LOCATION/local.template" > "$tmp"
 
   mv "$tmp" "$LOCAL_FLAKE/flake.nix"
-}
-
-# Derive the config from the environment
-detect_config() {
-  if test -n "${WSL_DISTRO_NAME:-}"; then
-    echo "wsl"
-  elif test "$(uname -s)" = "Darwin"; then
-    if test "$(uname -m)" = "arm64"; then
-      echo "mac-arm"
-    else
-      echo "mac-intel"
-    fi
-  elif test "$(uname -s)" = "Linux"; then
-    if test "$(uname -m)" = "aarch64"; then
-      echo "linux-arm"
-    else
-      echo "linux-intel"
-    fi
-  fi
+  nix flake update --flake "$LOCAL_FLAKE"
 }
 
 # Get the current access token
@@ -134,11 +138,6 @@ set_token() {
 
 # Initialize dotfiles in an environment
 setup() {
-  CONFIG="${CONFIG:-$(detect_config)}"
-  if ! get_valid_platforms | grep -q "\"$CONFIG\""; then
-    abort "Unknown config '$CONFIG' (expected one of: $(get_valid_platforms))"
-  fi
-
   if test -z "$YES"; then
     ask "Bootstrap dotfiles?"
   fi
@@ -246,11 +245,6 @@ case "$COMMAND" in
           shift
           test $# -eq 0 && abort "--token requires a value"
           TOKEN="$1"
-          ;;
-        -c|--config)
-          shift
-          test $# -eq 0 && abort "--config requires a value"
-          CONFIG="$1"
           ;;
         -o|--overwrite)
           OVERWRITE="true"
