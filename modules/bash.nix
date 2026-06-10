@@ -12,7 +12,7 @@
     };
 
     shellAliases = {
-      hms = "home-manager switch --flake ~/.dotfiles";
+      hms = "~/dotfiles/dotfiles.sh sync && home-manager switch --flake ~/.dotfiles";
       ncg = "nix-collect-garbage -d";
       gcb = "git branch | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -D";
     };
@@ -21,9 +21,29 @@
       source ~/.nix-profile/etc/profile.d/nix.sh
 
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
-      git_state_indicator="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\]"
+      _git_ps1_="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\]"
 
-      PS1="\w$git_state_indicator :: "
+      _nix_ps1_() {
+        local nix_pkgs
+
+        nix_pkgs="$(
+          printf '%s\n' "$PATH" \
+            | tr ':' '\n' \
+            | awk -F/ '/^\/nix\/store\// {
+                name=$4
+                sub(/^[a-z0-9]{32}-/, "", name)
+                sub(/\.drv$/, "", name)
+                sub(/-bin$/, "", name)
+                print name
+              }' \
+            | sort -u \
+            | paste -sd ',' -
+        )"
+
+        [ -n "$nix_pkgs" ] && echo "\[\e[01;35m\][$nix_pkgs]\[\e[00m\] "
+      }
+
+      PS1="\w$_git_ps1_ $(_nix_ps1_):: "
 
       # Activate Node from version manager
       XDG_RUNTIME_DIR=/tmp/run/user/$(id -u)
