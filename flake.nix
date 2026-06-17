@@ -27,11 +27,12 @@
           isWsl ? false,
           username,
           homeDirectory,
+          extraModules ? []
         }:
         {
           homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.${system};
-            modules = [ ./home.nix ];
+            modules = [ ./home.nix ] ++ extraModules;
             extraSpecialArgs = {
               helix-pkgs = nixpkgs-helix.legacyPackages.${system};
               cfg = { inherit system isWsl username homeDirectory; };
