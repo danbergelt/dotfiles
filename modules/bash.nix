@@ -19,14 +19,17 @@
 
     initExtra = ''
       source ~/.nix-profile/etc/profile.d/nix.sh
-
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
-      _git_ps1_="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\]"
 
-      _nix_ps1_() {
-        local nix_pkgs
+      __get_ps1() {
+        local value nix_packages
 
-        nix_pkgs="$(
+        value="\w"
+
+        # Track the current git branch
+        value+="\[\e[01;36m\]\$(__git_ps1)\[\e[00m\] "
+
+        nix_packages="$(
           printf '%s\n' "$PATH" \
             | tr ':' '\n' \
             | awk -F/ '/^\/nix\/store\// {
@@ -40,10 +43,17 @@
             | paste -sd ',' -
         )"
 
-        [ -n "$nix_pkgs" ] && echo "\[\e[01;35m\][$nix_pkgs]\[\e[00m\] "
+        # Track packages injected by "nix shell"
+        if [ -n "$nix_packages" ]; then
+          value+="\[\e[01;35m\][$nix_packages]\[\e[00m\] "
+        fi
+
+        value+=":: "
+
+        echo "$value"
       }
 
-      PS1="\w$_git_ps1_ $(_nix_ps1_):: "
+      PS1="$(__get_ps1)"
 
       # Activate Node from version manager
       XDG_RUNTIME_DIR=/tmp/run/user/$(id -u)
