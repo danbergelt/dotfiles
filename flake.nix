@@ -21,7 +21,7 @@
       ...
     }:
     {
-      mkHome =
+      lib.mkHome =
         {
           system,
           isWsl ? false,
