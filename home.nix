@@ -33,7 +33,6 @@
         jq
         git
         curl
-        tealdeer
         bat
         tree
         file

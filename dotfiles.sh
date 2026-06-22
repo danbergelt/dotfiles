@@ -113,6 +113,7 @@ generate_host_config() {
   isWsl = $(is_wsl);
   username = "$USER";
   homeDirectory = "$HOME";
+  modulesDirectory = $HOME/.dotfiles/modules;
 }
 EOF
 }

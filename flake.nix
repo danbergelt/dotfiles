@@ -24,11 +24,19 @@
       lib.mkHome =
         {
           system,
-          isWsl ? false,
           username,
           homeDirectory,
-          extraModules ? []
+          modulesDirectory,
+          isWsl ? false,
         }:
+        let
+          extraModules =
+            if builtins.pathExists modulesDirectory then
+              map (f: modulesDirectory + "/${f}")
+                (builtins.attrNames (builtins.readDir modulesDirectory))
+            else
+              [];
+        in
         {
           homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.${system};
