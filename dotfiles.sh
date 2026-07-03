@@ -3,6 +3,9 @@
 
 set -euo pipefail
 
+# Enable flakes for any nix call this script makes
+export NIX_CONFIG="experimental-features = nix-command flakes"
+
 # Constants
 ORIGIN="github.com/danbergelt/dotfiles.git"
 REPO_LOCATION="$HOME/dotfiles" # Source of truth
@@ -190,14 +193,6 @@ setup() {
   fi
 
   source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-
-  info "Enabling flakes"
-  if ! nix flake --help &> /dev/null; then
-    mkdir -p "$HOME/.config/nix"
-    echo "experimental-features = nix-command flakes" > "$HOME/.config/nix/nix.conf"
-  else
-    echo "Flakes already enabled"
-  fi
 
   info "Generating local flake"
   if test -f "$LOCAL_FLAKE/flake.nix"; then
