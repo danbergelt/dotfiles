@@ -91,11 +91,6 @@ detect_system() {
   echo "${arch}-${os}"
 }
 
-# Check if the current environment is likely WSL
-is_wsl() {
-  test -n "${WSL_DISTRO_NAME:-}"
-}
-
 # Propagate committed lock to local lock
 sync_lock() {
   nix flake lock \
@@ -122,10 +117,10 @@ generate_local_flake() {
 
   outputs = { dotfiles, ... }: dotfiles.lib.mkHome {
     system = "$(detect_system)";
-    isWsl = $(is_wsl && echo true || echo false);
+    isWsl = $([ -n "${WSL_DISTRO_NAME:-}" ] && echo true || echo false);
     username = "$USER";
     homeDirectory = "$HOME";
-    modulesDirectory = $HOME/.dotfiles/modules;
+    modulesDirectory = $LOCAL_FLAKE/modules;
   };
 }
 EOF
