@@ -32,13 +32,10 @@
         nix_packages="$(
           printf '%s\n' "$PATH" \
             | tr ':' '\n' \
-            | awk -F/ '/^\/nix\/store\// {
-                name=$4
-                sub(/^[a-z0-9]{32}-/, "", name)
-                sub(/\.drv$/, "", name)
-                sub(/-bin$/, "", name)
-                print name
-              }' \
+            | grep '^/nix/store/' \
+            | cut -d '/' -f4 \
+            | sed -E 's/^[a-z0-9]{32}-//' \
+            | sed -E 's/-(bin|man)$//' \
             | sort -u \
             | paste -sd ',' -
         )"
